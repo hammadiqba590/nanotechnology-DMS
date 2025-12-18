@@ -1,0 +1,51 @@
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using NanoDMSAuthService.Common;
+using NanoDMSAuthService.Models;
+
+namespace NanoDMSAuthService.Data
+{
+    public class AppDbContext : IdentityDbContext<AppUser>
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+        // Add custom DbSets here if needed
+        // For example:
+         public DbSet<PasswordHistory> PasswordHistory { get; set; }
+
+         public DbSet<UserProfile> UserProfile { get; set; }
+
+         public DbSet<AuditLogin> AuditLogins { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configure UserProfile
+            modelBuilder.Entity<UserProfile>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            modelBuilder.Entity<AuditLogin>(entity =>
+            {
+                entity.ToTable("Audit_Login");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.UserId).IsRequired();
+                entity.Property(e => e.UserName).IsRequired();
+                entity.Property(e => e.Password).IsRequired();
+                entity.Property(e => e.IpAddress).HasMaxLength(50);
+                entity.Property(e => e.MacAddress).HasMaxLength(50);
+                entity.Property(e => e.PcName).HasMaxLength(100);
+            });
+
+            
+
+        }
+
+
+
+
+    }
+}
