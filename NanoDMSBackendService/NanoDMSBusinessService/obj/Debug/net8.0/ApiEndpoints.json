@@ -1,0 +1,633 @@
+[
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessController",
+    "Method": "DeleteBusiness",
+    "RelativePath": "api/Business/delete-business",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteBusiness",
+        "Type": "NanoDMSBusinessService.DTO.DeleteBusinessModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessController",
+    "Method": "EditBusiness",
+    "RelativePath": "api/Business/edit-business",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StartDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "Logo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ntn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Stn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Tax3",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Tax4",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessController",
+    "Method": "GetBusinessById",
+    "RelativePath": "api/Business/get-business-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "businessById",
+        "Type": "NanoDMSBusinessService.DTO.BusinessByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessController",
+    "Method": "GetBusinessList",
+    "RelativePath": "api/Business/get-business-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "BusinessId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessController",
+    "Method": "GetBusinesses",
+    "RelativePath": "api/Business/get-businesses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessController",
+    "Method": "RegisterBusiness",
+    "RelativePath": "api/Business/register-business",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StartDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "TimeZoneId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "CurrencyId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "FinancialYearStartMonth",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "StockAccountingMethod",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Logo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "Ntn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Stn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Tax3",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Tax4",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessConfigController",
+    "Method": "DeleteBusinessConfig",
+    "RelativePath": "api/BusinessConfig/delete-business-config",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteBusinessConfigModel",
+        "Type": "NanoDMSBusinessService.DTO.DeleteBusinessConfigModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessConfigController",
+    "Method": "EditBusinessConfig",
+    "RelativePath": "api/BusinessConfig/edit-business-config",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSBusinessService.DTO.UpdateBusinessConfigModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessConfigController",
+    "Method": "GetBusinessConfigById",
+    "RelativePath": "api/BusinessConfig/get-business-config-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "businessConfigById",
+        "Type": "NanoDMSBusinessService.DTO.BusinessConfigByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessConfigController",
+    "Method": "GetBusinessConfigs",
+    "RelativePath": "api/BusinessConfig/get-business-configs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessConfigController",
+    "Method": "RegisterBusinessConfig",
+    "RelativePath": "api/BusinessConfig/register-business-config",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSBusinessService.DTO.RegisterBusinessConfigModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "DeleteBusinessLocation",
+    "RelativePath": "api/BusinessLocation/delete-business-location",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteBusinessLocation",
+        "Type": "NanoDMSBusinessService.DTO.DeleteBusinessLocationModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "EditBusinessLocation",
+    "RelativePath": "api/BusinessLocation/edit-business-location",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSBusinessService.DTO.UpdateBusinessLocationModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "GetBusinessLocationById",
+    "RelativePath": "api/BusinessLocation/get-business-location-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSBusinessService.DTO.BusinessLocationByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "GetBusinessLocationCount",
+    "RelativePath": "api/BusinessLocation/get-business-location-count",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "businessLocationCountModel",
+        "Type": "NanoDMSBusinessService.DTO.BusinessLocationCountModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "GetBusinessLocationList",
+    "RelativePath": "api/BusinessLocation/get-business-location-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "BusinessId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "GetBusinessesLocations",
+    "RelativePath": "api/BusinessLocation/get-businesses-locations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "RegisterBusinessLocation",
+    "RelativePath": "api/BusinessLocation/register-business-location",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSBusinessService.DTO.RegisterBusinessLocationModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationUserController",
+    "Method": "DeleteBusinessLocationUser",
+    "RelativePath": "api/BusinessLocationUser/delete-business-location-user",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteBusinessLocationuser",
+        "Type": "NanoDMSBusinessService.DTO.DeleteBusinessLocationUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationUserController",
+    "Method": "EditBusinessLocationUser",
+    "RelativePath": "api/BusinessLocationUser/edit-business-location-user",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSBusinessService.DTO.UpdateBusinessLocationUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationUserController",
+    "Method": "GetBusinessLocationUserById",
+    "RelativePath": "api/BusinessLocationUser/get-business-location-user-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "businesslocationuserById",
+        "Type": "NanoDMSBusinessService.DTO.BusinessLocationUserByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationUserController",
+    "Method": "GetBusinessLocationUserByUserId",
+    "RelativePath": "api/BusinessLocationUser/get-business-location-user-by-user-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "businesslocationuserById",
+        "Type": "NanoDMSBusinessService.DTO.BusinessLocationUserByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationUserController",
+    "Method": "GetBusinessLocationUserList",
+    "RelativePath": "api/BusinessLocationUser/get-business-location-user-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "BusinessId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationUserController",
+    "Method": "GetBusinessLocationUsers",
+    "RelativePath": "api/BusinessLocationUser/get-business-location-users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationUserController",
+    "Method": "RegisterBusinessLocationUser",
+    "RelativePath": "api/BusinessLocationUser/register-business-location-user",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSBusinessService.DTO.RegisterBusinessLocationUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessUserController",
+    "Method": "DeleteBusinessUser",
+    "RelativePath": "api/BusinessUser/delete-business-user",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteBusinessuser",
+        "Type": "NanoDMSBusinessService.DTO.DeleteBusinessUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessUserController",
+    "Method": "EditBusinessUser",
+    "RelativePath": "api/BusinessUser/edit-business-user",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSBusinessService.DTO.UpdateBusinessUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessUserController",
+    "Method": "GetBusinessUserById",
+    "RelativePath": "api/BusinessUser/get-business-user-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "businessuserById",
+        "Type": "NanoDMSBusinessService.DTO.BusinessUserByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessUserController",
+    "Method": "GetBusinessUserList",
+    "RelativePath": "api/BusinessUser/get-business-user-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "BusinessId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessUserController",
+    "Method": "GetBusinessUsers",
+    "RelativePath": "api/BusinessUser/get-business-users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessUserController",
+    "Method": "RegisterBusinessUser",
+    "RelativePath": "api/BusinessUser/register-business-user",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSBusinessService.DTO.RegisterBusinessUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

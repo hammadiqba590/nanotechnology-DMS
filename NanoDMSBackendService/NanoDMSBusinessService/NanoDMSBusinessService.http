@@ -1,0 +1,6 @@
+@NanoDMSBusinessService_HostAddress = http://localhost:5081
+
+GET {{NanoDMSBusinessService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,394 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NanoDMSBusinessService.Data;
+using NanoDMSBusinessService.DTO;
+using NanoDMSBusinessService.Models;
+using NanoDMSBusinessService.Repositories;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+namespace NanoDMSBusinessService.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BusinessController : ControllerBase
+    {
+        private readonly AppDbContext _context;
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IBusinessRepository _businessRepository;
+
+        #region Constructor
+        public BusinessController(AppDbContext context,
+            IBusinessRepository businessRepository,
+            IConfiguration configuration,
+            UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager)
+        {
+            _context = context;
+            _businessRepository = businessRepository;
+            _configuration = configuration;
+            _userManager = userManager;
+            _roleManager = roleManager;
+
+        }
+        #endregion
+
+        #region Apis
+
+        [Authorize]
+        [HttpPost("register-business")]
+        public async Task<IActionResult> RegisterBusiness([FromForm] RegisterBusinessModel model)
+        {
+            try
+            {
+                // Validate Business Name
+                if (string.IsNullOrEmpty(model.Name))
+                    return BadRequest(new { Message = "Business Name is required." });
+
+                // Validate StartDate
+                if (model.StartDate == default || model.StartDate > DateTime.UtcNow)
+                    return BadRequest(new { Message = "Invalid Start Date." });
+
+                // Validate TimeZoneId
+                if (model.TimeZoneId == Guid.Empty)
+                    return BadRequest(new { Message = "Time Zone is required." });
+
+                // Validate CurrencyId
+                if (model.CurrencyId == Guid.Empty)
+                    return BadRequest(new { Message = "Currency is required." });
+
+                // Validate FinancialYearStartMonth
+                if (model.FinancialYearStartMonth == Guid.Empty)
+                    return BadRequest(new { Message = "Financial Year Start Month is required." });
+
+                // Validate StockAccountingMethod
+                if (model.StockAccountingMethod == Guid.Empty)
+                    return BadRequest(new { Message = "Stock Accounting Method is required." });
+
+                // Check if User.Identity is null
+                if (User?.Identity?.Name == null)
+                    return Unauthorized(new { Message = "User identity is not available." });
+
+                // Check if user exists
+                var userName = User.Identity.Name;
+                if (string.IsNullOrEmpty(userName))
+                    return Unauthorized(new { Message = "User name is not available." });
+
+                // Fix for CS8604: Ensure userName is not null before passing it to FindByNameAsync
+                var superuser = await _userManager.FindByNameAsync(userName);
+                if (superuser == null)
+                    return Unauthorized(new { Message = "User not found." });
+
+                // Map DTO to entity (Assuming there's a Business entity)
+                var business = new Business
+                {
+                    Name = model.Name,
+                    StartDate = model.StartDate,
+                    TimeZoneId = model.TimeZoneId,
+                    CurrencyId = model.CurrencyId,
+                    FinancialYearStartMonth = model.FinancialYearStartMonth,
+                    StockAccountingMethod = model.StockAccountingMethod,
+                    Ntn = model.Ntn,
+                    Stn = model.Stn,
+                    Tax3 = model.Tax3,
+                    Tax4 = model.Tax4,
+                    CreateDate = DateTime.UtcNow,
+                    Published = true,
+                    CreateUser = Guid.Parse(superuser.Id)
+                };
+
+                // Save to repository
+                await _businessRepository.AddAsync(business);
+                await _businessRepository.SaveChangesAsync();
+
+                // Process and save the profile image
+                if (model.Logo != null && model.Logo.Length > 0)
+                {
+                    // Define the root directory for images
+                    var imagesRootPath = @"C:\Repos\dot net\PosApi\Images";
+
+                    // Define subfolder dynamically (e.g., UserProfile, ProductImages, etc.)
+                    var subFolder = "BusinessProfile"; // Change this dynamically based on use case
+                    var staticPath = Path.Combine(imagesRootPath, subFolder);
+
+                    if (!Directory.Exists(staticPath))
+                    {
+                        Directory.CreateDirectory(staticPath);
+                    }
+
+                    // Rename the image file using UserId
+                    var fileExtension = Path.GetExtension(model.Logo.FileName);
+                    var newFileName = $"{business.Id}{fileExtension}";
+                    var filePath = Path.Combine(staticPath, newFileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.Logo.CopyToAsync(stream);
+                    }
+
+                    // Save relative path instead of absolute path
+                    business.Logo = $"/Images/{subFolder}/{newFileName}";
+
+                    _businessRepository.Update(business);
+                    await _businessRepository.SaveChangesAsync();
+                }
+
+                // Return success response
+                return Ok(new { Message = "Business registered successfully", Business = business });
+            }
+            catch (Exception ex)
+            {
+                // Handle server errors
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Error: {ex.Message}" });
+            }
+        }
+
+        [Authorize]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [HttpGet("get-business-list")]
+        public async Task<IActionResult> GetBusinessList([FromQuery] BusinessFilterModel filter)
+        {
+            try
+            {
+                var query = _context.Business.Select(b => new Business
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    StartDate = b.StartDate,
+                    TimeZoneId = b.TimeZoneId,
+                    CurrencyId = b.CurrencyId,
+                    FinancialYearStartMonth = b.FinancialYearStartMonth,
+                    StockAccountingMethod = b.StockAccountingMethod,
+                    Logo = b.Logo,
+                    Ntn = b.Ntn,
+                    Stn = b.Stn,
+                    Tax3 = b.Tax3,
+                    Tax4 = b.Tax4,
+                    CreateDate = b.CreateDate,
+                    CreateUser = b.CreateUser,
+                    LastUpdateDate = b.LastUpdateDate,
+                    LastUpdateUser = b.LastUpdateUser,
+                    Published = b.Published,
+                    Deleted = b.Deleted,
+                }).AsQueryable();
+
+
+
+                if (!string.IsNullOrEmpty(filter.Name))
+                    query = query.Where(q => q.Name.Contains(filter.Name));
+
+                // Sort by CreateDate descending to get the latest profiles first
+                query = query.OrderByDescending(q => q.CreateDate);
+
+                // **Apply Pagination**
+                var totalRecords = await query.CountAsync();
+                // Apply pagination
+                var businesses = await query
+                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                    .Take(filter.PageSize)
+                    .ToListAsync();
+
+                if (!businesses.Any())
+                {
+                    return NoContent();
+                }
+
+                var response = new PaginatedResponseDto<Business>
+                {
+                    TotalRecords = totalRecords,
+                    PageNumber = filter.PageNumber,
+                    PageSize = filter.PageSize,
+                    TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
+                    Data = businesses
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [HttpGet("get-businesses")]
+        public async Task<IActionResult> GetBusinesses()
+        {
+            try
+            {
+                var businesses = await _context.Business.OrderByDescending(b=> b.CreateDate).ToListAsync();
+                if (!businesses.Any()) return NotFound("No Businesses found!.");
+
+                return Ok(new { Business = businesses });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [HttpPost("get-business-by-id")]
+        public async Task<IActionResult> GetBusinessById(BusinessByIdModel businessById)
+        {
+            try
+            {
+                var business = await _businessRepository.GetByIdAsync(Guid.Parse(businessById.Id));
+
+                return business == null ? NotFound("Business not found.") : Ok(new { Business = business });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [HttpPut("edit-business")]
+        public async Task<IActionResult> EditBusiness([FromForm] UpdateBusinessModel updateDto)
+        {
+            try
+            {
+                // Validate Id
+                if (string.IsNullOrEmpty(updateDto.Id))
+                    return BadRequest(new { Message = "Business ID is required." });
+
+                // Validate Name
+                if (string.IsNullOrEmpty(updateDto.Name))
+                    return BadRequest(new { Message = "Business Name is required." });
+
+                // Check if the business exists
+                var business = await _businessRepository.GetByIdAsync(Guid.Parse(updateDto.Id));
+                if (business == null)
+                    return NotFound(new { Message = "Business not found!." });
+
+                // Check if User.Identity is null
+                if (User?.Identity?.Name == null)
+                    return Unauthorized(new { Message = "User identity is not available." });
+
+                // Check if user exists
+                var userName = User.Identity.Name;
+                if (string.IsNullOrEmpty(userName))
+                    return Unauthorized(new { Message = "User name is not available." });
+
+                var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (superuser == null) return Unauthorized("User not found.");
+
+                // Handle image update if a new image is provided
+                if (updateDto.Logo != null && updateDto.Logo.Length > 0)
+                {
+                    // Define the root directory for images
+                    var imagesRootPath = @"C:\Repos\dot net\PosApi\Images";
+
+                    // Define subfolder dynamically (e.g., UserProfile, ProductImages, etc.)
+                    var subFolder = "BusinessProfile"; // Change this dynamically based on use case
+                    var staticPath = Path.Combine(imagesRootPath, subFolder);
+
+                    if (!Directory.Exists(staticPath))
+                    {
+                        Directory.CreateDirectory(staticPath);
+                    }
+
+                    // Rename the image file using the UserId
+                    var fileExtension = Path.GetExtension(updateDto.Logo.FileName);
+                    var newFileName = $"{business.Id}{fileExtension}";
+                    var filePath = Path.Combine(staticPath, newFileName);
+
+                    // Delete the old image if it exists
+                    if (!string.IsNullOrEmpty(business.Logo))
+                    {
+                        var oldImagePath = business.Logo;
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await updateDto.Logo.CopyToAsync(stream);
+                    }
+
+                    // Save the static path in the database (use relative or absolute path based on requirement)
+                    business.Logo = $"/Images/{subFolder}/{newFileName}"; // Save absolute file path
+
+
+                }
+
+                // Update the business properties
+                business.Name = updateDto.Name;
+                business.StartDate = updateDto.StartDate != default ? updateDto.StartDate : business.StartDate;
+                business.Ntn = !string.IsNullOrEmpty(updateDto.Ntn) ? updateDto.Ntn : business.Ntn;
+                business.Stn = !string.IsNullOrEmpty(updateDto.Stn) ? updateDto.Stn : business.Stn;
+                business.Tax3 = !string.IsNullOrEmpty(updateDto.Tax3) ? updateDto.Tax3 : business.Tax3;
+                business.Tax4 = !string.IsNullOrEmpty(updateDto.Tax4) ? updateDto.Tax4 : business.Tax4;
+                business.LastUpdateDate = DateTime.UtcNow;
+                business.Published = true;
+                business.LastUpdateUser = Guid.Parse(superuser.Id);
+
+                // Save updates
+                _businessRepository.Update(business);
+                await _businessRepository.SaveChangesAsync();
+
+                // Return success response
+                return Ok(new
+                {
+                    Message = "Business updated successfully!",
+                    Business = business
+                });
+            }
+            catch (Exception ex)
+            {
+                // Handle server errors
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Error: {ex.Message}" });
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("delete-business")]
+        public async Task<IActionResult> DeleteBusiness(DeleteBusinessModel deleteBusiness)
+        {
+            var business = await _businessRepository.GetByIdAsync(Guid.Parse(deleteBusiness.Id));
+            if (business == null) return NotFound("Business not found.");
+
+            // Check if User.Identity is null
+            if (User?.Identity?.Name == null)
+                return Unauthorized(new { Message = "User identity is not available." });
+
+            // Check if user exists
+            var userName = User.Identity.Name;
+            if (string.IsNullOrEmpty(userName))
+                return Unauthorized(new { Message = "User name is not available." });
+
+            var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (superuser == null) return Unauthorized("User not found.");
+
+            business.Deleted = true;
+            business.Published = false;
+            business.LastUpdateDate = DateTime.UtcNow;
+            business.LastUpdateUser = Guid.Parse(superuser.Id);
+
+            _businessRepository.Update(business);
+            await _businessRepository.SaveChangesAsync();
+
+            return Ok(new { Message = "Business marked as Deleted", Business = business });
+        }
+
+        #endregion
+
+
+
+
+
+
+    }
+}

@@ -42,7 +42,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5096
+                    "Port": 5081
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/BusinessService/Business/{url}",
@@ -54,7 +54,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5096
+                    "Port": 5081
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/BusinessService/BusinessLocation/{url}",
@@ -66,7 +66,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5096
+                    "Port": 5081
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/BusinessService/BusinessLocationUser/{url}",
@@ -78,7 +78,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5096
+                    "Port": 5081
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/BusinessService/BusinessUser/{url}",
@@ -90,7 +90,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5096
+                    "Port": 5081
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/BusinessService/BusinessConfig/{url}",

@@ -1,0 +1,1056 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NanoDMSAuthService",
+    "version": "1.0"
+  },
+  "paths": {
+    "/Account/FirstTimeLogin": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/register-profile": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Register.UserName": {
+                    "type": "string"
+                  },
+                  "Register.Email": {
+                    "type": "string"
+                  },
+                  "Register.Role": {
+                    "type": "string"
+                  },
+                  "Profile.Prefix": {
+                    "type": "string"
+                  },
+                  "Profile.FirstName": {
+                    "type": "string"
+                  },
+                  "Profile.LastName": {
+                    "type": "string"
+                  },
+                  "Profile.MobileNumber": {
+                    "type": "string"
+                  },
+                  "Profile.Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "Profile.PermanentAddress": {
+                    "type": "string"
+                  },
+                  "Profile.CurrentAddress": {
+                    "type": "string"
+                  },
+                  "Profile.City": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Profile.State": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Profile.Country": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Profile.PostalCode": {
+                    "type": "string"
+                  },
+                  "Profile.PersonalEmailAddress": {
+                    "type": "string"
+                  },
+                  "Profile.CNIC": {
+                    "type": "string"
+                  },
+                  "Profile.Dob": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "Profile.Gender": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Profile.MaritalStatus": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Profile.BloodGroup": {
+                    "type": "string"
+                  },
+                  "Profile.AlternateNumber": {
+                    "type": "string"
+                  },
+                  "Profile.EmergencyContact": {
+                    "type": "string"
+                  },
+                  "Profile.NTNNumber": {
+                    "type": "string"
+                  },
+                  "Profile.BankName": {
+                    "type": "string"
+                  },
+                  "Profile.BankBranch": {
+                    "type": "string"
+                  },
+                  "Profile.BankIBAN": {
+                    "type": "string"
+                  },
+                  "Profile.BankAccountNumber": {
+                    "type": "string"
+                  },
+                  "Profile.BankAccountName": {
+                    "type": "string"
+                  },
+                  "Profile.CardNumber": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Register.UserName": {
+                  "style": "form"
+                },
+                "Register.Email": {
+                  "style": "form"
+                },
+                "Register.Role": {
+                  "style": "form"
+                },
+                "Profile.Prefix": {
+                  "style": "form"
+                },
+                "Profile.FirstName": {
+                  "style": "form"
+                },
+                "Profile.LastName": {
+                  "style": "form"
+                },
+                "Profile.MobileNumber": {
+                  "style": "form"
+                },
+                "Profile.Image": {
+                  "style": "form"
+                },
+                "Profile.PermanentAddress": {
+                  "style": "form"
+                },
+                "Profile.CurrentAddress": {
+                  "style": "form"
+                },
+                "Profile.City": {
+                  "style": "form"
+                },
+                "Profile.State": {
+                  "style": "form"
+                },
+                "Profile.Country": {
+                  "style": "form"
+                },
+                "Profile.PostalCode": {
+                  "style": "form"
+                },
+                "Profile.PersonalEmailAddress": {
+                  "style": "form"
+                },
+                "Profile.CNIC": {
+                  "style": "form"
+                },
+                "Profile.Dob": {
+                  "style": "form"
+                },
+                "Profile.Gender": {
+                  "style": "form"
+                },
+                "Profile.MaritalStatus": {
+                  "style": "form"
+                },
+                "Profile.BloodGroup": {
+                  "style": "form"
+                },
+                "Profile.AlternateNumber": {
+                  "style": "form"
+                },
+                "Profile.EmergencyContact": {
+                  "style": "form"
+                },
+                "Profile.NTNNumber": {
+                  "style": "form"
+                },
+                "Profile.BankName": {
+                  "style": "form"
+                },
+                "Profile.BankBranch": {
+                  "style": "form"
+                },
+                "Profile.BankIBAN": {
+                  "style": "form"
+                },
+                "Profile.BankAccountNumber": {
+                  "style": "form"
+                },
+                "Profile.BankAccountName": {
+                  "style": "form"
+                },
+                "Profile.CardNumber": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/get-profile-list": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "UserName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PhoneNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UserRole",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/get-profile": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/get-profile-by-mobile-or-card-or-username": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "parameters": [
+          {
+            "name": "mobileNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cardNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/get-profile-by-id": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileByIdModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileByIdModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileByIdModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/get-profile-by-user-id": {
+      "post": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileByIdModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileByIdModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileByIdModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/edit-profile": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "UserId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Prefix": {
+                    "type": "string"
+                  },
+                  "FirstName": {
+                    "type": "string"
+                  },
+                  "LastName": {
+                    "type": "string"
+                  },
+                  "MobileNumber": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "PermanentAddress": {
+                    "type": "string"
+                  },
+                  "CurrentAddress": {
+                    "type": "string"
+                  },
+                  "City": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "State": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "Country": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "PostalCode": {
+                    "type": "string"
+                  },
+                  "PersonalEmailAddress": {
+                    "type": "string"
+                  },
+                  "CNIC": {
+                    "type": "string"
+                  },
+                  "Dob": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "Gender": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "MaritalStatus": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "BloodGroup": {
+                    "type": "string"
+                  },
+                  "AlternateNumber": {
+                    "type": "string"
+                  },
+                  "EmergencyContact": {
+                    "type": "string"
+                  },
+                  "NTNNumber": {
+                    "type": "string"
+                  },
+                  "BankName": {
+                    "type": "string"
+                  },
+                  "BankBranch": {
+                    "type": "string"
+                  },
+                  "BankIBAN": {
+                    "type": "string"
+                  },
+                  "BankAccountNumber": {
+                    "type": "string"
+                  },
+                  "BankAccountName": {
+                    "type": "string"
+                  },
+                  "CardNumber": {
+                    "type": "string"
+                  },
+                  "SmsAlert": {
+                    "type": "boolean"
+                  },
+                  "EmailAlert": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "encoding": {
+                "UserId": {
+                  "style": "form"
+                },
+                "Prefix": {
+                  "style": "form"
+                },
+                "FirstName": {
+                  "style": "form"
+                },
+                "LastName": {
+                  "style": "form"
+                },
+                "MobileNumber": {
+                  "style": "form"
+                },
+                "Image": {
+                  "style": "form"
+                },
+                "PermanentAddress": {
+                  "style": "form"
+                },
+                "CurrentAddress": {
+                  "style": "form"
+                },
+                "City": {
+                  "style": "form"
+                },
+                "State": {
+                  "style": "form"
+                },
+                "Country": {
+                  "style": "form"
+                },
+                "PostalCode": {
+                  "style": "form"
+                },
+                "PersonalEmailAddress": {
+                  "style": "form"
+                },
+                "CNIC": {
+                  "style": "form"
+                },
+                "Dob": {
+                  "style": "form"
+                },
+                "Gender": {
+                  "style": "form"
+                },
+                "MaritalStatus": {
+                  "style": "form"
+                },
+                "BloodGroup": {
+                  "style": "form"
+                },
+                "AlternateNumber": {
+                  "style": "form"
+                },
+                "EmergencyContact": {
+                  "style": "form"
+                },
+                "NTNNumber": {
+                  "style": "form"
+                },
+                "BankName": {
+                  "style": "form"
+                },
+                "BankBranch": {
+                  "style": "form"
+                },
+                "BankIBAN": {
+                  "style": "form"
+                },
+                "BankAccountNumber": {
+                  "style": "form"
+                },
+                "BankAccountName": {
+                  "style": "form"
+                },
+                "CardNumber": {
+                  "style": "form"
+                },
+                "SmsAlert": {
+                  "style": "form"
+                },
+                "EmailAlert": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Profile/delete-profile": {
+      "delete": {
+        "tags": [
+          "Profile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DelteUserProfileModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DelteUserProfileModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DelteUserProfileModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/create-role": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleUserModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleUserModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleUserModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/get-users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/get-user-by-id": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserByIdModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserByIdModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserByIdModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/get-roles": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/forgot-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/reset-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/first-time-login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FirstTimeLoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FirstTimeLoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FirstTimeLoginModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DelteUserProfileModel": {
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "boolean"
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lastUpdateDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdateUser": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FirstTimeLoginModel": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "confirmPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForgotPasswordModel": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginModel": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterUserModel": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResetPasswordModel": {
+        "required": [
+          "confirmPassword",
+          "email",
+          "newPassword",
+          "otp"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "otp": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "newPassword": {
+            "minLength": 12,
+            "type": "string"
+          },
+          "confirmPassword": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleUserModel": {
+        "type": "object",
+        "properties": {
+          "roleName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserByIdModel": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserProfileByIdModel": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

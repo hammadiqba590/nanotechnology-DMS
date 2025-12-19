@@ -1,0 +1,592 @@
+[
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.AccountController",
+    "Method": "FirstTimeLogin",
+    "RelativePath": "Account/FirstTimeLogin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "DeleteUserProfile",
+    "RelativePath": "api/Profile/delete-profile",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteUser",
+        "Type": "NanoDMSAuthService.DTO.DelteUserProfileModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "EditUserProfile",
+    "RelativePath": "api/Profile/edit-profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Prefix",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FirstName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "LastName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "MobileNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "PermanentAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CurrentAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "City",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "State",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Country",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "PostalCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PersonalEmailAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CNIC",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Dob",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "Gender",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaritalStatus",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "BloodGroup",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AlternateNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "EmergencyContact",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NTNNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "BankName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "BankBranch",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "BankIBAN",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "BankAccountNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "BankAccountName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CardNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "SmsAlert",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "EmailAlert",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "GetUserProfile",
+    "RelativePath": "api/Profile/get-profile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "GetUserProfileById",
+    "RelativePath": "api/Profile/get-profile-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userProfileById",
+        "Type": "NanoDMSAuthService.DTO.UserProfileByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "GetUserProfileByMobileOrCardOrUserName",
+    "RelativePath": "api/Profile/get-profile-by-mobile-or-card-or-username",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "mobileNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cardNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "userName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "GetUserProfileByUserId",
+    "RelativePath": "api/Profile/get-profile-by-user-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userProfileById",
+        "Type": "NanoDMSAuthService.DTO.UserProfileByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "GetUserProfileList",
+    "RelativePath": "api/Profile/get-profile-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PhoneNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserRole",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.ProfileController",
+    "Method": "Register",
+    "RelativePath": "api/Profile/register-profile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Register.UserName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Register.Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Register.Role",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.Prefix",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.FirstName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.LastName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.MobileNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.PermanentAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.CurrentAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.City",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.State",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.Country",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.PostalCode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.PersonalEmailAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.CNIC",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.Dob",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.Gender",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.MaritalStatus",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.BloodGroup",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.AlternateNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.EmergencyContact",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.NTNNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.BankName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.BankBranch",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.BankIBAN",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.BankAccountNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.BankAccountName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Profile.CardNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "CreateRole",
+    "RelativePath": "api/User/create-role",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSAuthService.DTO.RoleUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "FirstTimeLogin",
+    "RelativePath": "api/User/first-time-login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSAuthService.DTO.FirstTimeLoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/User/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSAuthService.DTO.ForgotPasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "GetRoles",
+    "RelativePath": "api/User/get-roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "GetUserById",
+    "RelativePath": "api/User/get-user-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userById",
+        "Type": "NanoDMSAuthService.DTO.UserByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "GetUsers",
+    "RelativePath": "api/User/get-users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "Login",
+    "RelativePath": "api/User/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSAuthService.DTO.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "Register",
+    "RelativePath": "api/User/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "register",
+        "Type": "NanoDMSAuthService.DTO.RegisterUserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAuthService.Controllers.UserController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/User/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSAuthService.DTO.ResetPasswordModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
