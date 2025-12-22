@@ -37,7 +37,7 @@ namespace NanoDMSAuthService.Controllers
         {
             if (model == null || model.Register == null || model.Profile == null)
             {
-                return BadRequest("Invalid request data.");
+                return BadRequest("Invalid Request Data.");
             }
 
             try
@@ -45,11 +45,11 @@ namespace NanoDMSAuthService.Controllers
                 // Check if the user already exists
                 var userExists = await _userManager.FindByNameAsync(model.Register.UserName);
                 if (userExists != null)
-                    return Ok(new { Message = "User already exists." });
+                    return Ok(new { Message = "User Already Exists." });
 
                 var userExistsEmail = await _userManager.FindByEmailAsync(model.Register.Email);
                 if (userExistsEmail != null)
-                    return Ok(new { Message = "User already exists." });
+                    return Ok(new { Message = "User Already Exists." });
 
                 // Generate a random secure password
                 var generatedPassword = GenerateSecurePassword();
@@ -70,7 +70,7 @@ namespace NanoDMSAuthService.Controllers
                 {
                     return Ok(new
                     {
-                        Message = "Failed to create user.",
+                        Message = "Failed To Create User.",
                         Errors = result.Errors.Select(e => e.Description)
                     });
                 }
@@ -82,7 +82,7 @@ namespace NanoDMSAuthService.Controllers
                     {
                         var roleResult = await _roleManager.CreateAsync(new IdentityRole(model.Register.Role));
                         if (!roleResult.Succeeded)
-                            return Ok(new { Message = "Failed to create role.", Errors = roleResult.Errors.Select(e => e.Description) });
+                            return Ok(new { Message = "Failed To Create Role.", Errors = roleResult.Errors.Select(e => e.Description) });
                     }
                     await _userManager.AddToRoleAsync(user, model.Register.Role);
                 }
@@ -103,34 +103,34 @@ namespace NanoDMSAuthService.Controllers
 
                 // Check if User.Identity is null
                 if (User?.Identity?.Name == null)
-                    return Unauthorized(new { Message = "User identity is not available." });
+                    return Unauthorized(new { Message = "User Identity Is Not Available." });
 
                 // Check if user exists
                 var userName = User.Identity.Name;
                 if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User name is not available." });
+                    return Unauthorized(new { Message = "User Name Is Not Available." });
 
                 var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (superuser == null)
                 {
-                    return Unauthorized("User not found.");
+                    return Unauthorized("User Not Found.");
                 }
                 var userId = superuser.Id; // Use this as your userId
 
                 // Step 4: Save user profile
                 if (string.IsNullOrEmpty(model.Profile.FirstName))
                 {
-                    return BadRequest(new { Message = "First Name is required." });
+                    return BadRequest(new { Message = "First Name Is Required." });
                 }
 
                 if (string.IsNullOrEmpty(model.Profile.LastName))
                 {
-                    return BadRequest(new { Message = "Last Name is required." });
+                    return BadRequest(new { Message = "Last Name Is Required." });
                 }
 
                 if (string.IsNullOrEmpty(model.Profile.MobileNumber) || !Regex.IsMatch(model.Profile.MobileNumber, @"^\d{11}$"))
                 {
-                    return BadRequest(new { Message = "Mobile Number is required and should be a 11-digit number." });
+                    return BadRequest(new { Message = "Mobile Number Is Required And Should Be A 11-Digit Number." });
                 }
 
                 UserProfile userProfile = new UserProfile
@@ -206,7 +206,7 @@ namespace NanoDMSAuthService.Controllers
                 }
 
                 // Return success response
-                return Ok(new { Message = "User profile registered successfully", UserProfile = userProfile });
+                return Ok(new { Message = "User Profile Registered Successfully", UserProfile = userProfile });
 
             }
             catch (Exception ex)
@@ -389,7 +389,7 @@ namespace NanoDMSAuthService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -402,7 +402,7 @@ namespace NanoDMSAuthService.Controllers
             {
                 if (string.IsNullOrEmpty(mobileNumber) && string.IsNullOrEmpty(cardNumber) && string.IsNullOrEmpty(userName))
                 {
-                    return BadRequest("At least one of mobile number or card number or user name  must be provided.");
+                    return BadRequest("At Least One Of Mobile Number Or Card Number Or User Name Must Be Provided.");
                 }
 
                 var userProfiles = await (from profile in _context.UserProfile
@@ -462,14 +462,14 @@ namespace NanoDMSAuthService.Controllers
 
                 if (userProfiles == null || !userProfiles.Any())
                 {
-                    return NotFound("No matching profiles found.");
+                    return NotFound("No Matching Profiles Found.");
                 }
 
                 return Ok(userProfiles);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -529,14 +529,14 @@ namespace NanoDMSAuthService.Controllers
 
                 if (userProfile == null)
                 {
-                    return NotFound("Profile not found.");
+                    return NotFound("Profile Not Found.");
                 }
 
                 return Ok(userProfile);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -596,14 +596,14 @@ namespace NanoDMSAuthService.Controllers
 
                 if (userProfile == null)
                 {
-                    return NotFound("Profile not found.");
+                    return NotFound("Profile Not Found.");
                 }
 
                 return Ok(userProfile);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -614,33 +614,33 @@ namespace NanoDMSAuthService.Controllers
             // Validate the incoming data
             if (updateDto == null)
             {
-                return BadRequest("Invalid data.");
+                return BadRequest("Invalid Data.");
             }
 
             if (string.IsNullOrEmpty(updateDto.FirstName) || string.IsNullOrEmpty(updateDto.LastName) || string.IsNullOrEmpty(updateDto.MobileNumber))
             {
-                return BadRequest("First Name, Last Name, and Mobile Number are required.");
+                return BadRequest("First Name, Last Name, And Mobile Number Are Required.");
             }
 
             // Find the existing user profile by UserId
             var userProfile = await _context.UserProfile.FirstOrDefaultAsync(up => up.Id == Guid.Parse(updateDto.UserId.ToString()));
             if (userProfile == null)
             {
-                return NotFound("UserProfile not found.");
+                return NotFound("UserProfile Not Found.");
             }
             // Check if User.Identity is null
             if (User?.Identity?.Name == null)
-                return Unauthorized(new { Message = "User identity is not available." });
+                return Unauthorized(new { Message = "User Identity Is Not Available." });
 
             // Check if user exists
             var userName = User.Identity.Name;
             if (string.IsNullOrEmpty(userName))
-                return Unauthorized(new { Message = "User name is not available." });
+                return Unauthorized(new { Message = "User Name Is Not Available." });
 
             var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
             if (superuser == null)
             {
-                return Unauthorized("User not found.");
+                return Unauthorized("User Not Found.");
             }
 
             var userId = superuser.Id; // Use this as your userId
@@ -729,11 +729,11 @@ namespace NanoDMSAuthService.Controllers
             {
                 _context.UserProfile.Update(userProfile);
                 await _context.SaveChangesAsync();
-                return Ok(new { Message = "User profile updated successfully", UserProfile = userProfile }); // Return updated profile
+                return Ok(new { Message = "User Profile Updated Successfully", UserProfile = userProfile }); // Return updated profile
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -747,21 +747,21 @@ namespace NanoDMSAuthService.Controllers
             // Check if the user profile exists
             if (userProfile == null)
             {
-                return NotFound("User profile not found.");
+                return NotFound("User Profile Not Found.");
             }
             // Check if User.Identity is null
             if (User?.Identity?.Name == null)
-                return Unauthorized(new { Message = "User identity is not available." });
+                return Unauthorized(new { Message = "User Identity Is Not Available." });
 
             // Check if user exists
             var userName = User.Identity.Name;
             if (string.IsNullOrEmpty(userName))
-                return Unauthorized(new { Message = "User name is not available." });
+                return Unauthorized(new { Message = "User Name Is Not Available." });
 
             var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
             if (superuser == null)
             {
-                return Unauthorized("User not found.");
+                return Unauthorized("User Not Found.");
             }
             var userId = superuser.Id; // Use this as your userId
 
@@ -775,7 +775,7 @@ namespace NanoDMSAuthService.Controllers
             _context.UserProfile.Update(userProfile);
             await _context.SaveChangesAsync();
 
-            return Ok(new { Message = "User profile marked as Deleted", UserProfile = userProfile });
+            return Ok(new { Message = "User Profile Marked As Deleted", UserProfile = userProfile });
         }
 
         private string GenerateSecurePassword()

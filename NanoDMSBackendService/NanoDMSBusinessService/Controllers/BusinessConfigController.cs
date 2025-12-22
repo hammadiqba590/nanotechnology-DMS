@@ -44,19 +44,19 @@ namespace NanoDMSBusinessService.Controllers
             try
             {
                 if (string.IsNullOrEmpty(model.NameKey))
-                    return BadRequest(new { Message = "Name Key is required." });
+                    return BadRequest(new { Message = "Name Key Is Required." });
 
                 if (string.IsNullOrEmpty(model.ConfigValue))
-                    return BadRequest(new { Message = "Config Value is required." });
+                    return BadRequest(new { Message = "Config Value Is Required." });
 
                 if (string.IsNullOrEmpty(model.ConfigType))
-                    return BadRequest(new { Message = "Config Type is required." });
+                    return BadRequest(new { Message = "Config Type Is Required." });
 
                 if (model.BusinessId == Guid.Empty)
-                    return BadRequest(new { Message = "Business Id is required." });
+                    return BadRequest(new { Message = "Business Id Is Required." });
 
                 if (model.BusinessLocationId == Guid.Empty)
-                    return BadRequest(new { Message = "Business Location Id is required." });
+                    return BadRequest(new { Message = "Business Location Id Is Required." });
 
                 if (User?.Identity?.Name == null)
                     return Unauthorized("User identity is not available.");
@@ -118,7 +118,7 @@ namespace NanoDMSBusinessService.Controllers
             try
             {
                 var businessconfig = await _businessconfigRepository.GetByIdAsync(businessConfigById.Id);
-                return businessconfig == null ? NotFound("BusinessConfig not found.") :
+                return businessconfig == null ? NotFound("BusinessConfig Not Found.") :
                 Ok(new { BusinessConfig = businessconfig });
             }
             catch (Exception ex)
@@ -133,39 +133,39 @@ namespace NanoDMSBusinessService.Controllers
         {
             if (string.IsNullOrEmpty(updateDto.NameKey))
             {
-                return BadRequest(new { Message = "Name Key is required." });
+                return BadRequest(new { Message = "Name Key Is Required." });
             }
 
             if (string.IsNullOrEmpty(updateDto.ConfigValue))
             {
-                return BadRequest(new { Message = "Config Value is required." });
+                return BadRequest(new { Message = "Config Value Is Required." });
             }
 
             if (string.IsNullOrEmpty(updateDto.ConfigType))
             {
-                return BadRequest(new { Message = "Config Type is required." });
+                return BadRequest(new { Message = "Config Type Is Required." });
             }
             if (updateDto.BusinessId == Guid.Empty)
             {
-                return BadRequest(new { Message = "Business Id is required." });
+                return BadRequest(new { Message = "Business Id Is Required." });
             }
             if (updateDto.BusinessLocationId == Guid.Empty)
             {
-                return BadRequest(new { Message = "Business Location Id is required." });
+                return BadRequest(new { Message = "Business Location Id Is Required." });
             }
 
             var businessconfig = await _businessconfigRepository.GetByIdAsync(updateDto.Id);
-            if (businessconfig == null) return NotFound("BusinessConfig not found.");
+            if (businessconfig == null) return NotFound("BusinessConfig Not Found.");
 
             if (User?.Identity?.Name == null)
-                return Unauthorized("User identity is not available.");
+                return Unauthorized("User identity Is Not Available.");
 
             var userName = User.Identity.Name;
             if (string.IsNullOrEmpty(userName))
-                return Unauthorized("User name is not available.");
+                return Unauthorized("User name Is Not Available.");
 
             var superuser = await _userManager.FindByNameAsync(userName);
-            if (superuser == null) return Unauthorized("User not found.");
+            if (superuser == null) return Unauthorized("User Not Found.");
 
             businessconfig.NameKey = updateDto.NameKey;
             businessconfig.ConfigValue = updateDto.ConfigValue;
@@ -181,7 +181,7 @@ namespace NanoDMSBusinessService.Controllers
             _businessconfigRepository.Update(businessconfig);
             await _businessconfigRepository.SaveChangesAsync();
 
-            return Ok(new { Message = "Business Config updated successfully", BusinessConfig = businessconfig });
+            return Ok(new { Message = "Business Config Updated Successfully", BusinessConfig = businessconfig });
         }
 
         [Authorize]
@@ -189,15 +189,15 @@ namespace NanoDMSBusinessService.Controllers
         public async Task<IActionResult> DeleteBusinessConfig(DeleteBusinessConfigModel deleteBusinessConfigModel)
         {
             var businessconfig = await _businessconfigRepository.GetByIdAsync(deleteBusinessConfigModel.Id);
-            if (businessconfig == null) return NotFound("BusinessConfig not found.");
+            if (businessconfig == null) return NotFound("BusinessConfig Not Found.");
 
             // Fix for CS8602: Ensure User.Identity.Name is not null before accessing it
             var userName = User?.Identity?.Name;
             if (string.IsNullOrEmpty(userName))
-                return Unauthorized("User name is not available.");
+                return Unauthorized("User Name Is Not Available.");
 
             var superuser = await _userManager.FindByNameAsync(userName ?? string.Empty);
-            if (superuser == null) return Unauthorized("User not found.");
+            if (superuser == null) return Unauthorized("User Not Found.");
 
             businessconfig.Deleted = true;
             businessconfig.Published = false;
@@ -207,7 +207,7 @@ namespace NanoDMSBusinessService.Controllers
             _businessconfigRepository.Update(businessconfig);
             await _businessconfigRepository.SaveChangesAsync();
 
-            return Ok(new { Message = "BusinessConfig marked as Deleted", BusinessConfig = businessconfig });
+            return Ok(new { Message = "BusinessConfig Marked As Deleted", BusinessConfig = businessconfig });
         }
 
         #endregion

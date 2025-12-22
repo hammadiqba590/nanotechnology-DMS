@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSBusinessService\\Migrations\\20251219030947_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:NanoDMSBusinessService\\Migrations\\20251219030947_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02C6DB3F-944B-40FE-91D2-6F042BA0CB2A}|NanoDMSBusinessService\\NanoDMSBusinessService.csproj|d:\\nanodms project\\nanotechnology-dms\\nanodmsbackendservice\\nanodmsbusinessservice\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02C6DB3F-944B-40FE-91D2-6F042BA0CB2A}|NanoDMSBusinessService\\NanoDMSBusinessService.csproj|solutionrelative:nanodmsbusinessservice\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF134CB2-BB13-408C-90B4-B568AB2EA429}|NanoDMSSetupService\\NanoDMSSetupService.csproj|d:\\nanodms project\\nanotechnology-dms\\nanodmsbackendservice\\nanodmssetupservice\\controllers\\countrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF134CB2-BB13-408C-90B4-B568AB2EA429}|NanoDMSSetupService\\NanoDMSSetupService.csproj|solutionrelative:nanodmssetupservice\\controllers\\countrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -95,27 +91,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "20251219030947_InitialCreate.cs",
-              "DocumentMoniker": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSBusinessService\\Migrations\\20251219030947_InitialCreate.cs",
-              "RelativeDocumentMoniker": "NanoDMSBusinessService\\Migrations\\20251219030947_InitialCreate.cs",
-              "ToolTip": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSBusinessService\\Migrations\\20251219030947_InitialCreate.cs",
-              "RelativeToolTip": "NanoDMSBusinessService\\Migrations\\20251219030947_InitialCreate.cs",
-              "ViewState": "AgIAAMcAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Title": "CountryController.cs",
+              "DocumentMoniker": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\Controllers\\CountryController.cs",
+              "RelativeDocumentMoniker": "NanoDMSSetupService\\Controllers\\CountryController.cs",
+              "ToolTip": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\Controllers\\CountryController.cs",
+              "RelativeToolTip": "NanoDMSSetupService\\Controllers\\CountryController.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwC4AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:09:48.067Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSBusinessService\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "NanoDMSBusinessService\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSBusinessService\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "NanoDMSBusinessService\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T03:06:13.614Z",
+              "WhenOpened": "2025-12-22T12:35:35.449Z",
               "EditorCaption": ""
             }
           ]

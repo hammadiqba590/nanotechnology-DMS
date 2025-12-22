@@ -1,0 +1,684 @@
+[
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CityController",
+    "Method": "DeleteCity",
+    "RelativePath": "api/City/delete-city",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteCity",
+        "Type": "NanoDMSSetupService.DTO.DeleteCityModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CityController",
+    "Method": "EditCity",
+    "RelativePath": "api/City/edit-city",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateCityModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CityController",
+    "Method": "GetCities",
+    "RelativePath": "api/City/get-cities",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CityController",
+    "Method": "GetCityById",
+    "RelativePath": "api/City/get-city-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cityById",
+        "Type": "NanoDMSSetupService.DTO.CityByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CityController",
+    "Method": "RegisterCity",
+    "RelativePath": "api/City/register-city",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterCityModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CountryController",
+    "Method": "DeleteCountry",
+    "RelativePath": "api/Country/delete-country",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteCountry",
+        "Type": "NanoDMSSetupService.DTO.DeleteCountryModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CountryController",
+    "Method": "EditCountry",
+    "RelativePath": "api/Country/edit-country",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateCountryModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CountryController",
+    "Method": "GetCountries",
+    "RelativePath": "api/Country/get-countries",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CountryController",
+    "Method": "GetCountryById",
+    "RelativePath": "api/Country/get-country-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "countryById",
+        "Type": "NanoDMSSetupService.DTO.CountryByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CountryController",
+    "Method": "GetCountryDetailsById",
+    "RelativePath": "api/Country/get-country-details-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CountryController",
+    "Method": "RegisterCountry",
+    "RelativePath": "api/Country/register-country",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterCountryModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CurrencyController",
+    "Method": "DeleteCurrency",
+    "RelativePath": "api/Currency/delete-currency",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteCurrencyModel",
+        "Type": "NanoDMSSetupService.DTO.DeleteCurrencyModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CurrencyController",
+    "Method": "EditCurrency",
+    "RelativePath": "api/Currency/edit-currency",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateCurrencyModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CurrencyController",
+    "Method": "GetCurrencies",
+    "RelativePath": "api/Currency/get-currencies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CurrencyController",
+    "Method": "GetCurrencyById",
+    "RelativePath": "api/Currency/get-currency-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "currencyByIdModel",
+        "Type": "NanoDMSSetupService.DTO.CurrencyByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.CurrencyController",
+    "Method": "RegisterCurrency",
+    "RelativePath": "api/Currency/register-currency",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterCurrencyModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.FinancialYearController",
+    "Method": "DeleteFinancialYear",
+    "RelativePath": "api/FinancialYear/delete-financial-year",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteFinancialYearModel",
+        "Type": "NanoDMSSetupService.DTO.DeleteFinancialYearModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.FinancialYearController",
+    "Method": "EditFinancialYear",
+    "RelativePath": "api/FinancialYear/edit-financial-year",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateFinancialYearModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.FinancialYearController",
+    "Method": "GetFinancialYearById",
+    "RelativePath": "api/FinancialYear/get-financial-year-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "financialYearByIdModel",
+        "Type": "NanoDMSSetupService.DTO.FinancialYearByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.FinancialYearController",
+    "Method": "GetFinancialYears",
+    "RelativePath": "api/FinancialYear/get-financial-years",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.FinancialYearController",
+    "Method": "RegisterFinancialYear",
+    "RelativePath": "api/FinancialYear/register-financial-year",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterFinancialYearModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.GenderController",
+    "Method": "DeleteGender",
+    "RelativePath": "api/Gender/delete-gender",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteGender",
+        "Type": "NanoDMSSetupService.DTO.DeleteGenderModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.GenderController",
+    "Method": "EditGender",
+    "RelativePath": "api/Gender/edit-gender",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateGenderModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.GenderController",
+    "Method": "GetGenderById",
+    "RelativePath": "api/Gender/get-gender-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "genderByID",
+        "Type": "NanoDMSSetupService.DTO.GenderByIDModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.GenderController",
+    "Method": "GetGenders",
+    "RelativePath": "api/Gender/get-genders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.GenderController",
+    "Method": "RegisterGender",
+    "RelativePath": "api/Gender/register-gender",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterGenderModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.MaritalStatusController",
+    "Method": "DeleteMaritalStatus",
+    "RelativePath": "api/MaritalStatus/delete-marital-status",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteMaritalStatus",
+        "Type": "NanoDMSSetupService.DTO.DeleteMaritalStatusModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.MaritalStatusController",
+    "Method": "EditMaritalStatus",
+    "RelativePath": "api/MaritalStatus/edit-marital-status",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateMaritalStatusModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.MaritalStatusController",
+    "Method": "GetMaritalStautsById",
+    "RelativePath": "api/MaritalStatus/get-marital-status-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maritalStatusById",
+        "Type": "NanoDMSSetupService.DTO.MaritalStatusById",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.MaritalStatusController",
+    "Method": "GetMaritalStatuses",
+    "RelativePath": "api/MaritalStatus/get-marital-statuses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.MaritalStatusController",
+    "Method": "RegisterMaritalStatus",
+    "RelativePath": "api/MaritalStatus/register-marital-status",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterMaritalStatusModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StateController",
+    "Method": "DeleteState",
+    "RelativePath": "api/State/delete-state",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteState",
+        "Type": "NanoDMSSetupService.DTO.DeleteStateModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StateController",
+    "Method": "EditState",
+    "RelativePath": "api/State/edit-state",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateStateModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StateController",
+    "Method": "GetStateById",
+    "RelativePath": "api/State/get-state-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stateById",
+        "Type": "NanoDMSSetupService.DTO.StateByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StateController",
+    "Method": "GetStates",
+    "RelativePath": "api/State/get-states",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StateController",
+    "Method": "RegisterState",
+    "RelativePath": "api/State/register-state",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterStateModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StockAccountingController",
+    "Method": "DeleteStockAccounting",
+    "RelativePath": "api/StockAccounting/delete-stock-accounting",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteStockAccountingModel",
+        "Type": "NanoDMSSetupService.DTO.DeleteStockAccountingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StockAccountingController",
+    "Method": "EditStockAccounting",
+    "RelativePath": "api/StockAccounting/edit-stock-accounting",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateStockAccountingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StockAccountingController",
+    "Method": "GetStockAccountingById",
+    "RelativePath": "api/StockAccounting/get-stock-accounting-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "stockAccountingById",
+        "Type": "NanoDMSSetupService.DTO.StockAccountingByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StockAccountingController",
+    "Method": "GetStockAccountings",
+    "RelativePath": "api/StockAccounting/get-stock-accountings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.StockAccountingController",
+    "Method": "RegisterStockAccounting",
+    "RelativePath": "api/StockAccounting/register-stock-accounting",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterStockAccountingModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.TimeZoneController",
+    "Method": "DeleteTimeZone",
+    "RelativePath": "api/TimeZone/delete-time-zone",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "deleteTimeZoneModel",
+        "Type": "NanoDMSSetupService.DTO.DeleteTimeZoneModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.TimeZoneController",
+    "Method": "EditTimeZone",
+    "RelativePath": "api/TimeZone/edit-time-zone",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "NanoDMSSetupService.DTO.UpdateTimeZoneModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.TimeZoneController",
+    "Method": "GetTimeZoneById",
+    "RelativePath": "api/TimeZone/get-time-zone-by-id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "timeZoneById",
+        "Type": "NanoDMSSetupService.DTO.TimeZoneByIdModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.TimeZoneController",
+    "Method": "GetTimeZones",
+    "RelativePath": "api/TimeZone/get-time-zones",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSSetupService.Controllers.TimeZoneController",
+    "Method": "RegisterTimeZone",
+    "RelativePath": "api/TimeZone/register-time-zone",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "NanoDMSSetupService.DTO.RegisterTimeZoneModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

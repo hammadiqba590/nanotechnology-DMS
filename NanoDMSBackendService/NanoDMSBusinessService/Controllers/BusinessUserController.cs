@@ -47,27 +47,27 @@ namespace NanoDMSBusinessService.Controllers
             {
 
                 if (model.BusinessId == Guid.Empty)
-                    return BadRequest(new { Message = "Business Id is required." });
+                    return BadRequest(new { Message = "Business Id Is Required." });
 
 
                 if (model.UserID == Guid.Empty)
-                    return BadRequest(new { Message = "UserId is required." });
+                    return BadRequest(new { Message = "UserId Is Required." });
 
 
                 // Check if User.Identity is null
                 if (User?.Identity?.Name == null)
-                    return Unauthorized(new { Message = "User identity is not available." });
+                    return Unauthorized(new { Message = "User Identity Is Not Available." });
 
                 // Check if user exists
                 var userName = User.Identity.Name;
                 if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User name is not available." });
+                    return Unauthorized(new { Message = "User Name Is Not Available." });
 
 
                 // Check if user exists
                 var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (superuser == null)
-                    return Unauthorized(new { Message = "User not found." });
+                    return Unauthorized(new { Message = "User Not Found." });
 
 
                 var businessuser = new BusinessUser
@@ -84,7 +84,7 @@ namespace NanoDMSBusinessService.Controllers
                 await _businessUserRepository.SaveChangesAsync();
 
                 // Return success response
-                return Ok(new { Message = "Business User registered successfully", BusinessUser = businessuser });
+                return Ok(new { Message = "Business User Registered Successfully", BusinessUser = businessuser });
             }
             catch (Exception ex)
             {
@@ -150,7 +150,7 @@ namespace NanoDMSBusinessService.Controllers
 
                 if (string.IsNullOrEmpty(jwtToken))
                 {
-                    return Unauthorized(new { Message = "JWT token is missing or invalid." });
+                    return Unauthorized(new { Message = "JWT Token Is Missing Or Invalid." });
                 }
 
                 var businessNames = await FetchBusinessNamesAsync(apiService, "Business", "businesse", businessIds, jwtToken);
@@ -195,7 +195,7 @@ namespace NanoDMSBusinessService.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -213,7 +213,7 @@ namespace NanoDMSBusinessService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -226,11 +226,11 @@ namespace NanoDMSBusinessService.Controllers
             {
                 var businessuser = await _businessUserRepository.GetByIdAsync(businessuserById.Id);
 
-                return businessuser == null ? NotFound("Business User not found.") : Ok(new { BusinessUser = businessuser });
+                return businessuser == null ? NotFound("Business User Not Found.") : Ok(new { BusinessUser = businessuser });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -242,32 +242,32 @@ namespace NanoDMSBusinessService.Controllers
             {
                 // Validate Id
                 if (updateDto.Id == Guid.Empty)
-                    return BadRequest(new { Message = "Business User Id is required." });
+                    return BadRequest(new { Message = "Business User Id Is Required." });
 
                 // Validate BusinessId
                 if (updateDto.BusinessId == Guid.Empty)
-                    return BadRequest(new { Message = "Business Id is required." });
+                    return BadRequest(new { Message = "Business Id Is Required." });
 
                 // Validate BusinessId
                 if (updateDto.UserId == Guid.Empty)
-                    return BadRequest(new { Message = "User Id is required." });
+                    return BadRequest(new { Message = "User Id Is Required." });
 
                 // Check if the business exists
                 var businessuser = await _businessUserRepository.GetByIdAsync(updateDto.Id);
                 if (businessuser == null)
-                    return NotFound(new { Message = "Business User not found!." });
+                    return NotFound(new { Message = "Business User Not Found!." });
 
                 // Check if User.Identity is null
                 if (User?.Identity?.Name == null)
-                    return Unauthorized(new { Message = "User identity is not available." });
+                    return Unauthorized(new { Message = "User Identity Is Not Available." });
 
                 // Check if user exists
                 var userName = User.Identity.Name;
                 if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User name is not available." });
+                    return Unauthorized(new { Message = "User Name Is Not Available." });
 
                 var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
-                if (superuser == null) return Unauthorized("User not found.");
+                if (superuser == null) return Unauthorized("User Not Found.");
 
                 // Update the business properties
                 businessuser.BusinessId = updateDto.BusinessId;
@@ -283,7 +283,7 @@ namespace NanoDMSBusinessService.Controllers
                 // Return success response
                 return Ok(new
                 {
-                    Message = "Business User updated successfully!",
+                    Message = "Business User Updated Successfully!",
                     BusinessUser = businessuser
                 });
             }
@@ -300,20 +300,20 @@ namespace NanoDMSBusinessService.Controllers
         public async Task<IActionResult> DeleteBusinessUser(DeleteBusinessUserModel deleteBusinessuser)
         {
             var businessuser = await _businessUserRepository.GetByIdAsync(deleteBusinessuser.Id);
-            if (businessuser == null) return NotFound("BusinessUser not found.");
+            if (businessuser == null) return NotFound("BusinessUser Not Found.");
 
             // Check if User.Identity is null
             if (User?.Identity?.Name == null)
-                return Unauthorized(new { Message = "User identity is not available." });
+                return Unauthorized(new { Message = "User Identity Is Not Available." });
 
             // Check if user exists
             var userName = User.Identity.Name;
             if (string.IsNullOrEmpty(userName))
-                return Unauthorized(new { Message = "User name is not available." });
+                return Unauthorized(new { Message = "User Name Is Not Available." });
 
 
             var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (superuser == null) return Unauthorized("User not found.");
+            if (superuser == null) return Unauthorized("User Not Found.");
 
             businessuser.Deleted = true;
             businessuser.Published = false;
@@ -323,7 +323,7 @@ namespace NanoDMSBusinessService.Controllers
             _businessUserRepository.Update(businessuser);
             await _businessUserRepository.SaveChangesAsync();
 
-            return Ok(new { Message = "Business User marked as Deleted", BusinessUser = businessuser });
+            return Ok(new { Message = "Business User Marked As Deleted", BusinessUser = businessuser });
         }
         #endregion
 

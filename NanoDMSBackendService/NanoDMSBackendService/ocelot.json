@@ -6,7 +6,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5195
+                    "Port": 5113
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/AuthService/Account/FirstTimeLogin",
@@ -18,7 +18,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5195
+                    "Port": 5113
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/AuthService/User/{url}",
@@ -30,10 +30,118 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 5195
+                    "Port": 5113
                 }
             ],
             "UpstreamPathTemplate": "/apigateway/AuthService/Profile/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Country/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/Country/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/State/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/State/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/City/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/City/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Gender/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/Gender/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/MaritalStatus/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/MaritalStatus/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/TimeZone/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/TimeZone/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/Currency/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/Currency/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/FinancialYear/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/FinancialYear/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/StockAccounting/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5080
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/SetupService/StockAccounting/{url}",
             "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
         },
         {

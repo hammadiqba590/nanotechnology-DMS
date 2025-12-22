@@ -48,7 +48,7 @@ namespace NanoDMSBusinessService.Controllers
             {
                 // Validate Business Name
                 if (string.IsNullOrEmpty(model.Name))
-                    return BadRequest(new { Message = "Business Name is required." });
+                    return BadRequest(new { Message = "Business Name Is Required." });
 
                 // Validate StartDate
                 if (model.StartDate == default || model.StartDate > DateTime.UtcNow)
@@ -56,33 +56,33 @@ namespace NanoDMSBusinessService.Controllers
 
                 // Validate TimeZoneId
                 if (model.TimeZoneId == Guid.Empty)
-                    return BadRequest(new { Message = "Time Zone is required." });
+                    return BadRequest(new { Message = "Time Zone Is Required." });
 
                 // Validate CurrencyId
                 if (model.CurrencyId == Guid.Empty)
-                    return BadRequest(new { Message = "Currency is required." });
+                    return BadRequest(new { Message = "Currency Is Required." });
 
                 // Validate FinancialYearStartMonth
                 if (model.FinancialYearStartMonth == Guid.Empty)
-                    return BadRequest(new { Message = "Financial Year Start Month is required." });
+                    return BadRequest(new { Message = "Financial Year Start Month Is Required." });
 
                 // Validate StockAccountingMethod
                 if (model.StockAccountingMethod == Guid.Empty)
-                    return BadRequest(new { Message = "Stock Accounting Method is required." });
+                    return BadRequest(new { Message = "Stock Accounting Method Is Required." });
 
                 // Check if User.Identity is null
                 if (User?.Identity?.Name == null)
-                    return Unauthorized(new { Message = "User identity is not available." });
+                    return Unauthorized(new { Message = "User identity Is Not Available." });
 
                 // Check if user exists
                 var userName = User.Identity.Name;
                 if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User name is not available." });
+                    return Unauthorized(new { Message = "User name Is Not Available." });
 
                 // Fix for CS8604: Ensure userName is not null before passing it to FindByNameAsync
                 var superuser = await _userManager.FindByNameAsync(userName);
                 if (superuser == null)
-                    return Unauthorized(new { Message = "User not found." });
+                    return Unauthorized(new { Message = "User Not Found." });
 
                 // Map DTO to entity (Assuming there's a Business entity)
                 var business = new Business
@@ -139,7 +139,7 @@ namespace NanoDMSBusinessService.Controllers
                 }
 
                 // Return success response
-                return Ok(new { Message = "Business registered successfully", Business = business });
+                return Ok(new { Message = "Business Registered Successfully", Business = business });
             }
             catch (Exception ex)
             {
@@ -212,7 +212,7 @@ namespace NanoDMSBusinessService.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -224,13 +224,13 @@ namespace NanoDMSBusinessService.Controllers
             try
             {
                 var businesses = await _context.Business.OrderByDescending(b=> b.CreateDate).ToListAsync();
-                if (!businesses.Any()) return NotFound("No Businesses found!.");
+                if (!businesses.Any()) return NotFound("No Businesses Found!.");
 
                 return Ok(new { Business = businesses });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -243,11 +243,11 @@ namespace NanoDMSBusinessService.Controllers
             {
                 var business = await _businessRepository.GetByIdAsync(Guid.Parse(businessById.Id));
 
-                return business == null ? NotFound("Business not found.") : Ok(new { Business = business });
+                return business == null ? NotFound("Business Not Found.") : Ok(new { Business = business });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -259,28 +259,28 @@ namespace NanoDMSBusinessService.Controllers
             {
                 // Validate Id
                 if (string.IsNullOrEmpty(updateDto.Id))
-                    return BadRequest(new { Message = "Business ID is required." });
+                    return BadRequest(new { Message = "Business Id Is Required." });
 
                 // Validate Name
                 if (string.IsNullOrEmpty(updateDto.Name))
-                    return BadRequest(new { Message = "Business Name is required." });
+                    return BadRequest(new { Message = "Business Name Is Required." });
 
                 // Check if the business exists
                 var business = await _businessRepository.GetByIdAsync(Guid.Parse(updateDto.Id));
                 if (business == null)
-                    return NotFound(new { Message = "Business not found!." });
+                    return NotFound(new { Message = "Business Not Found!." });
 
                 // Check if User.Identity is null
                 if (User?.Identity?.Name == null)
-                    return Unauthorized(new { Message = "User identity is not available." });
+                    return Unauthorized(new { Message = "User Identity Is Not Available." });
 
                 // Check if user exists
                 var userName = User.Identity.Name;
                 if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User name is not available." });
+                    return Unauthorized(new { Message = "User Name Is Not Available." });
 
                 var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
-                if (superuser == null) return Unauthorized("User not found.");
+                if (superuser == null) return Unauthorized("User Not Found.");
 
                 // Handle image update if a new image is provided
                 if (updateDto.Logo != null && updateDto.Logo.Length > 0)
@@ -342,7 +342,7 @@ namespace NanoDMSBusinessService.Controllers
                 // Return success response
                 return Ok(new
                 {
-                    Message = "Business updated successfully!",
+                    Message = "Business Updated Successfully!",
                     Business = business
                 });
             }
@@ -358,19 +358,19 @@ namespace NanoDMSBusinessService.Controllers
         public async Task<IActionResult> DeleteBusiness(DeleteBusinessModel deleteBusiness)
         {
             var business = await _businessRepository.GetByIdAsync(Guid.Parse(deleteBusiness.Id));
-            if (business == null) return NotFound("Business not found.");
+            if (business == null) return NotFound("Business Not Found.");
 
             // Check if User.Identity is null
             if (User?.Identity?.Name == null)
-                return Unauthorized(new { Message = "User identity is not available." });
+                return Unauthorized(new { Message = "User Identity Is Not Available." });
 
             // Check if user exists
             var userName = User.Identity.Name;
             if (string.IsNullOrEmpty(userName))
-                return Unauthorized(new { Message = "User name is not available." });
+                return Unauthorized(new { Message = "User Name Is Not Available." });
 
             var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (superuser == null) return Unauthorized("User not found.");
+            if (superuser == null) return Unauthorized("User Not Found.");
 
             business.Deleted = true;
             business.Published = false;
@@ -380,7 +380,7 @@ namespace NanoDMSBusinessService.Controllers
             _businessRepository.Update(business);
             await _businessRepository.SaveChangesAsync();
 
-            return Ok(new { Message = "Business marked as Deleted", Business = business });
+            return Ok(new { Message = "Business Marked As Deleted", Business = business });
         }
 
         #endregion

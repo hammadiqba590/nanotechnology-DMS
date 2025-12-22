@@ -47,27 +47,27 @@ namespace NanoDMSBusinessService.Controllers
             try
             {
                 if (model.BusinessId == Guid.Empty)
-                    return BadRequest(new { Message = "Business Id is required." });
+                    return BadRequest(new { Message = "Business Id Is Required." });
 
                 if (model.BusinessLocationIds == null || model.BusinessLocationIds.Count == 0)
-                    return BadRequest(new { Message = "At least one Business Location Id is required." });
+                    return BadRequest(new { Message = "At Least One Business Location Id Is Required." });
 
                 if (model.UserId == Guid.Empty)
-                    return BadRequest(new { Message = "UserId is required." });
+                    return BadRequest(new { Message = "UserId Is Required." });
 
                 // Check if User.Identity is null
                 if (User?.Identity?.Name == null)
-                    return Unauthorized(new { Message = "User identity is not available." });
+                    return Unauthorized(new { Message = "User Identity Is Not available." });
 
                 // Check if user exists
                 var userName = User.Identity.Name;
                 if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User name is not available." });
+                    return Unauthorized(new { Message = "User Name Is Not Available." });
 
                 // Check if the logged-in user exists
                 var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (superuser == null)
-                    return Unauthorized(new { Message = "User not found." });
+                    return Unauthorized(new { Message = "User Not Found." });
 
                 var businessLocationUsers = new List<BusinessLocationUser>();
 
@@ -90,7 +90,7 @@ namespace NanoDMSBusinessService.Controllers
                 await _businessLocationUserRepository.AddRangeAsync(businessLocationUsers);
                 await _businessLocationUserRepository.SaveChangesAsync();
 
-                return Ok(new { Message = "Business Location Users registered successfully", BusinessLocationUsers = businessLocationUsers });
+                return Ok(new { Message = "Business Location Users Registered Successfully", BusinessLocationUsers = businessLocationUsers });
             }
             catch (Exception ex)
             {
@@ -158,7 +158,7 @@ namespace NanoDMSBusinessService.Controllers
 
                 if (string.IsNullOrEmpty(jwtToken))
                 {
-                    return Unauthorized(new { Message = "JWT token is missing or invalid." });
+                    return Unauthorized(new { Message = "JWT Token Is Missing Or Invalid." });
                 }
 
                 var businessNames = await FetchBusinessNamesAsync(apiService, "Business", "businesse", businessIds, jwtToken);
@@ -210,7 +210,7 @@ namespace NanoDMSBusinessService.Controllers
             catch (Exception ex)
             {
 
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -228,7 +228,7 @@ namespace NanoDMSBusinessService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -247,7 +247,7 @@ namespace NanoDMSBusinessService.Controllers
 
                 var jwtToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
                 if (string.IsNullOrEmpty(jwtToken))
-                    return Unauthorized(new { Message = "JWT token is missing or invalid." });
+                    return Unauthorized(new { Message = "JWT Token Is Missing Or Invalid." });
 
                 var apiService = new ApiServiceHelper(new HttpClient());
                 var businessId = businessLocationUsers.First().BusinessId;
@@ -294,7 +294,7 @@ namespace NanoDMSBusinessService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -307,11 +307,11 @@ namespace NanoDMSBusinessService.Controllers
             {
                 var businesslocationuser = await _businessLocationUserRepository.GetByIdAsync(businesslocationuserById.Id);
 
-                return businesslocationuser == null ? NotFound("Business Location User not found.") : Ok(new { BusinessLocationUser = businesslocationuser });
+                return businesslocationuser == null ? NotFound("Business Location User Not Found.") : Ok(new { BusinessLocationUser = businesslocationuser });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -323,28 +323,28 @@ namespace NanoDMSBusinessService.Controllers
             {
                 // Validate UserId
                 if (updateDto.UserId == Guid.Empty)
-                    return BadRequest(new { Message = "User Id is required." });
+                    return BadRequest(new { Message = "User Id Is Required." });
 
                 // Validate BusinessId
                 if (updateDto.BusinessId == Guid.Empty)
-                    return BadRequest(new { Message = "Business Id is required." });
+                    return BadRequest(new { Message = "Business Id Is Required." });
 
                 // Validate Business Location Id
                 if (updateDto.BusinessLocationIds == null || updateDto.BusinessLocationIds.Count == 0)
-                    return BadRequest(new { Message = "Atleast one Business Location Id is required." });
+                    return BadRequest(new { Message = "Atleast One Business Location Id Is Required." });
 
                 // Check if User.Identity is null
                 if (User?.Identity?.Name == null)
-                    return Unauthorized(new { Message = "User identity is not available." });
+                    return Unauthorized(new { Message = "User Identity Is Not Available." });
 
                 // Check if user exists
                 var userName = User.Identity.Name;
                 if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User name is not available." });
+                    return Unauthorized(new { Message = "User Name Is Not Available." });
 
 
                 var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
-                if (superuser == null) return Unauthorized("User not found.");
+                if (superuser == null) return Unauthorized("User Not Found.");
 
                 // Delete existing records for the UserId
                 var existingRecords = await _businessLocationUserRepository.GetByUserIdAsync(updateDto.UserId);
@@ -383,7 +383,7 @@ namespace NanoDMSBusinessService.Controllers
                 // Return success response
                 return Ok(new
                 {
-                    Message = "Business Location User updated successfully!",
+                    Message = "Business Location User Updated Successfully!",
                     BusinessLocationUser = businessLocationUsers
                 });
             }
@@ -399,20 +399,20 @@ namespace NanoDMSBusinessService.Controllers
         public async Task<IActionResult> DeleteBusinessLocationUser(DeleteBusinessLocationUserModel deleteBusinessLocationuser)
         {
             var businesslocationuser = await _businessLocationUserRepository.GetByIdAsync(deleteBusinessLocationuser.Id);
-            if (businesslocationuser == null) return NotFound("Business Location User not found.");
+            if (businesslocationuser == null) return NotFound("Business Location User Not Found.");
 
             // Check if User.Identity is null
             if (User?.Identity?.Name == null)
-                return Unauthorized(new { Message = "User identity is not available." });
+                return Unauthorized(new { Message = "User Identity Is Not Available." });
 
             // Check if user exists
             var userName = User.Identity.Name;
             if (string.IsNullOrEmpty(userName))
-                return Unauthorized(new { Message = "User name is not available." });
+                return Unauthorized(new { Message = "User Name Is Not Available." });
 
 
             var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
-            if (superuser == null) return Unauthorized("User not found.");
+            if (superuser == null) return Unauthorized("User Not Found.");
 
             businesslocationuser.Deleted = true;
             businesslocationuser.Published = false;
@@ -422,7 +422,7 @@ namespace NanoDMSBusinessService.Controllers
             _businessLocationUserRepository.Update(businesslocationuser);
             await _businessLocationUserRepository.SaveChangesAsync();
 
-            return Ok(new { Message = "Business Location User marked as Deleted", BusinessLocationUser = businesslocationuser });
+            return Ok(new { Message = "Business Location User Marked As Deleted", BusinessLocationUser = businesslocationuser });
         }
 
         #endregion

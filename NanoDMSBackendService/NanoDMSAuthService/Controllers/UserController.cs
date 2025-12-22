@@ -52,11 +52,11 @@ namespace NanoDMSAuthService.Controllers
             // Check if the user already exists
             var userExists = await _userManager.FindByNameAsync(register.UserName);
             if (userExists != null)
-                return Ok(new { Message = "User already exists." });
+                return Ok(new { Message = "User Already Exists." });
 
             var userExistsEmail = await _userManager.FindByEmailAsync(register.Email);
             if (userExistsEmail != null)
-                return Ok(new { Message = "User already exists." });
+                return Ok(new { Message = "User Already Exists." });
 
             // Generate a random secure password
             var generatedPassword = GenerateSecurePassword();
@@ -76,7 +76,7 @@ namespace NanoDMSAuthService.Controllers
             {
                 return BadRequest(new
                 {
-                    Message = "Failed to create user.",
+                    Message = "Failed To Create User.",
                     Errors = result.Errors.Select(e => e.Description)
                 });
             }
@@ -90,7 +90,7 @@ namespace NanoDMSAuthService.Controllers
                 {
                     var roleResult = await _roleManager.CreateAsync(new IdentityRole(register.Role));
                     if (!roleResult.Succeeded)
-                        return BadRequest(new { Message = "Failed to create role.", Errors = roleResult.Errors.Select(e => e.Description) });
+                        return BadRequest(new { Message = "Failed To Create Role.", Errors = roleResult.Errors.Select(e => e.Description) });
                 }
                 await _userManager.AddToRoleAsync(user, register.Role);
             }
@@ -108,7 +108,7 @@ namespace NanoDMSAuthService.Controllers
 
             // Send the email
             await SendEmailAsync(register.Email, "New Registered Password", htmlTemplate);
-            return Ok(new { Message = "User registered successfully.Username and Password has been sent to your email", UserID = user.Id });
+            return Ok(new { Message = "User Registered Successfully.Username And Password Has Been Sent To Your Email", UserID = user.Id });
         }
 
         //[Authorize(Roles = "Admin")]
@@ -117,14 +117,14 @@ namespace NanoDMSAuthService.Controllers
         {
             if (string.IsNullOrEmpty(model.RoleName))
             {
-                return BadRequest("Role name cannot be empty.");
+                return BadRequest("Role Name Cannot Be Empty.");
             }
 
             // Check if the role already exists
             var roleExist = await _roleManager.RoleExistsAsync(model.RoleName);
             if (roleExist)
             {
-                return Ok(new { Message = $"Role '{model.RoleName}' already exists." });
+                return Ok(new { Message = $"Role '{model.RoleName}' Already Exists." });
             }
 
             // Create the new role
@@ -133,11 +133,11 @@ namespace NanoDMSAuthService.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(new { Message = $"Role '{model.RoleName}' created successfully." });
+                return Ok(new { Message = $"Role '{model.RoleName}' Created Successfully." });
             }
             else
             {
-                return StatusCode(500, new { Message = "Failed to create the role.", Errors = result.Errors });
+                return StatusCode(500, new { Message = "Failed To Create The Role.", Errors = result.Errors });
             }
         }
 
@@ -162,7 +162,7 @@ namespace NanoDMSAuthService.Controllers
             }
             else
             {
-                return NotFound(new { Message = "No users found." });
+                return NotFound(new { Message = "No Users Found." });
             }
         }
 
@@ -179,7 +179,7 @@ namespace NanoDMSAuthService.Controllers
 
                 if (user == null)
                 {
-                    return NotFound(new { Message = "User not found." });
+                    return NotFound(new { Message = "User Not Found." });
                 }
 
                 // Return the user details in the response
@@ -192,7 +192,7 @@ namespace NanoDMSAuthService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
 
@@ -210,7 +210,7 @@ namespace NanoDMSAuthService.Controllers
             }
             else
             {
-                return StatusCode(500, new { Message = "Failed to get the role." });
+                return StatusCode(500, new { Message = "Failed To Get The Role." });
             }
         }
 
@@ -224,7 +224,7 @@ namespace NanoDMSAuthService.Controllers
 
             if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssuer) || string.IsNullOrEmpty(jwtAudience))
             {
-                return StatusCode(500, new { Message = "JWT configuration values are missing or invalid." });
+                return StatusCode(500, new { Message = "JWT Configuration Values Are Missing Or Invalid." });
             }
 
             // Find user by username
@@ -232,7 +232,7 @@ namespace NanoDMSAuthService.Controllers
 
             if (user == null || string.IsNullOrEmpty(user.UserName) || string.IsNullOrEmpty(user.Email))
             {
-                return BadRequest(new { Message = "Invalid username or password." });
+                return BadRequest(new { Message = "Invalid Username Or Password." });
             }
 
             // Ensure user.UserName is not null before assignment
@@ -291,13 +291,13 @@ namespace NanoDMSAuthService.Controllers
                 {
                     return BadRequest(new
                     {
-                        Message = $"Your account is locked. Please try again after {timeRemaining.Minutes} minute(s).",
+                        Message = $"Your Account Is Locked. Please Try Again After {timeRemaining.Minutes} Minute(s).",
                         RefreshedToken = newJwtToken
                     });
                 }
                 else
                 {
-                    return BadRequest(new { Message = "Your account is locked. Please try again later.", RefreshedToken = newJwtToken });
+                    return BadRequest(new { Message = "Your Account Is Locked. Please Try Again Later.", RefreshedToken = newJwtToken });
                 }
             }
 
@@ -320,7 +320,7 @@ namespace NanoDMSAuthService.Controllers
                 // Send the confirmation email with the link
                 await SendConfirmationEmail(user.Email, firstTimeLoginLink);
 
-                return Ok(new { Message = "First-time login email has been sent to your email address.", });
+                return Ok(new { Message = "First-Time Login Email Has Been Sent To Your Email Address.", });
             }
 
             // Check 90-day password expiration
@@ -328,7 +328,7 @@ namespace NanoDMSAuthService.Controllers
 
             if (lastPasswordChange != null && (DateTime.UtcNow - lastPasswordChange.Value).TotalDays > 90)
             {
-                return BadRequest(new { Message = "Password has expired. Please reset your password." });
+                return BadRequest(new { Message = "Password Has Expired. Please Reset Your Password." });
             }
 
             // Check the password
@@ -345,10 +345,10 @@ namespace NanoDMSAuthService.Controllers
                 if (failedAttempts >= 5)
                 {
                     // Lock the user out after 5 failed attempts
-                    return BadRequest(new { Message = "Account locked due to too many failed login attempts. Try again in 30 minutes." });
+                    return BadRequest(new { Message = "Account Locked Due To Too Many Failed Login Attempts. Try Again In 30 Minutes." });
                 }
 
-                return BadRequest(new { Message = "Invalid credentials." });
+                return BadRequest(new { Message = "Invalid Credentials." });
             }
 
             // Reset the failed attempts counter if login is successful
@@ -462,7 +462,7 @@ namespace NanoDMSAuthService.Controllers
             // Send the OTP via email
             await SendEmailAsync(model.Email, "Forgot Password OTP", htmlTemplate);
 
-            return Ok(new { Message = "OTP sent to your email." });
+            return Ok(new { Message = "OTP Sent To Your Email." });
         }
 
         [HttpPost("reset-password")]
@@ -471,7 +471,7 @@ namespace NanoDMSAuthService.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
-                return BadRequest(new { Message = "User not found." });
+                return BadRequest(new { Message = "User Not Found." });
 
             // Validate OTP
             if (user.SecurityStamp != model.Otp)
@@ -479,7 +479,7 @@ namespace NanoDMSAuthService.Controllers
 
             // Validate password policy
             if (!IsValidPassword(model.NewPassword))
-                return BadRequest(new { Message = "Password does not meet the policy requirements." });
+                return BadRequest(new { Message = "Password Does Not Meet The Policy Requirements." });
 
             // Check against password history
             var lastPasswords = _context.PasswordHistory
@@ -490,7 +490,7 @@ namespace NanoDMSAuthService.Controllers
                 .ToList();
 
             if (lastPasswords.Any(p => _userManager.PasswordHasher.VerifyHashedPassword(user, p, model.NewPassword) == PasswordVerificationResult.Success))
-                return BadRequest(new { Message = "New password cannot be one of the last 4 passwords." });
+                return BadRequest(new { Message = "New Password Cannot Be One Of The Last 4 Passwords." });
 
             // Update the password
             var resetResult = await _userManager.ResetPasswordAsync(user, await _userManager.GeneratePasswordResetTokenAsync(user), model.NewPassword);
@@ -509,7 +509,7 @@ namespace NanoDMSAuthService.Controllers
             _context.PasswordHistory.Add(passwordHistory);
             await _context.SaveChangesAsync();
 
-            return Ok(new { Message = "Password reset successfully." });
+            return Ok(new { Message = "Password Reset Successfully." });
         }
 
         [HttpPost("first-time-login")]
@@ -517,7 +517,7 @@ namespace NanoDMSAuthService.Controllers
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
             if (user == null)
-                return Ok(new { Message = "User not found." });
+                return Ok(new { Message = "User Not Found." });
             // Validate configuration values to ensure they are not null
             var jwtKey = _configuration["Jwt:Key"];
             var jwtIssuer = _configuration["Jwt:Issuer"];
@@ -525,27 +525,27 @@ namespace NanoDMSAuthService.Controllers
 
             if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssuer) || string.IsNullOrEmpty(jwtAudience))
             {
-                return StatusCode(500, new { Message = "JWT configuration values are missing or invalid." });
+                return StatusCode(500, new { Message = "JWT Configuration Values Are Missing Or Invalid." });
             }
 
             var jwtHelper = new JwtHelper(jwtKey, jwtIssuer, jwtAudience);
 
             // Validate the token
             if (!jwtHelper.ValidateJwtToken(model.Token, out var principal))
-                return Ok(new { Message = "Invalid or expired token." });
+                return Ok(new { Message = "Invalid Or Expired Token." });
 
             if (model.NewPassword != model.ConfirmPassword)
-                return Ok(new { Message = "Passwords do not match." });
+                return Ok(new { Message = "Passwords Do Not Match." });
 
             // Validate password against policy
             if (!ValidatePasswordPolicy(model.NewPassword))
-                return Ok(new { Message = "Password does not meet complexity requirements." });
+                return Ok(new { Message = "Password Does Not Meet Complexity Requirements." });
 
             // Update password
             await _userManager.RemovePasswordAsync(user);
             var result = await _userManager.AddPasswordAsync(user, model.NewPassword);
             if (!result.Succeeded)
-                return Ok(new { Message = "Failed to set new password.", Errors = result.Errors.Select(e => e.Description) });
+                return Ok(new { Message = "Failed To Set New Password.", Errors = result.Errors.Select(e => e.Description) });
 
             // Mark email as confirmed
             user.EmailConfirmed = true;
@@ -557,7 +557,7 @@ namespace NanoDMSAuthService.Controllers
             // Unlock the account if it's locked
             await _userManager.ResetAccessFailedCountAsync(user);
 
-            return Ok(new { Message = "success" });
+            return Ok(new { Message = "Success" });
         }
 
         #endregion
