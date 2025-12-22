@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{EF134CB2-BB13-408C-90B4-B568AB2EA429}|NanoDMSSetupService\\NanoDMSSetupService.csproj|d:\\nanodms project\\nanotechnology-dms\\nanodmsbackendservice\\nanodmssetupservice\\controllers\\countrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF134CB2-BB13-408C-90B4-B568AB2EA429}|NanoDMSSetupService\\NanoDMSSetupService.csproj|solutionrelative:nanodmssetupservice\\controllers\\countrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 18,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -87,19 +82,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CountryController.cs",
-              "DocumentMoniker": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\Controllers\\CountryController.cs",
-              "RelativeDocumentMoniker": "NanoDMSSetupService\\Controllers\\CountryController.cs",
-              "ToolTip": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\Controllers\\CountryController.cs",
-              "RelativeToolTip": "NanoDMSSetupService\\Controllers\\CountryController.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAAwCsAAABfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-22T12:35:35.449Z",
-              "EditorCaption": ""
             }
           ]
         }
