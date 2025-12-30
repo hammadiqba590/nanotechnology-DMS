@@ -7,11 +7,11 @@ namespace NanoDMSBusinessService.Models
     public class BusinessUser: BaseEntity
     {
         public Guid Id { get; set; }
-        public Guid BusinessId { get; set; }
+        public Guid Business_Id { get; set; }
 
-        [ForeignKey("BusinessId")]
+        [ForeignKey("Business_Id")]
         public Business? Business { get; set; }
-        public Guid UserId { get; set; } 
+        public Guid User_Id { get; set; } 
 
         
     }

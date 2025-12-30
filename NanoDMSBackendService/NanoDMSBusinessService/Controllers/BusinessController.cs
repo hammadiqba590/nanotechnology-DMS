@@ -88,18 +88,18 @@ namespace NanoDMSBusinessService.Controllers
                 var business = new Business
                 {
                     Name = model.Name,
-                    StartDate = model.StartDate,
-                    TimeZoneId = model.TimeZoneId,
-                    CurrencyId = model.CurrencyId,
-                    FinancialYearStartMonth = model.FinancialYearStartMonth,
-                    StockAccountingMethod = model.StockAccountingMethod,
+                    Start_Date = model.StartDate,
+                    Time_Zone_Id = model.TimeZoneId,
+                    Currency_Id = model.CurrencyId,
+                    Financial_Year_Start_Month = model.FinancialYearStartMonth,
+                    Stock_Accounting_Method = model.StockAccountingMethod,
                     Ntn = model.Ntn,
                     Stn = model.Stn,
                     Tax3 = model.Tax3,
                     Tax4 = model.Tax4,
-                    CreateDate = DateTime.UtcNow,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 // Save to repository
@@ -159,20 +159,20 @@ namespace NanoDMSBusinessService.Controllers
                 {
                     Id = b.Id,
                     Name = b.Name,
-                    StartDate = b.StartDate,
-                    TimeZoneId = b.TimeZoneId,
-                    CurrencyId = b.CurrencyId,
-                    FinancialYearStartMonth = b.FinancialYearStartMonth,
-                    StockAccountingMethod = b.StockAccountingMethod,
+                    Start_Date = b.Start_Date,
+                    Time_Zone_Id = b.Time_Zone_Id,
+                    Currency_Id = b.Currency_Id,
+                    Financial_Year_Start_Month = b.Financial_Year_Start_Month,
+                    Stock_Accounting_Method = b.Stock_Accounting_Method,
                     Logo = b.Logo,
                     Ntn = b.Ntn,
                     Stn = b.Stn,
                     Tax3 = b.Tax3,
                     Tax4 = b.Tax4,
-                    CreateDate = b.CreateDate,
-                    CreateUser = b.CreateUser,
-                    LastUpdateDate = b.LastUpdateDate,
-                    LastUpdateUser = b.LastUpdateUser,
+                    Create_Date = b.Create_Date,
+                    Create_User = b.Create_User,
+                    Last_Update_Date = b.Last_Update_Date,
+                    Last_Update_User = b.Last_Update_User,
                     Published = b.Published,
                     Deleted = b.Deleted,
                 }).AsQueryable();
@@ -183,7 +183,7 @@ namespace NanoDMSBusinessService.Controllers
                     query = query.Where(q => q.Name.Contains(filter.Name));
 
                 // Sort by CreateDate descending to get the latest profiles first
-                query = query.OrderByDescending(q => q.CreateDate);
+                query = query.OrderByDescending(q => q.Create_Date);
 
                 // **Apply Pagination**
                 var totalRecords = await query.CountAsync();
@@ -223,7 +223,7 @@ namespace NanoDMSBusinessService.Controllers
         {
             try
             {
-                var businesses = await _context.Business.OrderByDescending(b=> b.CreateDate).ToListAsync();
+                var businesses = await _context.Business.OrderByDescending(b=> b.Create_Date).ToListAsync();
                 if (!businesses.Any()) return NotFound("No Businesses Found!.");
 
                 return Ok(new { Business = businesses });
@@ -241,7 +241,7 @@ namespace NanoDMSBusinessService.Controllers
         {
             try
             {
-                var business = await _businessRepository.GetByIdAsync(Guid.Parse(businessById.Id));
+                var business = await _context.Business.FindAsync(businessById.Id);
 
                 return business == null ? NotFound("Business Not Found.") : Ok(new { Business = business });
             }
@@ -326,14 +326,14 @@ namespace NanoDMSBusinessService.Controllers
 
                 // Update the business properties
                 business.Name = updateDto.Name;
-                business.StartDate = updateDto.StartDate != default ? updateDto.StartDate : business.StartDate;
+                business.Start_Date = updateDto.StartDate != default ? updateDto.StartDate : business.Start_Date;
                 business.Ntn = !string.IsNullOrEmpty(updateDto.Ntn) ? updateDto.Ntn : business.Ntn;
                 business.Stn = !string.IsNullOrEmpty(updateDto.Stn) ? updateDto.Stn : business.Stn;
                 business.Tax3 = !string.IsNullOrEmpty(updateDto.Tax3) ? updateDto.Tax3 : business.Tax3;
                 business.Tax4 = !string.IsNullOrEmpty(updateDto.Tax4) ? updateDto.Tax4 : business.Tax4;
-                business.LastUpdateDate = DateTime.UtcNow;
+                business.Last_Update_Date = DateTime.UtcNow;
                 business.Published = true;
-                business.LastUpdateUser = Guid.Parse(superuser.Id);
+                business.Last_Update_User = Guid.Parse(superuser.Id);
 
                 // Save updates
                 _businessRepository.Update(business);
@@ -374,8 +374,8 @@ namespace NanoDMSBusinessService.Controllers
 
             business.Deleted = true;
             business.Published = false;
-            business.LastUpdateDate = DateTime.UtcNow;
-            business.LastUpdateUser = Guid.Parse(superuser.Id);
+            business.Last_Update_Date = DateTime.UtcNow;
+            business.Last_Update_User = Guid.Parse(superuser.Id);
 
             _businessRepository.Update(business);
             await _businessRepository.SaveChangesAsync();

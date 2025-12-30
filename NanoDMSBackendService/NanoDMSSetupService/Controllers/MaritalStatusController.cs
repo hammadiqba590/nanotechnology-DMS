@@ -63,9 +63,9 @@ namespace NanoDMSSetupService.Controllers
                 var marital = new MaritalStatus
                 {
                     Name = model.Name,
-                    CreateDate = DateTime.UtcNow,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _maritalRepository.AddAsync(marital);
@@ -143,9 +143,9 @@ namespace NanoDMSSetupService.Controllers
             if (superuser == null) return Unauthorized("User not found.");
 
             marital.Name = updateDto.Name;
-            marital.LastUpdateDate = DateTime.UtcNow;
+            marital.Last_Update_Date = DateTime.UtcNow;
             marital.Published = true;
-            marital.LastUpdateUser = Guid.Parse(superuser.Id);
+            marital.Last_Update_User = Guid.Parse(superuser.Id);
 
             _maritalRepository.Update(marital);
             await _maritalRepository.SaveChangesAsync();
@@ -175,8 +175,8 @@ namespace NanoDMSSetupService.Controllers
 
             marital.Deleted = true;
             marital.Published = false;
-            marital.LastUpdateDate = DateTime.UtcNow;
-            marital.LastUpdateUser = Guid.Parse(superuser.Id);
+            marital.Last_Update_Date = DateTime.UtcNow;
+            marital.Last_Update_User = Guid.Parse(superuser.Id);
 
             _maritalRepository.Update(marital);
             await _maritalRepository.SaveChangesAsync();

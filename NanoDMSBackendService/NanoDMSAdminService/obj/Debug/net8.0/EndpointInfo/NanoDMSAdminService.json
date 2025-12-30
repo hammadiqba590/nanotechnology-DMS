@@ -1,0 +1,1575 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "NanoDMSAdminService",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/MasterEntry/get-banks": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-bank-by-id": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-bank-list": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Country_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Is_Active",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/register-bank": {
+      "post": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/update-bank": {
+      "put": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/delete-bank": {
+      "delete": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-countries": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-country-list": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Iso2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-country-by-id": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/register-country": {
+      "post": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/update-country": {
+      "put": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/delete-country": {
+      "delete": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-currencies": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-currency-list": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "Code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Country_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-currency-by-id": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/register-currency": {
+      "post": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrencyCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrencyCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrencyCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/update-currency": {
+      "put": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrencyUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrencyUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CurrencyUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/delete-currency": {
+      "delete": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-discount-rules": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-discount-rule-list": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "Campaign_Card_Bin_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Discount_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DiscountTypeStatus"
+            }
+          },
+          {
+            "name": "Payment_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/PaymentTypeStatus"
+            }
+          },
+          {
+            "name": "Budget_Limit_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-discount-rule-by-id": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/register-discount-rule": {
+      "post": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/update-discount-rule": {
+      "put": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/delete-discount-rule": {
+      "delete": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-discount-rule-histories": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-discount-rule-history-list": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "Discount_Rule_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Campaign_Card_Bin_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Currency_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Discount_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DiscountTypeStatus"
+            }
+          },
+          {
+            "name": "Payment_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/PaymentTypeStatus"
+            }
+          },
+          {
+            "name": "Change_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ChangeTypeStatus"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-discount-rule-history-by-id": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/register-discount-rule-history": {
+      "post": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleHistoryCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleHistoryCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleHistoryCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/update-discount-rule-history": {
+      "put": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleHistoryUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleHistoryUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiscountRuleHistoryUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/delete-discount-rule-history": {
+      "delete": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BankCreateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "country_Id",
+          "name",
+          "short_Code",
+          "short_Name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "short_Name": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "short_Code": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "swift_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BankUpdateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "country_Id",
+          "name",
+          "short_Code",
+          "short_Name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "short_Name": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "short_Code": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "swift_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BudgetLimitTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ChangeTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "CountryCreateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "iso2",
+          "iso3",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "iso2": {
+            "maxLength": 2,
+            "minLength": 0,
+            "type": "string"
+          },
+          "iso3": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "numeric_Code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "phone_Code": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Symbol": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "flag_Emoji": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "time_Zone": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CountryUpdateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "iso2",
+          "iso3",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "iso2": {
+            "maxLength": 2,
+            "minLength": 0,
+            "type": "string"
+          },
+          "iso3": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "numeric_Code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "phone_Code": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Symbol": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "flag_Emoji": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "time_Zone": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CurrencyCreateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "code",
+          "country_Id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "symbol": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CurrencyUpdateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "code",
+          "country_Id",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "symbol": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiscountRuleCreateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campaign_Card_Bin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "discount_Type": {
+            "$ref": "#/components/schemas/DiscountTypeStatus"
+          },
+          "discount_Value": {
+            "type": "number",
+            "format": "double"
+          },
+          "min_Spend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "max_Discount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "payment_Type": {
+            "$ref": "#/components/schemas/PaymentTypeStatus"
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "applicable_Days": {
+            "type": "string",
+            "nullable": true
+          },
+          "transaction_Cap": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "start_Time": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "end_Time": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiscountRuleHistoryCreateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "currency_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "discount_Rule_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "campaign_Card_Bin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "discount_Type": {
+            "$ref": "#/components/schemas/DiscountTypeStatus"
+          },
+          "discount_Value": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "min_Spend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "max_Discount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "payment_Type": {
+            "$ref": "#/components/schemas/PaymentTypeStatus"
+          },
+          "applicable_Days": {
+            "type": "string",
+            "nullable": true
+          },
+          "transaction_Cap": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stackable": {
+            "type": "boolean"
+          },
+          "change_Type": {
+            "$ref": "#/components/schemas/ChangeTypeStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiscountRuleHistoryUpdateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id",
+          "currency_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "discount_Rule_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "campaign_Card_Bin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "discount_Type": {
+            "$ref": "#/components/schemas/DiscountTypeStatus"
+          },
+          "discount_Value": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "min_Spend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "max_Discount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "payment_Type": {
+            "$ref": "#/components/schemas/PaymentTypeStatus"
+          },
+          "applicable_Days": {
+            "type": "string",
+            "nullable": true
+          },
+          "transaction_Cap": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stackable": {
+            "type": "boolean"
+          },
+          "change_Type": {
+            "$ref": "#/components/schemas/ChangeTypeStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiscountRuleUpdateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campaign_Card_Bin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "discount_Type": {
+            "$ref": "#/components/schemas/DiscountTypeStatus"
+          },
+          "discount_Value": {
+            "type": "number",
+            "format": "double"
+          },
+          "min_Spend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "max_Discount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "payment_Type": {
+            "$ref": "#/components/schemas/PaymentTypeStatus"
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "applicable_Days": {
+            "type": "string",
+            "nullable": true
+          },
+          "transaction_Cap": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "start_Time": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "end_Time": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiscountTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PaymentTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      }
+    }
+  }
+}

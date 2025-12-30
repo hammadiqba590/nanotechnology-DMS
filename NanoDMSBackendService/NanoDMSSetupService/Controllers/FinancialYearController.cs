@@ -64,9 +64,9 @@ namespace NanoDMSSetupService.Controllers
                 var financialyear = new FinancialYearStartMonth
                 {
                     Name = model.Name,
-                    CreateDate = DateTime.UtcNow,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _financialYearRepository.AddAsync(financialyear);
@@ -145,9 +145,9 @@ namespace NanoDMSSetupService.Controllers
             if (superuser == null) return Unauthorized("User not found.");
 
             financialyear.Name = updateDto.Name;
-            financialyear.LastUpdateDate = DateTime.UtcNow;
+            financialyear.Last_Update_Date = DateTime.UtcNow;
             financialyear.Published = true;
-            financialyear.LastUpdateUser = Guid.Parse(superuser.Id);
+            financialyear.Last_Update_User = Guid.Parse(superuser.Id);
 
             _financialYearRepository.Update(financialyear);
             await _financialYearRepository.SaveChangesAsync();
@@ -177,8 +177,8 @@ namespace NanoDMSSetupService.Controllers
 
             financialyear.Deleted = true;
             financialyear.Published = false;
-            financialyear.LastUpdateDate = DateTime.UtcNow;
-            financialyear.LastUpdateUser = Guid.Parse(superuser.Id);
+            financialyear.Last_Update_Date = DateTime.UtcNow;
+            financialyear.Last_Update_User = Guid.Parse(superuser.Id);
 
             _financialYearRepository.Update(financialyear);
             await _financialYearRepository.SaveChangesAsync();

@@ -66,10 +66,10 @@ namespace NanoDMSSetupService.Controllers
                 var city = new City
                 {
                     Name = model.Name,
-                    StateId = Guid.Parse(model.StateId),
-                    CreateDate = DateTime.UtcNow,
+                    State_Id = Guid.Parse(model.StateId),
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _cityRepository.AddAsync(city);
@@ -147,9 +147,9 @@ namespace NanoDMSSetupService.Controllers
             if (superuser == null) return Unauthorized("User not found.");
 
             city.Name = updateDto.Name;
-            city.LastUpdateDate = DateTime.UtcNow;
+            city.Last_Update_Date = DateTime.UtcNow;
             city.Published = true;
-            city.LastUpdateUser = Guid.Parse(superuser.Id);
+            city.Last_Update_User = Guid.Parse(superuser.Id);
 
             _cityRepository.Update(city);
             await _cityRepository.SaveChangesAsync();
@@ -179,8 +179,8 @@ namespace NanoDMSSetupService.Controllers
 
             city.Deleted = true;
             city.Published = false;
-            city.LastUpdateDate = DateTime.UtcNow;
-            city.LastUpdateUser = Guid.Parse(superuser.Id);
+            city.Last_Update_Date = DateTime.UtcNow;
+            city.Last_Update_User = Guid.Parse(superuser.Id);
 
             _cityRepository.Update(city);
             await _cityRepository.SaveChangesAsync();

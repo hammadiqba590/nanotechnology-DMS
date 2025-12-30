@@ -370,13 +370,7 @@ namespace NanoDMSAuthService.Controllers
             // URLs should come from configuration ideally
             string businessUsersUrl = "http://195.7.7.34:8010/apigateway/BusinessService/BusinessUser" + "/get-business-users";
             string locationUsersUrl = "http://195.7.7.34:8010/apigateway/BusinessService/BusinessLocationUser" + "/get-business-location-users";
-
-            //string businessUsersUrl = "http://192.168.100.61/apigateway/GroBusinessService/BusinessUser" + "/get-business-users";
-            //string locationUsersUrl = "http://192.168.100.61/apigateway/GroBusinessService/BusinessLocationUser" + "/get-business-location-users";
-
-            //string cashRegistersUrl = "http://192.168.100.61/apigateway/SaleService/CashRegister" + "/get-cash-registers";
-
-            string cashRegistersUrl = "http://195.7.7.34:8010/apigateway/SaleService/CashRegister" + "/get-cash-registers";
+            
 
             var businessUsersJson = await _apiServiceHelper.SendRequestAsync<object>(
     businessUsersUrl, HttpMethod.Get, null, jwtToken);
@@ -384,8 +378,7 @@ namespace NanoDMSAuthService.Controllers
             var locationUsersJson = await _apiServiceHelper.SendRequestAsync<object>(
                 locationUsersUrl, HttpMethod.Get, null, jwtToken);
 
-            var cashRegistersJson = await _apiServiceHelper.SendRequestAsync<object>(
-                cashRegistersUrl, HttpMethod.Get, null, jwtToken);
+            
 
             var userGuid = Guid.Parse(user.Id);
 
@@ -401,13 +394,7 @@ namespace NanoDMSAuthService.Controllers
                     .ToList()
                 : new List<JsonElement>();
 
-            var cashRegister = cashRegistersJson?.TryGetProperty("cashRegister", out var cashArray) == true
-                ? cashArray.EnumerateArray()
-                    .Where(x =>
-                        x.TryGetProperty("userId", out var userIdProp) && userIdProp.GetGuid() == userGuid &&
-                        x.TryGetProperty("status", out var statusProp) && statusProp.GetInt32() == 0
-                    ).ToList()
-                : new List<JsonElement>();
+            
 
             var businessId = businessUser.ValueKind != JsonValueKind.Undefined
                 ? businessUser.GetProperty("businessId").GetGuid()
@@ -417,9 +404,7 @@ namespace NanoDMSAuthService.Controllers
                 .Select(x => x.GetProperty("businessLocationId").GetGuid())
                 .ToList();
 
-            var cashRegisterIds = cashRegister
-                .Select(x => x.GetProperty("id").GetGuid())
-                .ToList();
+            
 
 
             return Ok(new
@@ -431,7 +416,6 @@ namespace NanoDMSAuthService.Controllers
                 Roles = userRoles,
                 BusinessId = businessId,
                 BusinessLocationId = businessLocationIds,
-                CashRegisterId = cashRegisterIds
             });
         }
 

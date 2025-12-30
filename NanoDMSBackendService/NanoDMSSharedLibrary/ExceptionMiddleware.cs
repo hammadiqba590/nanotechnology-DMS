@@ -15,7 +15,9 @@ namespace NanoDMSSharedLibrary
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(
+            RequestDelegate next,
+            ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
@@ -29,18 +31,16 @@ namespace NanoDMSSharedLibrary
             }
             catch (Exception ex)
             {
-                var traceId = context.TraceIdentifier;
-
-                _logger.LogError(ex, "Unhandled exception occurred. TraceId: {TraceId}", traceId);
+                _logger.LogError(ex, ex.Message);
 
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.ContentType = "application/json";
 
                 var response = new
                 {
-                    error = "INTERNAL_SERVER_ERROR",
-                    message = "Something went wrong",
-                    traceId = traceId
+                    statusCode = context.Response.StatusCode,
+                    message = "An unexpected error occurred.",
+                    detail = ex.Message // ❗ remove in prod if needed
                 };
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));

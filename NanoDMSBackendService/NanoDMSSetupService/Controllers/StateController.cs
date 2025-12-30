@@ -66,10 +66,10 @@ namespace NanoDMSSetupService.Controllers
                 var state = new State
                 {
                     Name = model.Name,
-                    CountryId = Guid.Parse(model.CountryId),
-                    CreateDate = DateTime.UtcNow,
+                    Country_Id = Guid.Parse(model.CountryId),
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _stateRepository.AddAsync(state);
@@ -148,9 +148,9 @@ namespace NanoDMSSetupService.Controllers
             if (superuser == null) return Unauthorized("User not found.");
 
             state.Name = updateDto.Name;
-            state.LastUpdateDate = DateTime.UtcNow;
+            state.Last_Update_Date = DateTime.UtcNow;
             state.Published = true;
-            state.LastUpdateUser = Guid.Parse(superuser.Id);
+            state.Last_Update_User = Guid.Parse(superuser.Id);
 
             _stateRepository.Update(state);
             await _stateRepository.SaveChangesAsync();
@@ -180,8 +180,8 @@ namespace NanoDMSSetupService.Controllers
 
             state.Deleted = true;
             state.Published = false;
-            state.LastUpdateDate = DateTime.UtcNow;
-            state.LastUpdateUser = Guid.Parse(superuser.Id);
+            state.Last_Update_Date = DateTime.UtcNow;
+            state.Last_Update_User = Guid.Parse(superuser.Id);
 
             _stateRepository.Update(state);
             await _stateRepository.SaveChangesAsync();

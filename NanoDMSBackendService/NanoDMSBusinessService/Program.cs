@@ -102,6 +102,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Global exception middleware
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<CorrelationIdMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -115,9 +119,7 @@ app.UseCors("AllowAll"); // Apply the CORS policy to allow all origins
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Global exception middleware
-app.UseMiddleware<ExceptionMiddleware>();
-app.UseMiddleware<CorrelationIdMiddleware>();
+
 
 app.MapControllers();
 

@@ -4,11 +4,11 @@ using NanoDMSSetupService.Models;
 
 namespace NanoDMSSetupService.Repositories
 {
-    public class CountryRepository : Repository<Country>, ICountryRepository
-    {
-        public CountryRepository(AppDbContext context) : base(context) { }
+    //public class CountryRepository : Repository<Country>, ICountryRepository
+    //{
+    //    public CountryRepository(AppDbContext context) : base(context) { }
 
         
-    }
+    //}
 
 }

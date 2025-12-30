@@ -72,15 +72,15 @@ namespace NanoDMSBusinessService.Controllers
 
                 var businessConfig = new BusinessConfig
                 {
-                    NameKey = model.NameKey,
-                    ConfigValue = model.ConfigValue,
-                    ConfigType = model.ConfigType,
+                    Name_Key = model.NameKey,
+                    Config_Value = model.ConfigValue,
+                    Config_Type = model.ConfigType,
                     Description = model.Description,
-                    BusinessId = model.BusinessId,
-                    BusinessLocationId = model.BusinessLocationId,
-                    CreateDate = DateTime.UtcNow,
+                    Business_Id = model.BusinessId,
+                    Business_Location_Id = model.BusinessLocationId,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _businessconfigRepository.AddAsync(businessConfig);
@@ -167,16 +167,16 @@ namespace NanoDMSBusinessService.Controllers
             var superuser = await _userManager.FindByNameAsync(userName);
             if (superuser == null) return Unauthorized("User Not Found.");
 
-            businessconfig.NameKey = updateDto.NameKey;
-            businessconfig.ConfigValue = updateDto.ConfigValue;
-            businessconfig.ConfigType = updateDto.ConfigType;
+            businessconfig.Name_Key = updateDto.NameKey;
+            businessconfig.Config_Value = updateDto.ConfigValue;
+            businessconfig.Config_Type = updateDto.ConfigType;
             businessconfig.Description = updateDto.Description;
-            businessconfig.BusinessId = updateDto.BusinessId;
-            businessconfig.BusinessLocationId = updateDto.BusinessLocationId;
+            businessconfig.Business_Id = updateDto.BusinessId;
+            businessconfig.Business_Location_Id = updateDto.BusinessLocationId;
 
-            businessconfig.LastUpdateDate = DateTime.UtcNow;
+            businessconfig.Last_Update_Date = DateTime.UtcNow;
             businessconfig.Published = true;
-            businessconfig.LastUpdateUser = Guid.Parse(superuser.Id);
+            businessconfig.Last_Update_User = Guid.Parse(superuser.Id);
 
             _businessconfigRepository.Update(businessconfig);
             await _businessconfigRepository.SaveChangesAsync();
@@ -201,8 +201,8 @@ namespace NanoDMSBusinessService.Controllers
 
             businessconfig.Deleted = true;
             businessconfig.Published = false;
-            businessconfig.LastUpdateDate = DateTime.UtcNow;
-            businessconfig.LastUpdateUser = Guid.Parse(superuser.Id);
+            businessconfig.Last_Update_Date = DateTime.UtcNow;
+            businessconfig.Last_Update_User = Guid.Parse(superuser.Id);
 
             _businessconfigRepository.Update(businessconfig);
             await _businessconfigRepository.SaveChangesAsync();

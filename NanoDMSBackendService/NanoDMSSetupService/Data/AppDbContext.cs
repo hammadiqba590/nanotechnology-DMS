@@ -5,18 +5,15 @@ using NanoDMSSetupService.Models;
 
 namespace NanoDMSSetupService.Data
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<City> City { get; set; }
-
-        public DbSet<Country> Country { get; set; }
         public DbSet<Gender> Gender { get; set; }   
         public DbSet<MaritalStatus> MaritalStatus { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Models.TimeZone> TimeZone { get; set; }
-        public DbSet<Currency> Currency{ get; set; }
         public DbSet<FinancialYearStartMonth> FinancialYearStartMonth { get; set; }
         public DbSet<StockAccountingMethod> StockAccountingMethod { get; set; }
 
@@ -25,19 +22,25 @@ namespace NanoDMSSetupService.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // State to Country
-            modelBuilder.Entity<State>()
-                .HasOne(s => s.Country)          // State has one Country
-                .WithMany(c => c.States)         // Country has many States
-                .HasForeignKey(s => s.CountryId) // Foreign key in State
-                .OnDelete(DeleteBehavior.Cascade); // Optional: Cascade delete
+            modelBuilder.Entity<MaritalStatus>(entity =>
+            {
+                entity.ToTable("Marital_Status");
+            });
 
-            // City to State
-            modelBuilder.Entity<City>()
-                .HasOne(c => c.State)           // City has one State
-                .WithMany(s => s.Cities)        // State has many Cities
-                .HasForeignKey(c => c.StateId)  // Foreign key in City
-                .OnDelete(DeleteBehavior.Cascade); // Optional: Cascade delete
+            modelBuilder.Entity<Models.TimeZone>(entity =>
+            {
+                entity.ToTable("Time_Zone");
+            });
+
+            modelBuilder.Entity<FinancialYearStartMonth>(entity =>
+            {
+                entity.ToTable("Financial_Year_Start_Month");
+            });
+
+            modelBuilder.Entity<StockAccountingMethod>(entity =>
+            {
+                entity.ToTable("Stock_Accounting_Method");
+            });
         }
 
 

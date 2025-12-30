@@ -6,15 +6,16 @@ namespace NanoDMSBusinessService.Models
     public class BusinessLocation: BaseEntity
     {
         public Guid Id { get; set; }
-        public Guid BusinessId { get; set; }
-        [ForeignKey("BusinessId")]
+        public Guid Business_Id { get; set; }
+
+        [ForeignKey("Business_Id")]
         public Business? Business { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public Guid Country { get; set; }
         public Guid State { get; set; }
         public Guid City { get; set; } 
-        public string PostalCode { get; set; } = string.Empty;
+        public string Postal_Code { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Mobile { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

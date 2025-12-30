@@ -11,14 +11,14 @@ namespace NanoDMSBusinessService.Repositories
         public async Task<Dictionary<string, object>> GetConfigValuesAsync(IEnumerable<string> keys)
         {
             var configEntries = await _context.Set<BusinessConfig>()
-                                              .Where(config => keys.Contains(config.NameKey))
+                                              .Where(config => keys.Contains(config.Name_Key))
                                               .ToListAsync();
 
             var result = new Dictionary<string, object>();
 
             foreach (var entry in configEntries)
             {
-                result[entry.NameKey] = ParseConfigValue(entry.ConfigValue, entry.ConfigType);
+                result[entry.Name_Key] = ParseConfigValue(entry.Config_Value, entry.Config_Type);
             }
 
             return result;

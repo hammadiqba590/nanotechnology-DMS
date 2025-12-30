@@ -6,11 +6,11 @@ namespace NanoDMSBusinessService.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public DateTime StartDate { get; set; }
-        public Guid TimeZoneId { get; set; }
-        public Guid CurrencyId { get; set; }
-        public Guid FinancialYearStartMonth { get; set; }
-        public Guid StockAccountingMethod { get; set; }
+        public DateTime Start_Date { get; set; }
+        public Guid Time_Zone_Id { get; set; }
+        public Guid Currency_Id { get; set; }
+        public Guid Financial_Year_Start_Month { get; set; }
+        public Guid Stock_Accounting_Method { get; set; }
         public string Logo { get; set; } = string.Empty;
         public string Ntn { get; set; } = string.Empty;
         public string Stn { get; set; } = string.Empty;

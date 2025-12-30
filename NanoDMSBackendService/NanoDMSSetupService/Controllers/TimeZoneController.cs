@@ -67,10 +67,10 @@ namespace NanoDMSSetupService.Controllers
                 var timeZone = new Models.TimeZone
                 {
                     Name = model.Name,
-                    GMTSetting = model.GMTSetting,
-                    CreateDate = DateTime.UtcNow,
+                    GMT_Setting = model.GMTSetting,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _timeZoneRepository.AddAsync(timeZone);
@@ -154,10 +154,10 @@ namespace NanoDMSSetupService.Controllers
             if (superuser == null) return Unauthorized("User not found.");
 
             timezone.Name = updateDto.Name;
-            timezone.GMTSetting = updateDto.GMTSetting;
-            timezone.LastUpdateDate = DateTime.UtcNow;
+            timezone.GMT_Setting = updateDto.GMTSetting;
+            timezone.Last_Update_Date = DateTime.UtcNow;
             timezone.Published = true;
-            timezone.LastUpdateUser = Guid.Parse(superuser.Id);
+            timezone.Last_Update_User = Guid.Parse(superuser.Id);
 
             _timeZoneRepository.Update(timezone);
             await _timeZoneRepository.SaveChangesAsync();
@@ -187,8 +187,8 @@ namespace NanoDMSSetupService.Controllers
 
             timezone.Deleted = true;
             timezone.Published = false;
-            timezone.LastUpdateDate = DateTime.UtcNow;
-            timezone.LastUpdateUser = Guid.Parse(superuser.Id);
+            timezone.Last_Update_Date = DateTime.UtcNow;
+            timezone.Last_Update_User = Guid.Parse(superuser.Id);
 
             _timeZoneRepository.Update(timezone);
             await _timeZoneRepository.SaveChangesAsync();

@@ -6,18 +6,18 @@ namespace NanoDMSBusinessService.Models
     public class BusinessConfig: BaseEntity
     {
         public Guid Id { get; set; }
-        public string NameKey { get; set; } = string.Empty;
+        public string Name_Key { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public string ConfigValue { get; set; } = string.Empty;
-        public string ConfigType { get; set; } = string.Empty;
-        public Guid BusinessId { get; set; }
+        public string Config_Value { get; set; } = string.Empty;
+        public string Config_Type { get; set; } = string.Empty;
+        public Guid Business_Id { get; set; }
 
-        [ForeignKey("BusinessId")]
+        [ForeignKey("Business_Id")]
         public Business? Business { get; set; }
 
-        public Guid BusinessLocationId { get; set; }
+        public Guid Business_Location_Id { get; set; }
 
-        [ForeignKey("BusinessLocationId")]
+        [ForeignKey("Business_Location_Id")]
         public BusinessLocation? BusinessLocation { get; set; }
 
     }

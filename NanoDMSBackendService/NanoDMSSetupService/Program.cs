@@ -18,13 +18,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<ICountryRepository, CountryRepository>();
+//builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IStateRepository, StateRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 builder.Services.AddScoped<IMaritalRepository, MaritalRepository>();
 builder.Services.AddScoped<ITimeZoneRepository, TimeZoneRepository>();
-builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+//builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
 builder.Services.AddScoped<IStockAccountingRepository, StockAccountingRepository>();
 

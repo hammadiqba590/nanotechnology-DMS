@@ -3,9 +3,9 @@ using NanoDMSSetupService.Models;
 
 namespace NanoDMSSetupService.Repositories
 {
-    public interface ICountryRepository : IRepository<Country>
-    {
+    //public interface ICountryRepository : IRepository<Country>
+    //{
         
-    }
+    //}
 
 }

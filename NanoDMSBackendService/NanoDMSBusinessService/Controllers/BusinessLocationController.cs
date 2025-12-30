@@ -90,7 +90,7 @@ namespace NanoDMSBusinessService.Controllers
                 // 🔥 ADD UNIQUENESS CHECK HERE
 
                 var existingLocation = await _context.BusinessLocation
-            .Where(x => x.BusinessId == model.BusinessId &&
+            .Where(x => x.Business_Id == model.BusinessId &&
                         x.Name.Trim().ToUpper() == normalizedName &&
                         !x.Deleted)
             .FirstOrDefaultAsync();
@@ -118,19 +118,19 @@ namespace NanoDMSBusinessService.Controllers
                 var businesslocation = new BusinessLocation
                 {
                     Name = model.Name.Trim(),
-                    BusinessId = model.BusinessId,
+                    Business_Id = model.BusinessId,
                     Address = model.Address,
                     Country = model.Country,
                     State = model.State,
                     City = model.City,
-                    PostalCode = model.PostalCode,
+                    Postal_Code = model.PostalCode,
                     Phone = model.Phone,
                     Mobile = model.Mobile,
                     Email = model.Email,
                     Website = model.Website,
-                    CreateDate = DateTime.UtcNow,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 // Save to repository
@@ -156,27 +156,27 @@ namespace NanoDMSBusinessService.Controllers
             {
                 // Step 1: Build the query with Business name
                 var query = from b in _context.BusinessLocation
-                            join bs in _context.Business on b.BusinessId equals bs.Id into bsJoin
+                            join bs in _context.Business on b.Business_Id equals bs.Id into bsJoin
                             from bs in bsJoin.DefaultIfEmpty()
                             select new
                             {
                                 b.Id,
-                                b.BusinessId,
+                                b.Business_Id,
                                 BusinessName = bs != null ? bs.Name : "Unknown",
                                 b.Name,
                                 b.Address,
                                 b.Country,
                                 b.State,
                                 b.City,
-                                b.PostalCode,
+                                b.Postal_Code,
                                 b.Phone,
                                 b.Mobile,
                                 b.Email,
                                 b.Website,
-                                b.CreateDate,
-                                b.CreateUser,
-                                b.LastUpdateDate,
-                                b.LastUpdateUser,
+                                b.Create_Date,
+                                b.Create_User,
+                                b.Last_Update_Date,
+                                b.Last_Update_User,
                                 b.Published,
                                 b.Deleted,
                             };
@@ -186,7 +186,7 @@ namespace NanoDMSBusinessService.Controllers
                     query = query.Where(q => q.Name.Contains(filter.Name));
 
                 // Sort by CreateDate descending to get the latest profiles first
-                query = query.OrderByDescending(q => q.CreateDate);
+                query = query.OrderByDescending(q => q.Create_Date);
 
                 // Step 3: Get total records and apply pagination
                 var totalRecords = await query.CountAsync();
@@ -220,25 +220,25 @@ namespace NanoDMSBusinessService.Controllers
                 var result = businessLocations.Select(b => new BusinessLocationListModel
                 {
                     Id = b.Id,
-                    BusinessId = b.BusinessId,
+                    BusinessId = b.Business_Id,
                     BusinessName = b.BusinessName,
                     Name = b.Name,
                     Address = b.Address,
                     Country = countryNames.TryGetValue(b.Country, out var cName) ? cName : "Unknown",
                     State = stateNames.TryGetValue(b.State, out var sName) ? sName : "Unknown",
                     City = cityNames.TryGetValue(b.City, out var ctName) ? ctName : "Unknown",
-                    PostalCode = b.PostalCode,
+                    PostalCode = b.Postal_Code,
                     Phone = b.Phone,
                     Mobile = b.Mobile,
                     Email = b.Email,
                     Website = b.Website,
-                    CreateDate = b.CreateDate,
-                    CreateUser = b.CreateUser,
-                    LastUpdateDate = b.LastUpdateDate,
-                    LastUpdateUser = b.LastUpdateUser,
+                    Create_Date = b.Create_Date,
+                    Create_User = b.Create_User,
+                    Last_Update_Date = b.Last_Update_Date,
+                    Last_Update_User = b.Last_Update_User,
                     Published = b.Published,
                     Deleted = b.Deleted,
-                }).OrderByDescending(b=> b.CreateDate).ToList();
+                }).OrderByDescending(b=> b.Create_Date).ToList();
 
                 // Step 8: Return paginated response
                 var response = new PaginatedResponseDto<BusinessLocationListModel>
@@ -274,7 +274,7 @@ namespace NanoDMSBusinessService.Controllers
                 if (locationCount > 0)
                 {
                     // Return the location count
-                    return Ok(new { BusinessId = Guid.Parse(businessLocationCountModel.BusinessId), LocationCount = locationCount });
+                    return Ok(new { Business_Id = Guid.Parse(businessLocationCountModel.BusinessId), LocationCount = locationCount });
                 }
                 else
                 {
@@ -305,24 +305,24 @@ namespace NanoDMSBusinessService.Controllers
                 var dtos = locations.Select(loc => new BusinessLocationsDto
                 {
                     Id = loc.Id,
-                    BusinessId = loc.BusinessId,
+                    BusinessId = loc.Business_Id,
                     BusinessName = loc.Business?.Name ?? string.Empty,
                     Name = loc.Name,
                     Address = loc.Address,
                     Country = loc.Country,
                     State = loc.State,
                     City = loc.City,
-                    PostalCode = loc.PostalCode,
+                    PostalCode = loc.Postal_Code,
                     Phone = loc.Phone,
                     Mobile = loc.Mobile,
                     Email = loc.Email,
                     Website = loc.Website,
                     Deleted = loc.Deleted,
                     Published = loc.Published,
-                    CreateDate = loc.CreateDate,
-                    CreateUser = loc.CreateUser,
-                    LastUpdateDate = loc.LastUpdateDate,
-                    LastUpdateUser = loc.LastUpdateUser
+                    CreateDate = loc.Create_Date,
+                    CreateUser = loc.Create_User,
+                    LastUpdateDate = loc.Last_Update_Date,
+                    LastUpdateUser = loc.Last_Update_User,
                 }).OrderByDescending(dto => dto.CreateDate)
                 .ToList();
 
@@ -352,14 +352,14 @@ namespace NanoDMSBusinessService.Controllers
                 var dto = new BusinessLocationsDto
                 {
                     Id = location.Id,
-                    BusinessId = location.BusinessId,
+                    BusinessId = location.Business_Id,
                     BusinessName = location.Business?.Name ?? string.Empty,
                     Name = location.Name,
                     Address = location.Address,
                     Country = location.Country,
                     State = location.State,
                     City = location.City,
-                    PostalCode = location.PostalCode,
+                    PostalCode = location.Postal_Code,
                     Mobile = location.Mobile,
                     Phone = location.Phone,
                     Email = location.Email,
@@ -416,7 +416,7 @@ namespace NanoDMSBusinessService.Controllers
 
                 var duplicate = await _context.BusinessLocation
                     .Where(x =>
-                        x.BusinessId == businessId &&
+                        x.Business_Id == businessId &&
                         x.Id != businesslocation.Id &&                // Exclude current
                         x.Name.Trim().ToUpper() == normalizedName &&
                         !x.Deleted)
@@ -430,19 +430,19 @@ namespace NanoDMSBusinessService.Controllers
 
                 // Update the business properties
                 businesslocation.Name = updateDto.Name.Trim();
-                businesslocation.BusinessId = Guid.Parse(updateDto.BusinessId);
+                businesslocation.Business_Id = Guid.Parse(updateDto.BusinessId);
                 businesslocation.Address = !string.IsNullOrEmpty(updateDto.Address) ? updateDto.Address : businesslocation.Address;
                 businesslocation.Country = !string.IsNullOrEmpty(updateDto.Country) ? Guid.Parse(updateDto.Country) : businesslocation.Country;
                 businesslocation.State = string.IsNullOrWhiteSpace(updateDto.State) ? businesslocation.State : Guid.Parse(updateDto.State);
                 businesslocation.City = !string.IsNullOrEmpty(updateDto.City) ? Guid.Parse(updateDto.City) : businesslocation.City;
-                businesslocation.PostalCode = !string.IsNullOrEmpty(updateDto.PostalCode) ? updateDto.PostalCode : businesslocation.PostalCode;
+                businesslocation.Postal_Code = !string.IsNullOrEmpty(updateDto.PostalCode) ? updateDto.PostalCode : businesslocation.Postal_Code;
                 businesslocation.Phone = !string.IsNullOrEmpty(updateDto.Phone) ? updateDto.Phone : businesslocation.Phone;
                 businesslocation.Mobile = !string.IsNullOrEmpty(updateDto.Mobile) ? updateDto.Mobile : businesslocation.Mobile;
                 businesslocation.Email = !string.IsNullOrEmpty(updateDto.Email) ? updateDto.Email : businesslocation.Email;
                 businesslocation.Website = !string.IsNullOrEmpty(updateDto.Website) ? updateDto.Website : businesslocation.Website;
-                businesslocation.LastUpdateDate = DateTime.UtcNow;
+                businesslocation.Last_Update_Date = DateTime.UtcNow;
                 businesslocation.Published = true;
-                businesslocation.LastUpdateUser = Guid.Parse(superuser.Id);
+                businesslocation.Last_Update_User = Guid.Parse(superuser.Id);
 
                 // Save updates
                 _businessLocationRepository.Update(businesslocation);
@@ -483,8 +483,8 @@ namespace NanoDMSBusinessService.Controllers
 
             businesslocation.Deleted = true;
             businesslocation.Published = false;
-            businesslocation.LastUpdateDate = DateTime.UtcNow;
-            businesslocation.LastUpdateUser = Guid.Parse(superuser.Id);
+            businesslocation.Last_Update_Date = DateTime.UtcNow;
+            businesslocation.Last_Update_User = Guid.Parse(superuser.Id);
 
             _businessLocationRepository.Update(businesslocation);
             await _businessLocationRepository.SaveChangesAsync();

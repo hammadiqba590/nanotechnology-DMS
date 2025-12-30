@@ -75,12 +75,12 @@ namespace NanoDMSBusinessService.Controllers
                 {
                     var businesslocationuser = new BusinessLocationUser
                     {
-                        BusinessId = model.BusinessId,
-                        BusinessLocationId = businessLocationId,
-                        UserId = model.UserId,
-                        CreateDate = DateTime.UtcNow,
+                        Business_Id = model.BusinessId,
+                        Business_Location_Id = businessLocationId,
+                        User_Id = model.UserId,
+                        Create_Date = DateTime.UtcNow,
                         Published = true,
-                        CreateUser = Guid.Parse(superuser.Id)
+                        Create_User = Guid.Parse(superuser.Id)
                     };
 
                     businessLocationUsers.Add(businesslocationuser);
@@ -108,13 +108,13 @@ namespace NanoDMSBusinessService.Controllers
                 var query = _context.BusinessLocationUser.Select(b => new BusinessLocationUser
                 {
                     Id = b.Id,
-                    BusinessId = b.BusinessId,
-                    BusinessLocationId = b.BusinessLocationId,
-                    UserId = b.UserId,
-                    CreateDate = b.CreateDate,
-                    CreateUser = b.CreateUser,
-                    LastUpdateDate = b.LastUpdateDate,
-                    LastUpdateUser = b.LastUpdateUser,
+                    Business_Id = b.Business_Id,
+                    Business_Location_Id = b.Business_Location_Id,
+                    User_Id = b.User_Id,
+                    Create_Date = b.Create_Date,
+                    Create_User = b.Create_User,
+                    Last_Update_Date = b.Last_Update_Date,
+                    Last_Update_User = b.Last_Update_User,
                     Published = b.Published,
                     Deleted = b.Deleted,
                 }).AsQueryable();
@@ -123,15 +123,15 @@ namespace NanoDMSBusinessService.Controllers
 
                 // Filter by BusinessId
                 if (filter.BusinessId != Guid.Empty)
-                    query = query.Where(q => q.BusinessId == filter.BusinessId);
+                    query = query.Where(q => q.Business_Id == filter.BusinessId);
 
 
                 // Filter by BusinessId
                 if (filter.UserId != Guid.Empty)
-                    query = query.Where(q => q.UserId == filter.UserId);
+                    query = query.Where(q => q.User_Id == filter.UserId);
 
                 // Sort by CreateDate descending to get the latest profiles first
-                query = query.OrderByDescending(q => q.CreateDate);
+                query = query.OrderByDescending(q => q.Create_Date);
 
 
                 // **Apply Pagination**
@@ -148,9 +148,9 @@ namespace NanoDMSBusinessService.Controllers
                 }
 
                 // Step 2: Collect Unique business, user,businesslocation IDs
-                var businessIds = businesslocationuserProfiles.Select(x => x.BusinessId).Distinct().ToList();
-                var businesslocationIds = businesslocationuserProfiles.Select(x => x.BusinessLocationId).Distinct().ToList();
-                var userIds = businesslocationuserProfiles.Select(x => x.UserId).Distinct().ToList();
+                var businessIds = businesslocationuserProfiles.Select(x => x.Business_Id).Distinct().ToList();
+                var businesslocationIds = businesslocationuserProfiles.Select(x => x.Business_Location_Id).Distinct().ToList();
+                var userIds = businesslocationuserProfiles.Select(x => x.User_Id).Distinct().ToList();
 
                 // Step 3: Fetch Names from External APIs
                 var jwtToken = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
@@ -170,16 +170,16 @@ namespace NanoDMSBusinessService.Controllers
                 var result = businesslocationuserProfiles.Select(b => new BusinessLocationUserListModel
                 {
                     Id = b.Id,
-                    BusinessName = businessNames.TryGetValue(b.BusinessId, out var bName) ? bName : "Unknown",
-                    UserName = userNames.TryGetValue(b.UserId, out var uName) ? uName : "Unknown",
-                    BusinessLocationName = businessLocationNames.TryGetValue(b.BusinessLocationId, out var blName) ? blName : "Unknown",
-                    CreateDate = b.CreateDate,
-                    CreateUser = b.CreateUser,
-                    LastUpdateDate = b.LastUpdateDate,
-                    LastUpdateUser = b.LastUpdateUser,
+                    BusinessName = businessNames.TryGetValue(b.Business_Id, out var bName) ? bName : "Unknown",
+                    UserName = userNames.TryGetValue(b.User_Id, out var uName) ? uName : "Unknown",
+                    BusinessLocationName = businessLocationNames.TryGetValue(b.Business_Location_Id, out var blName) ? blName : "Unknown",
+                    Create_Date = b.Create_Date,
+                    Create_User = b.Create_User,
+                    Last_Update_Date = b.Last_Update_Date,
+                    Last_Update_User = b.Last_Update_User,
                     Published = b.Published,
                     Deleted = b.Deleted,
-                }).OrderByDescending(b=> b.CreateDate).ToList();
+                }).OrderByDescending(b=> b.Create_Date).ToList();
 
                 // Apply Name filter SAFELY
                 if (!string.IsNullOrEmpty(filter.Name))
@@ -221,7 +221,7 @@ namespace NanoDMSBusinessService.Controllers
         {
             try
             {
-                var businesslocationuser = await _context.BusinessLocationUser.OrderByDescending(b=> b.CreateDate).ToListAsync();
+                var businesslocationuser = await _context.BusinessLocationUser.OrderByDescending(b=> b.Create_Date).ToListAsync();
                 if (!businesslocationuser.Any()) return NotFound("No Businesses Location User found!.");
 
                 return Ok(new { BusinessLocationUser = businesslocationuser });
@@ -240,7 +240,7 @@ namespace NanoDMSBusinessService.Controllers
             try
             {
                 var businessLocationUsers = await _businessLocationUserRepository
-                    .GetAllByConditionAsync(x => x.UserId == businesslocationuserById.UserId);
+                    .GetAllByConditionAsync(x => x.User_Id == businesslocationuserById.UserId);
 
                 if (businessLocationUsers == null || !businessLocationUsers.Any())
                     return NotFound("Business Location User not found.");
@@ -250,13 +250,13 @@ namespace NanoDMSBusinessService.Controllers
                     return Unauthorized(new { Message = "JWT Token Is Missing Or Invalid." });
 
                 var apiService = new ApiServiceHelper(new HttpClient());
-                var businessId = businessLocationUsers.First().BusinessId;
+                var businessId = businessLocationUsers.First().Business_Id;
 
                 var businessName = await FetchBusinessNameAsync(apiService, "Business", "businesse", businessId, jwtToken);
 
                 // All business location IDs
                 var businessLocationIds = businessLocationUsers
-                    .Select(x => x.BusinessLocationId)
+                    .Select(x => x.Business_Location_Id)
                     .Distinct()
                     .ToList();
 
@@ -267,16 +267,16 @@ namespace NanoDMSBusinessService.Controllers
                 // 🧠 Build list using each matching record
                 var businessLocationDtos = businessLocationUsers.Select(user => new BusinessLocationDto
                 {
-                    BusinessLocationId = user.BusinessLocationId,
-                    BusinessLocationName = businessLocationNames.TryGetValue(user.BusinessLocationId, out var name)
+                    BusinessLocationId = user.Business_Location_Id,
+                    BusinessLocationName = businessLocationNames.TryGetValue(user.Business_Location_Id, out var name)
                         ? name
                         : "Unknown",
 
                     // ✅ Now each record gets its own values
-                    CreateDate = user.CreateDate,
-                    CreateUser = user.CreateUser,
-                    LastUpdateDate = user.LastUpdateDate,
-                    LastUpdateUser = user.LastUpdateUser,
+                    Create_Date = user.Create_Date,
+                    Create_User = user.Create_User,
+                    Last_Update_Date = user.Last_Update_Date,
+                    Last_Update_User = user.Last_Update_User,
                     Published = user.Published,
                     Deleted = user.Deleted
                 }).ToList();
@@ -362,14 +362,14 @@ namespace NanoDMSBusinessService.Controllers
                 {
                     var businesslocationuser = new BusinessLocationUser
                     {
-                        BusinessId = updateDto.BusinessId,
-                        BusinessLocationId = businessLocationId,
-                        UserId = updateDto.UserId,
-                        CreateDate = DateTime.UtcNow,
+                        Business_Id = updateDto.BusinessId,
+                        Business_Location_Id = businessLocationId,
+                        User_Id = updateDto.UserId,
+                        Create_Date = DateTime.UtcNow,
                         Published = true,
-                        CreateUser = Guid.Parse(superuser.Id),
-                        LastUpdateDate = DateTime.UtcNow,
-                        LastUpdateUser = Guid.Parse(superuser.Id)
+                        Create_User = Guid.Parse(superuser.Id),
+                        Last_Update_Date = DateTime.UtcNow,
+                        Last_Update_User = Guid.Parse(superuser.Id)
                     };
 
                     businessLocationUsers.Add(businesslocationuser);
@@ -416,8 +416,8 @@ namespace NanoDMSBusinessService.Controllers
 
             businesslocationuser.Deleted = true;
             businesslocationuser.Published = false;
-            businesslocationuser.LastUpdateDate = DateTime.UtcNow;
-            businesslocationuser.LastUpdateUser = Guid.Parse(superuser.Id);
+            businesslocationuser.Last_Update_Date = DateTime.UtcNow;
+            businesslocationuser.Last_Update_User = Guid.Parse(superuser.Id);
 
             _businessLocationUserRepository.Update(businesslocationuser);
             await _businessLocationUserRepository.SaveChangesAsync();

@@ -1,0 +1,597 @@
+[
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Delete",
+    "RelativePath": "api/MasterEntry/delete-bank",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "DeleteCountry",
+    "RelativePath": "api/MasterEntry/delete-country",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "DeleteCurrency",
+    "RelativePath": "api/MasterEntry/delete-currency",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "DeleteDiscountRule",
+    "RelativePath": "api/MasterEntry/delete-discount-rule",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "DeleteDiscountRuleHistory",
+    "RelativePath": "api/MasterEntry/delete-discount-rule-history",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetById",
+    "RelativePath": "api/MasterEntry/get-bank-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetBankList",
+    "RelativePath": "api/MasterEntry/get-bank-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Country_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Is_Active",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Skip",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetAll",
+    "RelativePath": "api/MasterEntry/get-banks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetAllCountries",
+    "RelativePath": "api/MasterEntry/get-countries",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetByIdCountry",
+    "RelativePath": "api/MasterEntry/get-country-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetList",
+    "RelativePath": "api/MasterEntry/get-country-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Iso2",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetAllCurrencies",
+    "RelativePath": "api/MasterEntry/get-currencies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetByIdCurrency",
+    "RelativePath": "api/MasterEntry/get-currency-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetList",
+    "RelativePath": "api/MasterEntry/get-currency-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Country_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetByIdDiscountRule",
+    "RelativePath": "api/MasterEntry/get-discount-rule-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetAllDiscountRuleHistories",
+    "RelativePath": "api/MasterEntry/get-discount-rule-histories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetByIdDiscountRuleHistory",
+    "RelativePath": "api/MasterEntry/get-discount-rule-history-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetList",
+    "RelativePath": "api/MasterEntry/get-discount-rule-history-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Discount_Rule_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Campaign_Card_Bin_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Currency_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Discount_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Payment_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Change_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetList",
+    "RelativePath": "api/MasterEntry/get-discount-rule-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Campaign_Card_Bin_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Discount_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Payment_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Budget_Limit_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetAllDiscountRules",
+    "RelativePath": "api/MasterEntry/get-discount-rules",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Create",
+    "RelativePath": "api/MasterEntry/register-bank",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Bank.BankCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Create",
+    "RelativePath": "api/MasterEntry/register-country",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Country.CountryCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Create",
+    "RelativePath": "api/MasterEntry/register-currency",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Currency.CurrencyCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Create",
+    "RelativePath": "api/MasterEntry/register-discount-rule",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.DiscountRule.DiscountRuleCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Create",
+    "RelativePath": "api/MasterEntry/register-discount-rule-history",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.DiscountRuleHistory.DiscountRuleHistoryCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Update",
+    "RelativePath": "api/MasterEntry/update-bank",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Bank.BankUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Update",
+    "RelativePath": "api/MasterEntry/update-country",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Country.CountryUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Update",
+    "RelativePath": "api/MasterEntry/update-currency",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Currency.CurrencyUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Update",
+    "RelativePath": "api/MasterEntry/update-discount-rule",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.DiscountRule.DiscountRuleUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "Update",
+    "RelativePath": "api/MasterEntry/update-discount-rule-history",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.DiscountRuleHistory.DiscountRuleHistoryUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

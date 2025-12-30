@@ -25,7 +25,7 @@ namespace NanoDMSBusinessService.Repositories
         public async Task<IEnumerable<BusinessLocationUser>> GetByUserIdAsync(Guid userId)
         {
             return await _context.BusinessLocationUser
-                .Where(b => b.UserId == userId)
+                .Where(b => b.User_Id == userId)
                 .ToListAsync();
         }
 

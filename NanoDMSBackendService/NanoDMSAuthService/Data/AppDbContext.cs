@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NanoDMSAuthService.Common;
 using NanoDMSAuthService.Models;
@@ -21,13 +22,30 @@ namespace NanoDMSAuthService.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure UserProfile
+            // --------------------
+            // Identity Tables
+            // --------------------
+            modelBuilder.Entity<AppUser>().ToTable("Users");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("User_Roles");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("User_Claims");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("User_Logins");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("Role_Claims");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("User_Tokens");
+
+            // --------------------
+            // UserProfile
+            // --------------------
             modelBuilder.Entity<UserProfile>(entity =>
             {
+                entity.ToTable("User_Profile");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
+            // --------------------
+            // AuditLogin
+            // --------------------
             modelBuilder.Entity<AuditLogin>(entity =>
             {
                 entity.ToTable("Audit_Login");
@@ -40,8 +58,13 @@ namespace NanoDMSAuthService.Data
                 entity.Property(e => e.PcName).HasMaxLength(100);
             });
 
-            
-
+            // --------------------
+            // PasswordHistory
+            // --------------------
+            modelBuilder.Entity<PasswordHistory>(entity =>
+            {
+                entity.ToTable("Password_History");
+            });
         }
 
 

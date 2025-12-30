@@ -28,25 +28,25 @@ namespace NanoDMSBusinessService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CurrencyId")
+                    b.Property<Guid>("Currency_Id")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("FinancialYearStartMonth")
+                    b.Property<Guid>("Financial_Year_Start_Month")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("Last_Update_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Logo")
@@ -64,14 +64,14 @@ namespace NanoDMSBusinessService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Stn")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("StockAccountingMethod")
+                    b.Property<Guid>("Stock_Accounting_Method")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Tax3")
@@ -82,7 +82,7 @@ namespace NanoDMSBusinessService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TimeZoneId")
+                    b.Property<Guid>("Time_Zone_Id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -96,24 +96,24 @@ namespace NanoDMSBusinessService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BusinessId")
+                    b.Property<Guid>("Business_Id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BusinessLocationId")
+                    b.Property<Guid>("Business_Location_Id")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ConfigType")
+                    b.Property<string>("Config_Type")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ConfigValue")
+                    b.Property<string>("Config_Value")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
@@ -123,13 +123,13 @@ namespace NanoDMSBusinessService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("Last_Update_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("NameKey")
+                    b.Property<string>("Name_Key")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -138,11 +138,11 @@ namespace NanoDMSBusinessService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessId");
+                    b.HasIndex("Business_Id");
 
-                    b.HasIndex("BusinessLocationId");
+                    b.HasIndex("Business_Location_Id");
 
-                    b.ToTable("BusinessConfigs");
+                    b.ToTable("Business_Config", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocation", b =>
@@ -155,7 +155,7 @@ namespace NanoDMSBusinessService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("BusinessId")
+                    b.Property<Guid>("Business_Id")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("City")
@@ -164,10 +164,10 @@ namespace NanoDMSBusinessService.Migrations
                     b.Property<Guid>("Country")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
@@ -177,10 +177,10 @@ namespace NanoDMSBusinessService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("Last_Update_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Mobile")
@@ -195,7 +195,7 @@ namespace NanoDMSBusinessService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PostalCode")
+                    b.Property<string>("Postal_Code")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -211,9 +211,9 @@ namespace NanoDMSBusinessService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessId");
+                    b.HasIndex("Business_Id");
 
-                    b.ToTable("BusinessLocation");
+                    b.ToTable("Business_Location", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocationUser", b =>
@@ -222,40 +222,40 @@ namespace NanoDMSBusinessService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BusinessId")
+                    b.Property<Guid>("Business_Id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BusinessLocationId")
+                    b.Property<Guid>("Business_Location_Id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("Last_Update_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("User_Id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessId");
+                    b.HasIndex("Business_Id");
 
-                    b.HasIndex("BusinessLocationId");
+                    b.HasIndex("Business_Location_Id");
 
-                    b.ToTable("BusinessLocationUser");
+                    b.ToTable("Business_Location_User", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessUser", b =>
@@ -264,48 +264,48 @@ namespace NanoDMSBusinessService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BusinessId")
+                    b.Property<Guid>("Business_Id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("Last_Update_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("User_Id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessId");
+                    b.HasIndex("Business_Id");
 
-                    b.ToTable("BusinessUser");
+                    b.ToTable("Business_User", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessConfig", b =>
                 {
                     b.HasOne("NanoDMSBusinessService.Models.Business", "Business")
                         .WithMany("BusinessConfigs")
-                        .HasForeignKey("BusinessId")
+                        .HasForeignKey("Business_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("NanoDMSBusinessService.Models.BusinessLocation", "BusinessLocation")
                         .WithMany("BusinessConfigs")
-                        .HasForeignKey("BusinessLocationId")
+                        .HasForeignKey("Business_Location_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -318,7 +318,7 @@ namespace NanoDMSBusinessService.Migrations
                 {
                     b.HasOne("NanoDMSBusinessService.Models.Business", "Business")
                         .WithMany("BusinessLocations")
-                        .HasForeignKey("BusinessId")
+                        .HasForeignKey("Business_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -329,26 +329,26 @@ namespace NanoDMSBusinessService.Migrations
                 {
                     b.HasOne("NanoDMSBusinessService.Models.Business", "Business")
                         .WithMany("BusinessLocationUsers")
-                        .HasForeignKey("BusinessId")
+                        .HasForeignKey("Business_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NanoDMSBusinessService.Models.BusinessLocation", "BusinessLocation")
+                    b.HasOne("NanoDMSBusinessService.Models.BusinessLocation", "Business_Location")
                         .WithMany("BusinessLocationUsers")
-                        .HasForeignKey("BusinessLocationId")
+                        .HasForeignKey("Business_Location_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Business");
 
-                    b.Navigation("BusinessLocation");
+                    b.Navigation("Business_Location");
                 });
 
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessUser", b =>
                 {
                     b.HasOne("NanoDMSBusinessService.Models.Business", "Business")
                         .WithMany("BusinessUsers")
-                        .HasForeignKey("BusinessId")
+                        .HasForeignKey("Business_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

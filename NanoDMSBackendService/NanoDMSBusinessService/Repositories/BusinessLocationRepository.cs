@@ -11,7 +11,7 @@ namespace NanoDMSBusinessService.Repositories
         public async Task<int> GetLocationCountByBusinessIdAsync(Guid businessId)
         {
             return await _context.Set<BusinessLocation>()
-                                 .Where(bl => bl.BusinessId == businessId).CountAsync();
+                                 .Where(bl => bl.Business_Id == businessId).CountAsync();
                                  
         }
         public async Task<BusinessLocation?> GetByIdWithBusinessAsync(Guid id)

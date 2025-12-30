@@ -4,9 +4,9 @@
     {
         public bool Deleted { get; set; } = false;
         public bool Published { get; set; } = false;
-        public DateTime CreateDate { get; set; } = DateTime.UtcNow;
-        public Guid CreateUser { get; set; }
-        public DateTime LastUpdateDate { get; set; } = DateTime.UtcNow;
-        public Guid LastUpdateUser { get; set; }
+        public DateTime Create_Date { get; set; } = DateTime.UtcNow;
+        public Guid Create_User { get; set; }
+        public DateTime Last_Update_Date { get; set; } = DateTime.UtcNow;
+        public Guid Last_Update_User { get; set; }
     }
 }

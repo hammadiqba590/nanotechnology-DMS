@@ -63,9 +63,9 @@ namespace NanoDMSSetupService.Controllers
                 var gender = new Gender
                 {
                     Name = model.Name,
-                    CreateDate = DateTime.UtcNow,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _genderRepository.AddAsync(gender);
@@ -143,9 +143,9 @@ namespace NanoDMSSetupService.Controllers
             if (superuser == null) return Unauthorized("User not found.");
 
             gender.Name = updateDto.Name;
-            gender.LastUpdateDate = DateTime.UtcNow;
+            gender.Last_Update_Date = DateTime.UtcNow;
             gender.Published = true;
-            gender.LastUpdateUser = Guid.Parse(superuser.Id);
+            gender.Last_Update_User = Guid.Parse(superuser.Id);
 
             _genderRepository.Update(gender);
             await _genderRepository.SaveChangesAsync();
@@ -175,8 +175,8 @@ namespace NanoDMSSetupService.Controllers
 
             gender.Deleted = true;
             gender.Published = false;
-            gender.LastUpdateDate = DateTime.UtcNow;
-            gender.LastUpdateUser = Guid.Parse(superuser.Id);
+            gender.Last_Update_Date = DateTime.UtcNow;
+            gender.Last_Update_User = Guid.Parse(superuser.Id);
 
             _genderRepository.Update(gender);
             await _genderRepository.SaveChangesAsync();

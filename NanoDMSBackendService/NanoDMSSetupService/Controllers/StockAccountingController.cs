@@ -63,9 +63,9 @@ namespace NanoDMSSetupService.Controllers
                 var stockaccounting = new StockAccountingMethod
                 {
                     Name = model.Name,
-                    CreateDate = DateTime.UtcNow,
+                    Create_Date = DateTime.UtcNow,
                     Published = true,
-                    CreateUser = Guid.Parse(superuser.Id)
+                    Create_User = Guid.Parse(superuser.Id)
                 };
 
                 await _stockAccountingRepository.AddAsync(stockaccounting);
@@ -144,9 +144,9 @@ namespace NanoDMSSetupService.Controllers
             if (superuser == null) return Unauthorized("User not found.");
 
             stockaccounting.Name = updateDto.Name;
-            stockaccounting.LastUpdateDate = DateTime.UtcNow;
+            stockaccounting.Last_Update_Date = DateTime.UtcNow;
             stockaccounting.Published = true;
-            stockaccounting.LastUpdateUser = Guid.Parse(superuser.Id);
+            stockaccounting.Last_Update_User = Guid.Parse(superuser.Id);
 
             _stockAccountingRepository.Update(stockaccounting);
             await _stockAccountingRepository.SaveChangesAsync();
@@ -176,8 +176,8 @@ namespace NanoDMSSetupService.Controllers
 
             stockaccounting.Deleted = true;
             stockaccounting.Published = false;
-            stockaccounting.LastUpdateDate = DateTime.UtcNow;
-            stockaccounting.LastUpdateUser = Guid.Parse(superuser.Id);
+            stockaccounting.Last_Update_Date = DateTime.UtcNow;
+            stockaccounting.Last_Update_User = Guid.Parse(superuser.Id);
 
             _stockAccountingRepository.Update(stockaccounting);
             await _stockAccountingRepository.SaveChangesAsync();

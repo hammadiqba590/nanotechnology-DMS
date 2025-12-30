@@ -28,19 +28,31 @@ namespace NanoDMSSetupService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<Guid>("BusinessLocation_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Business_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("End_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -50,83 +62,15 @@ namespace NanoDMSSetupService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("StateId")
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("State_Id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StateId");
 
                     b.ToTable("City");
-                });
-
-            modelBuilder.Entity("NanoDMSSetupService.Models.Country", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("CreateUser")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("LastUpdateDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("LastUpdateUser")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Published")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Country");
-                });
-
-            modelBuilder.Entity("NanoDMSSetupService.Models.Currency", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("ConversionRateToUSD")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("CreateUser")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("LastUpdateDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("LastUpdateUser")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Published")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Currency");
                 });
 
             modelBuilder.Entity("NanoDMSSetupService.Models.FinancialYearStartMonth", b =>
@@ -135,19 +79,31 @@ namespace NanoDMSSetupService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<Guid>("BusinessLocation_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Business_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("End_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -157,9 +113,12 @@ namespace NanoDMSSetupService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
-                    b.ToTable("FinancialYearStartMonth");
+                    b.ToTable("Financial_Year_Start_Month", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSSetupService.Models.Gender", b =>
@@ -168,19 +127,31 @@ namespace NanoDMSSetupService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<Guid>("BusinessLocation_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Business_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("End_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -189,6 +160,9 @@ namespace NanoDMSSetupService.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -201,19 +175,31 @@ namespace NanoDMSSetupService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<Guid>("BusinessLocation_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Business_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("End_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -223,9 +209,12 @@ namespace NanoDMSSetupService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
-                    b.ToTable("MaritalStatus");
+                    b.ToTable("Marital_Status", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSSetupService.Models.State", b =>
@@ -234,22 +223,34 @@ namespace NanoDMSSetupService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CountryId")
+                    b.Property<Guid>("BusinessLocation_Id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<Guid>("Business_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Country_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("End_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -259,9 +260,10 @@ namespace NanoDMSSetupService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasIndex("CountryId");
+                    b.HasKey("Id");
 
                     b.ToTable("State");
                 });
@@ -272,19 +274,31 @@ namespace NanoDMSSetupService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<Guid>("BusinessLocation_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Business_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime>("End_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -294,9 +308,12 @@ namespace NanoDMSSetupService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
-                    b.ToTable("StockAccountingMethod");
+                    b.ToTable("Stock_Accounting_Method", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSSetupService.Models.TimeZone", b =>
@@ -305,23 +322,35 @@ namespace NanoDMSSetupService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<Guid>("BusinessLocation_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Business_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("CreateUser")
+                    b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("GMTSetting")
+                    b.Property<DateTime>("End_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("GMT_Setting")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<bool>("Is_Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("LastUpdateUser")
+                    b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -331,41 +360,12 @@ namespace NanoDMSSetupService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
-                    b.ToTable("TimeZone");
-                });
-
-            modelBuilder.Entity("NanoDMSSetupService.Models.City", b =>
-                {
-                    b.HasOne("NanoDMSSetupService.Models.State", "State")
-                        .WithMany("Cities")
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("State");
-                });
-
-            modelBuilder.Entity("NanoDMSSetupService.Models.State", b =>
-                {
-                    b.HasOne("NanoDMSSetupService.Models.Country", "Country")
-                        .WithMany("States")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("NanoDMSSetupService.Models.Country", b =>
-                {
-                    b.Navigation("States");
-                });
-
-            modelBuilder.Entity("NanoDMSSetupService.Models.State", b =>
-                {
-                    b.Navigation("Cities");
+                    b.ToTable("Time_Zone", (string)null);
                 });
 #pragma warning restore 612, 618
         }

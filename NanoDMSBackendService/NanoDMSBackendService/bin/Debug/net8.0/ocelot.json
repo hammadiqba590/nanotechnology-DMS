@@ -203,6 +203,18 @@
             ],
             "UpstreamPathTemplate": "/apigateway/BusinessService/BusinessConfig/{url}",
             "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/MasterEntry/{url}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5296
+                }
+            ],
+            "UpstreamPathTemplate": "/apigateway/AdminService/MasterEntry/{url}",
+            "UpstreamHttpMethod": [ "GET", "PUT", "POST", "DELETE" ]
         }
         
     ],
