@@ -1,5 +1,805 @@
 [
   {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "DeleteCampaign",
+    "RelativePath": "api/Campaign/delete-campaign",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "DeleteCampaignBank",
+    "RelativePath": "api/Campaign/delete-campaign-bank",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "DeleteCampaignCardBin",
+    "RelativePath": "api/Campaign/delete-campaign-card-bin",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetByIdCampaignBank",
+    "RelativePath": "api/Campaign/get-campaign-bank-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetList",
+    "RelativePath": "api/Campaign/get-campaign-bank-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Campaign_Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Bank_Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Tax_On_Merchant_Share",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Budget_Limit_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Discount_Mode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetAllCampaignBanks",
+    "RelativePath": "api/Campaign/get-campaign-banks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetByIdCampaign",
+    "RelativePath": "api/Campaign/get-campaign-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetByIdCampaignCardBin",
+    "RelativePath": "api/Campaign/get-campaign-card-bin-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetList",
+    "RelativePath": "api/Campaign/get-campaign-card-bin-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetAllCampaignCardBins",
+    "RelativePath": "api/Campaign/get-campaign-card-bins",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetList",
+    "RelativePath": "api/Campaign/get-campaign-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Campaign_Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetAllCampaigns",
+    "RelativePath": "api/Campaign/get-campaigns",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "Create",
+    "RelativePath": "api/Campaign/register-campaign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Campagin.CampaignCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "Create",
+    "RelativePath": "api/Campaign/register-campaign-bank",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CampaignBank.CampaignBankCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "Create",
+    "RelativePath": "api/Campaign/register-campaign-card-bin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CampaignCardBin.CampaignCardBinCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "Update",
+    "RelativePath": "api/Campaign/update-campaign",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Campagin.CampaignUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "Update",
+    "RelativePath": "api/Campaign/update-campaign-bank",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CampaignBank.CampaignBankUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "Update",
+    "RelativePath": "api/Campaign/update-campaign-card-bin",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CampaignCardBin.CampaignCardBinUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "DeleteCardBin",
+    "RelativePath": "api/Card/delete-card-bin",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "DeleteCardBrand",
+    "RelativePath": "api/Card/delete-card-brand",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "DeleteCardLevel",
+    "RelativePath": "api/Card/delete-card-level",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "DeleteCardType",
+    "RelativePath": "api/Card/delete-card-type",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetByIdCardBin",
+    "RelativePath": "api/Card/get-card-bin-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetList",
+    "RelativePath": "api/Card/get-card-bin-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Card_Bin_Value",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Bank_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Card_Brand_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Card_Type_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Card_Level_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Country_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Local_International",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Is_Active",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetAllCardBins",
+    "RelativePath": "api/Card/get-card-bins",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetByIdCardBrand",
+    "RelativePath": "api/Card/get-card-brand-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetList",
+    "RelativePath": "api/Card/get-card-brand-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetAllCardBrands",
+    "RelativePath": "api/Card/get-card-brands",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetByIdCardLevel",
+    "RelativePath": "api/Card/get-card-level-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetList",
+    "RelativePath": "api/Card/get-card-level-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetAllCardLevels",
+    "RelativePath": "api/Card/get-card-levels",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetByIdCardType",
+    "RelativePath": "api/Card/get-card-type-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetList",
+    "RelativePath": "api/Card/get-card-type-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetAllCardTypes",
+    "RelativePath": "api/Card/get-card-types",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Create",
+    "RelativePath": "api/Card/register-card-bin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardBin.CardBinCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Create",
+    "RelativePath": "api/Card/register-card-brand",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardBrand.CardBrandCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Create",
+    "RelativePath": "api/Card/register-card-level",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardLevel.CardLevelCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Create",
+    "RelativePath": "api/Card/register-card-type",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardType.CardTypeCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Update",
+    "RelativePath": "api/Card/update-card-bin",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardBin.CardBinUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Update",
+    "RelativePath": "api/Card/update-card-brand",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardBrand.CardBrandUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Update",
+    "RelativePath": "api/Card/update-card-level",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardLevel.CardLevelUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "Update",
+    "RelativePath": "api/Card/update-card-type",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.CardType.CardTypeUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
     "Method": "Delete",
     "RelativePath": "api/MasterEntry/delete-bank",
@@ -589,6 +1389,1066 @@
       {
         "Name": "dto",
         "Type": "NanoDMSAdminService.DTO.DiscountRuleHistory.DiscountRuleHistoryUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "DeletePosTerminal",
+    "RelativePath": "api/PosTerminal/delete-pos-terminal",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "DeletePosTerminalAssignment",
+    "RelativePath": "api/PosTerminal/delete-pos-terminal-assignment",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "DeletePosTerminalConfiguration",
+    "RelativePath": "api/PosTerminal/delete-pos-terminal-configuration",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "DeletePosTerminalStatusHistory",
+    "RelativePath": "api/PosTerminal/delete-pos-terminal-status-history",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetByIdPosTerminalAssignment",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-assignment-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetList",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-assignment-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PosTerminal_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Mid",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Tid",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetAllPosTerminalAssignments",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-assignments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetByIdPosTerminal",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetByIdPosTerminalConfiguration",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-configuration-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetList",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-configuration-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Pos_Terminal_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Config_Key",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Config_Value",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetAllPosTerminalConfigurations",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-configurations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetList",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Serial_Number",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Terminal_Code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Company",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Model_Number",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetAllPosTerminalStatusHistories",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-status-histories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetByIdPosTerminalStatusHistory",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-status-history-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetList",
+    "RelativePath": "api/PosTerminal/get-pos-terminal-status-history-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Pos_Terminal_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Notes",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "GetAllPosTerminals",
+    "RelativePath": "api/PosTerminal/get-pos-terminals",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Create",
+    "RelativePath": "api/PosTerminal/register-pos-terminal",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalMaster.PosTerminalMasterCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Create",
+    "RelativePath": "api/PosTerminal/register-pos-terminal-assignment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalAssignment.PosTerminalAssignmentCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Create",
+    "RelativePath": "api/PosTerminal/register-pos-terminal-configuration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalConfiguration.PosTerminalConfigurationCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Create",
+    "RelativePath": "api/PosTerminal/register-pos-terminal-status-history",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalStatusHistory.PosTerminalStatusHistoryCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Update",
+    "RelativePath": "api/PosTerminal/update-pos-terminal",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalMaster.PosTerminalMasterUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Update",
+    "RelativePath": "api/PosTerminal/update-pos-terminal-assignment",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalAssignment.PosTerminalAssignmentUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Update",
+    "RelativePath": "api/PosTerminal/update-pos-terminal-configuration",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalConfiguration.PosTerminalConfigurationUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PosTerminalController",
+    "Method": "Update",
+    "RelativePath": "api/PosTerminal/update-pos-terminal-status-history",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PosTerminalStatusHistory.PosTerminalStatusHistoryUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "DeletePsp",
+    "RelativePath": "api/Psp/delete-psp",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "DeletePspCategory",
+    "RelativePath": "api/Psp/delete-psp-category",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "DeletePspCurrency",
+    "RelativePath": "api/Psp/delete-psp-currency",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "DeletePspDocument",
+    "RelativePath": "api/Psp/delete-psp-document",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "DeletePspPaymentMethod",
+    "RelativePath": "api/Psp/delete-psp-payment-method",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetByIdPsp",
+    "RelativePath": "api/Psp/get-psp-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetAllPspCategories",
+    "RelativePath": "api/Psp/get-psp-categories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetByIdPspCategory",
+    "RelativePath": "api/Psp/get-psp-category-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetList",
+    "RelativePath": "api/Psp/get-psp-category-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetAllPspCurrencies",
+    "RelativePath": "api/Psp/get-psp-currencies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetByIdPspCurrency",
+    "RelativePath": "api/Psp/get-psp-currency-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetList",
+    "RelativePath": "api/Psp/get-psp-currency-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Psp_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Currency_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetByIdPspDocument",
+    "RelativePath": "api/Psp/get-psp-document-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetList",
+    "RelativePath": "api/Psp/get-psp-document-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Psp_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Doc_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetAllPspDocuments",
+    "RelativePath": "api/Psp/get-psp-documents",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetList",
+    "RelativePath": "api/Psp/get-psp-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Short_Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Currency_Code",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Registration_Number",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Compliance_Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Contact_Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Contact_Phone",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Api_Key",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Integration_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Settlement_Frequency",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Requires_Kyc",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetByIdPspPaymentMethod",
+    "RelativePath": "api/Psp/get-psp-payment-method-by-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetList",
+    "RelativePath": "api/Psp/get-psp-payment-method-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Psp_Id",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Payment_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetAllPspPaymentMethods",
+    "RelativePath": "api/Psp/get-psp-payment-methods",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "GetAllPsps",
+    "RelativePath": "api/Psp/get-psps",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Create",
+    "RelativePath": "api/Psp/register-psp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Psp.PspCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Create",
+    "RelativePath": "api/Psp/register-psp-category",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspCategory.PspCategoryCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Create",
+    "RelativePath": "api/Psp/register-psp-currency",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspCurrency.PspCurrencyCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Create",
+    "RelativePath": "api/Psp/register-psp-document",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspDocument.PspDocumentCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Create",
+    "RelativePath": "api/Psp/register-psp-payment-method",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspPaymentMethod.PspPaymentMethodCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Update",
+    "RelativePath": "api/Psp/update-psp",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Psp.PspUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Update",
+    "RelativePath": "api/Psp/update-psp-category",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspCategory.PspCategoryUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Update",
+    "RelativePath": "api/Psp/update-psp-currency",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspCurrency.PspCurrencyUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Update",
+    "RelativePath": "api/Psp/update-psp-document",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspDocument.PspDocumentUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.PspController",
+    "Method": "Update",
+    "RelativePath": "api/Psp/update-psp-payment-method",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.PspPaymentMethod.PspPaymentMethodUpdateDto",
         "IsRequired": true
       }
     ],

@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NanoDMSAdminService.Blocks;
+using NanoDMSAdminService.Models;
 
 namespace NanoDMSAdminService.Data
 {
-    using Microsoft.EntityFrameworkCore;
-    using NanoDMSAdminService.Blocks;
-    using NanoDMSAdminService.Models;
+    
 
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
@@ -364,12 +364,12 @@ namespace NanoDMSAdminService.Data
             modelBuilder.Entity<PosTerminalConfiguration>()
               .HasOne(x => x.Pos_Terminal)
               .WithMany(x => x.PosTerminal_Configurations)
-              .HasForeignKey(x => x.Terminal_Id);
+              .HasForeignKey(x => x.Pos_Terminal_Id);
 
             modelBuilder.Entity<PosTerminalStatusHistory>()
                 .HasOne(x => x.Pos_Terminal)
                 .WithMany(x => x.PosTerminal_Status_Histories)
-                .HasForeignKey(x => x.Terminal_Id);
+                .HasForeignKey(x => x.Pos_Terminal_Id);
 
             modelBuilder.Entity<Psp>()
                 .HasOne(x => x.PspCategory)
@@ -400,8 +400,6 @@ namespace NanoDMSAdminService.Data
                 .HasOne(x => x.Psp)
                 .WithMany(x => x.PspDocuments)
                 .HasForeignKey(x => x.Psp_Id);
-
-            
 
             
         }

@@ -8,8 +8,8 @@ using NanoDMSAdminService.DTO.Currency;
 using NanoDMSAdminService.DTO.DiscountRule;
 using NanoDMSAdminService.DTO.DiscountRuleHistory;
 using NanoDMSAdminService.Filters;
-using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Implementations;
+using NanoDMSAdminService.Services.Interfaces;
 
 namespace NanoDMSAdminService.Controllers
 {
@@ -17,15 +17,20 @@ namespace NanoDMSAdminService.Controllers
     [ApiController]
     public class MasterEntryController : ControllerBase
     {
-        private readonly BankService _service;
+        private readonly IBankService _service;
         private readonly ICountryService _countryservice;
         private readonly ICurrencyService _currencyservice;
         private readonly IDiscountRuleService _ruleservice;
-        private readonly DiscountRuleHistoryService _rulehistoryservice;
+        private readonly IDiscountRuleHistoryService _rulehistoryservice;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public MasterEntryController(BankService service,CountryService countryService,CurrencyService currencyService,DiscountRuleService ruleService, DiscountRuleHistoryService ruleHistoryService,UserManager<IdentityUser> userManager,
+        public MasterEntryController(IBankService service,
+            ICountryService countryService,
+            ICurrencyService currencyService,
+            IDiscountRuleService ruleService, 
+            IDiscountRuleHistoryService ruleHistoryService,
+            UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             _service = service;
@@ -152,6 +157,7 @@ namespace NanoDMSAdminService.Controllers
 
             return Ok(new { Message = "Bank Marked As Deleted", Bank = deleted });
         }
+
         #endregion
 
         #region Country

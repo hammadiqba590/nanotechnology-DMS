@@ -368,8 +368,8 @@ namespace NanoDMSAuthService.Controllers
             await _userManager.SetAuthenticationTokenAsync(user, "MyApp", "JwtToken", jwtToken);
 
             // URLs should come from configuration ideally
-            string businessUsersUrl = "http://195.7.7.34:8010/apigateway/BusinessService/BusinessUser" + "/get-business-users";
-            string locationUsersUrl = "http://195.7.7.34:8010/apigateway/BusinessService/BusinessLocationUser" + "/get-business-location-users";
+            string businessUsersUrl = "http://localhost:8010/apigateway/BusinessService/BusinessUser" + "/get-business-users";
+            string locationUsersUrl = "http://localhost:8010/apigateway/BusinessService/BusinessLocationUser" + "/get-business-location-users";
             
 
             var businessUsersJson = await _apiServiceHelper.SendRequestAsync<object>(

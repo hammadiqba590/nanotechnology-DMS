@@ -1,8 +1,9 @@
-﻿using NanoDMSAdminService.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using NanoDMSAdminService.Data;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Repositories.Interfaces;
+using System.Data;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace NanoDMSAdminService.Repositories.Implementations
 {
@@ -54,5 +55,8 @@ namespace NanoDMSAdminService.Repositories.Implementations
 
         public void Update(DiscountRuleHistory rule)
             => _context.DiscountRuleHistories.Update(rule);
+
+        public void Delete(DiscountRuleHistory rule)
+        => _context.DiscountRuleHistories.Remove(rule);
     }
 }

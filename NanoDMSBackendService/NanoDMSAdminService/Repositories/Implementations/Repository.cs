@@ -16,9 +16,6 @@ namespace NanoDMSAdminService.Repositories.Implementations
             _dbSet = context.Set<T>();
         }
 
-        public IQueryable<T> Query(bool tracking = false)
-            => tracking ? _dbSet : _dbSet.AsNoTracking();
-
         public async Task AddAsync(T entity)
             => await _dbSet.AddAsync(entity);
 

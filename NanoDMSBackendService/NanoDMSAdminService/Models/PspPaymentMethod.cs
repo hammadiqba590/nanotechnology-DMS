@@ -9,7 +9,6 @@ namespace NanoDMSAdminService.Models
     {
         [Key]
         public Guid Id { get; set; }
-
         public Guid Psp_Id { get; set; }
         [ForeignKey(nameof(Psp_Id))]
         public Psp Psp { get; set; } = null!;

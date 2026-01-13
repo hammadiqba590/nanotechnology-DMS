@@ -23,17 +23,6 @@ namespace NanoDMSAuthService.Data
             base.OnModelCreating(modelBuilder);
 
             // --------------------
-            // Identity Tables
-            // --------------------
-            modelBuilder.Entity<AppUser>().ToTable("Users");
-            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("User_Roles");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("User_Claims");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("User_Logins");
-            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("Role_Claims");
-            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("User_Tokens");
-
-            // --------------------
             // UserProfile
             // --------------------
             modelBuilder.Entity<UserProfile>(entity =>

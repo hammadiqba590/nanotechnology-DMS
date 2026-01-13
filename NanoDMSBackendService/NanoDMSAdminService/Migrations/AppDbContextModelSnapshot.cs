@@ -81,6 +81,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Short_Code")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -141,10 +144,8 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<Guid>("Create_User")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("character varying(3)");
+                    b.Property<Guid>("Currency_Id")
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
@@ -173,6 +174,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -187,6 +191,8 @@ namespace NanoDMSAdminService.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Campaign_Name");
+
+                    b.HasIndex("Currency_Id");
 
                     b.ToTable("Campaigns");
                 });
@@ -252,6 +258,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -315,6 +324,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
@@ -394,6 +406,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -455,6 +470,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -503,6 +521,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -550,6 +571,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
@@ -630,6 +654,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -698,6 +725,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
@@ -791,6 +821,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -882,6 +915,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Stackable")
                         .HasColumnType("boolean");
 
@@ -949,6 +985,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -1012,21 +1051,24 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<Guid>("Last_Update_User")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("Pos_Terminal_Id")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("Terminal_Id")
-                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Config_Key")
                         .IsUnique();
 
-                    b.HasIndex("Terminal_Id");
+                    b.HasIndex("Pos_Terminal_Id");
 
                     b.ToTable("Pos_Terminal_Configurations", (string)null);
                 });
@@ -1078,6 +1120,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Serial_Number")
                         .IsRequired()
@@ -1139,8 +1184,14 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("Pos_Terminal_Id")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
@@ -1150,12 +1201,9 @@ namespace NanoDMSAdminService.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
 
-                    b.Property<Guid>("Terminal_Id")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Terminal_Id");
+                    b.HasIndex("Pos_Terminal_Id");
 
                     b.ToTable("Pos_Terminal_Status_Histories", (string)null);
                 });
@@ -1257,6 +1305,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Reg_Doc_Url")
                         .HasMaxLength(255)
@@ -1365,6 +1416,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -1417,6 +1471,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
@@ -1480,6 +1537,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -1534,6 +1594,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("RecordStatus")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -1553,6 +1616,17 @@ namespace NanoDMSAdminService.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("NanoDMSAdminService.Models.Campaign", b =>
+                {
+                    b.HasOne("NanoDMSAdminService.Models.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("Currency_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Currency");
                 });
 
             modelBuilder.Entity("NanoDMSAdminService.Models.CampaignBank", b =>
@@ -1694,7 +1768,7 @@ namespace NanoDMSAdminService.Migrations
                 {
                     b.HasOne("NanoDMSAdminService.Models.PosTerminalMaster", "Pos_Terminal")
                         .WithMany("PosTerminal_Configurations")
-                        .HasForeignKey("Terminal_Id")
+                        .HasForeignKey("Pos_Terminal_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1705,7 +1779,7 @@ namespace NanoDMSAdminService.Migrations
                 {
                     b.HasOne("NanoDMSAdminService.Models.PosTerminalMaster", "Pos_Terminal")
                         .WithMany("PosTerminal_Status_Histories")
-                        .HasForeignKey("Terminal_Id")
+                        .HasForeignKey("Pos_Terminal_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

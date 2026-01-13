@@ -88,7 +88,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Business_Id = b.Business_Id,
                 BusinessLocation_Id = b.BusinessLocation_Id,
                 Is_Active = b.Is_Active,
-                Status = b.Status,
+                RecordStatus = b.RecordStatus,
             });
         }
         public async Task<CountryDto?> GetByIdAsync(Guid id)
@@ -103,12 +103,18 @@ namespace NanoDMSAdminService.Services.Implementations
                 Iso2 = country.Iso2,
                 Iso3 = country.Iso3,
                 Currency_Code = country.Currency_Code,
+                Currency_Symbol = country.Currency_Symbol,
+                Time_Zone = country.Time_Zone,
                 Phone_Code = country.Phone_Code,
                 Flag_Emoji = country.Flag_Emoji,
                 Deleted = country.Deleted,
                 Published = country.Published,
                 Is_Active = country.Is_Active,
+                BusinessLocation_Id= country.BusinessLocation_Id,
+                Business_Id = country.BusinessLocation_Id,
                 Create_Date = country.Create_Date,
+                Create_User = country.Create_User,
+                Last_Update_User = country.Last_Update_User,
                 Last_Update_Date = country.Last_Update_Date
             };
         }
@@ -133,9 +139,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Published = true,
                 Deleted = false,
                 Is_Active = true,
-                Status = Blocks.RecordStatus.Active,
-                Business_Id = dto.Business_Id,
-                BusinessLocation_Id = dto.BusinessLocation_Id
+                RecordStatus = Blocks.RecordStatus.Active,
             };
 
             await _uow.Countries.AddAsync(country);
@@ -176,7 +180,7 @@ namespace NanoDMSAdminService.Services.Implementations
             country.Deleted = true;
             country.Is_Active = false;
             country.Published = false;
-            country.Status = Blocks.RecordStatus.Inactive;
+            country.RecordStatus = Blocks.RecordStatus.Inactive;
             country.Last_Update_User = Guid.Parse(userId);
             country.Last_Update_Date = DateTime.UtcNow;
 

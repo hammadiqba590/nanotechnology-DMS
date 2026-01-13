@@ -50,7 +50,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Business_Id = b.Business_Id,
                 BusinessLocation_Id = b.BusinessLocation_Id,
                 Is_Active = b.Is_Active,
-                Status = b.Status,
+                RecordStatus = b.RecordStatus,
             });
         }
         
@@ -110,7 +110,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Create_User = x.Create_User,
                 Last_Update_Date = x.Last_Update_Date,
                 Last_Update_User = x.Last_Update_User,
-                Status = x.Status
+                RecordStatus = x.RecordStatus
             }).ToList();
 
             return new PaginatedResponseDto<DiscountRuleHistoryDto>
@@ -152,7 +152,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Deleted = false,
                 Published = true,
                 Is_Active = true,
-                Status = RecordStatus.Active,
+                RecordStatus = RecordStatus.Active,
                 Create_Date = DateTime.UtcNow,
                 Create_User = userId
             };
@@ -199,7 +199,7 @@ namespace NanoDMSAdminService.Services.Implementations
             entity.Deleted = true;
             entity.Published = false;
             entity.Is_Active = false;
-            entity.Status = RecordStatus.Inactive;
+            entity.RecordStatus = RecordStatus.Inactive;
             entity.Last_Update_Date = DateTime.UtcNow;
             entity.Last_Update_User = userId;
 
@@ -225,6 +225,8 @@ namespace NanoDMSAdminService.Services.Implementations
             Priority = x.Priority,
             Stackable = x.Stackable,
             Change_Type = x.Change_Type,
+            Business_Id = x.Business_Id,
+            BusinessLocation_Id = x.BusinessLocation_Id,
             Is_Active = x.Is_Active,
             Deleted = x.Deleted,
             Published = x.Published,
@@ -232,7 +234,7 @@ namespace NanoDMSAdminService.Services.Implementations
             Create_User = x.Create_User,
             Last_Update_Date = x.Last_Update_Date,
             Last_Update_User = x.Last_Update_User,
-            Status = x.Status
+            RecordStatus = x.RecordStatus
         };
     }
 

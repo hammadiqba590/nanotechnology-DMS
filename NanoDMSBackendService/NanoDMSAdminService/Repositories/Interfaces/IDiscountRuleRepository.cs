@@ -3,15 +3,14 @@ using System.Linq.Expressions;
 
 namespace NanoDMSAdminService.Repositories.Interfaces
 {
-    public interface IDiscountRuleRepository
+    public interface IDiscountRuleRepository : IRepository<DiscountRule>
     {
         Task<IEnumerable<DiscountRule>> GetAllAsync();
         Task<IEnumerable<DiscountRule>> GetAllByConditionAsync(
     Expression<Func<DiscountRule, bool>> predicate);
         IQueryable<DiscountRule> GetQueryable();
         Task<DiscountRule?> GetByIdAsync(Guid id);
-        Task AddAsync(DiscountRule rule);
-        void Update(DiscountRule rule);
+        
     }
 
 }

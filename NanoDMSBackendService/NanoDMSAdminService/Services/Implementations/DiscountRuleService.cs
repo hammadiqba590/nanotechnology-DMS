@@ -47,7 +47,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Business_Id = b.Business_Id,
                 BusinessLocation_Id = b.BusinessLocation_Id,
                 Is_Active = b.Is_Active,
-                Status = b.Status,
+                RecordStatus = b.RecordStatus,
             });
         }
         public async Task<PaginatedResponseDto<DiscountRuleDto>> GetPagedAsync(DiscountRuleFilterModel filter)
@@ -131,6 +131,8 @@ namespace NanoDMSAdminService.Services.Implementations
                 End_Time = rule.End_Time,
                 Published = rule.Published,
                 Deleted = rule.Deleted,
+                Business_Id = rule.Business_Id,
+                BusinessLocation_Id = rule.BusinessLocation_Id,
                 Is_Active = rule.Is_Active,
                 Create_Date = rule.Create_Date,
                 Last_Update_Date = rule.Last_Update_Date
@@ -161,7 +163,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Published = true,
                 Deleted = false,
                 Is_Active = true,
-                Status = Blocks.RecordStatus.Active,
+                RecordStatus = Blocks.RecordStatus.Active,
                 Business_Id = dto.Business_Id,
                 BusinessLocation_Id = dto.BusinessLocation_Id
             };
@@ -207,7 +209,7 @@ namespace NanoDMSAdminService.Services.Implementations
             rule.Deleted = true;
             rule.Published = false;
             rule.Is_Active = false;
-            rule.Status = Blocks.RecordStatus.Inactive;
+            rule.RecordStatus = Blocks.RecordStatus.Inactive;
             rule.Last_Update_User = Guid.Parse(userId);
             rule.Last_Update_Date = DateTime.UtcNow;
 

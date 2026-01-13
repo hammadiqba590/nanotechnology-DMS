@@ -1,0 +1,13 @@
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\bin\Release\net8.0\NanoDMSSharedLibrary.deps.json
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\bin\Release\net8.0\NanoDMSSharedLibrary.dll
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\bin\Release\net8.0\NanoDMSSharedLibrary.pdb
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.csproj.AssemblyReference.cache
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.AssemblyInfoInputs.cache
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.AssemblyInfo.cs
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.csproj.CoreCompileInputs.cache
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.sourcelink.json
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.dll
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\refint\NanoDMSSharedLibrary.dll
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\NanoDMSSharedLibrary.pdb
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSSharedLibrary\obj\Release\net8.0\ref\NanoDMSSharedLibrary.dll

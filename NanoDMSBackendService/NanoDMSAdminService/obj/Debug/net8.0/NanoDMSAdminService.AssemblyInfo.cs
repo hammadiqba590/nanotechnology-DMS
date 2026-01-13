@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NanoDMSAdminService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24cb1d2d81e5ab7c4c1a612d2b6d6b2cc9f3db98")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70ce4b0b3c33dd2f719869fc566f8a6af8fded48")]
 [assembly: System.Reflection.AssemblyProductAttribute("NanoDMSAdminService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NanoDMSAdminService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

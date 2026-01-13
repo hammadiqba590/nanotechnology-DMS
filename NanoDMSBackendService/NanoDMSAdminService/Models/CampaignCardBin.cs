@@ -9,9 +9,11 @@ namespace NanoDMSAdminService.Models
     {
         [Key]
         public Guid Id { get; set; }
+        [Required]
         public Guid Campagin_Bank_Id { get; set; }
         [ForeignKey(nameof(Campagin_Bank_Id))]
         public CampaignBank? Campaign_Bank { get; set; }
+        [Required]
         public Guid Card_Bin_Id { get; set; }
         [ForeignKey(nameof(Card_Bin_Id))]
         public CardBin? Card_Bin { get; set; }

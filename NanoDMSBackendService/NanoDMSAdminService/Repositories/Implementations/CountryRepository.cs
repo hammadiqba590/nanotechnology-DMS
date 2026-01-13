@@ -2,6 +2,7 @@
 using NanoDMSAdminService.Data;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Repositories.Interfaces;
+using System.Diagnostics.Metrics;
 using System.Linq.Expressions;
 
 namespace NanoDMSAdminService.Repositories.Implementations
@@ -54,6 +55,9 @@ namespace NanoDMSAdminService.Repositories.Implementations
 
         public void Update(Country country)
             => _context.Countries.Update(country);
+
+        public void Delete(Country country)
+        => _context.Countries.Remove(country);
     }
 
 }

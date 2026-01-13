@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace NanoDMSAdminService.Repositories.Interfaces
 {
-    public interface ICountryRepository
+    public interface ICountryRepository : IRepository<Country>
     {
         Task<IEnumerable<Country>> GetAllAsync();
         Task<IEnumerable<Country>> GetAllByConditionAsync(
@@ -11,8 +11,7 @@ namespace NanoDMSAdminService.Repositories.Interfaces
 
         Task<Country?> GetByIdAsync(Guid id);
         IQueryable<Country> GetQueryable();
-        Task AddAsync(Country country);
-        void Update(Country country);
+        
     }
 
 }

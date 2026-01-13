@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NanoDMSAuthService.Data;
-using Microsoft.AspNetCore.Identity;
 using NanoDMSAuthService.Models;
 using NanoDMSAuthService.Services;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using NanoDMSSharedLibrary;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -119,6 +120,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// 1. ADD THIS AT THE VERY TOP OF THE PIPELINE
+// This tells .NET to trust the headers from Nginx (X-Forwarded-Proto, etc.)
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -126,7 +135,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseStaticFiles();
-app.UseHttpsRedirection();
+// 2. PATH BASE
+// Ensure this matches exactly how you call the URL (see Step 2 below)
+app.UsePathBase("/apigateway/AuthService");
+
+app.UseRouting();
+//app.UseHttpsRedirection();
 app.UseCors("AllowAll"); // Apply the CORS policy to allow all origins
 
 app.Use(async (context, next) =>

@@ -2,6 +2,7 @@
 using NanoDMSAdminService.Data;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Repositories.Interfaces;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace NanoDMSAdminService.Repositories.Implementations
@@ -46,6 +47,9 @@ namespace NanoDMSAdminService.Repositories.Implementations
 
         public void Update(DiscountRule rule)
             => _context.DiscountRules.Update(rule);
+
+        public void Delete(DiscountRule rule)
+        => _context.DiscountRules.Remove(rule);
     }
 
 }

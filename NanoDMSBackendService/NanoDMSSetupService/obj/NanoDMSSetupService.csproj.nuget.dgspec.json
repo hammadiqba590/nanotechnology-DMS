@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj": {}
+    "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj": {}
   },
   "projects": {
-    "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj": {
+    "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj",
+        "projectUniqueName": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj",
         "projectName": "NanoDMSSetupService",
-        "projectPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj",
+        "projectPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\NanoDMSSetupService.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\obj\\",
+        "outputPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSetupService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj": {
-                "projectPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj"
+              "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj": {
+                "projectPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj"
               }
             }
           }
@@ -107,14 +107,14 @@
         }
       }
     },
-    "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj": {
+    "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj",
+        "projectUniqueName": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj",
         "projectName": "NanoDMSSharedLibrary",
-        "projectPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj",
+        "projectPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\obj\\",
+        "outputPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

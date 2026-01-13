@@ -14,10 +14,7 @@ namespace NanoDMSAdminService.DTO.Currency
         [Required]
         public Guid? Country_Id { get; set; }
 
-        [Required]
-        public Guid Business_Id { get; set; }
-        [Required]
-        public Guid BusinessLocation_Id { get; set; }
+        
 
     }
 

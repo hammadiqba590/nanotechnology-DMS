@@ -47,6 +47,9 @@ namespace NanoDMSAdminService.Repositories.Implementations
 
         public void Update(Currency currency)
             => _context.Currencies.Update(currency);
+
+        public void Delete(Currency currency)
+         => _context.Currencies.Remove(currency);
     }
 
 }

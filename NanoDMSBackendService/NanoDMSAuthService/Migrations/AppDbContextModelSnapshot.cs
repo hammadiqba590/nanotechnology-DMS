@@ -45,7 +45,7 @@ namespace NanoDMSAuthService.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -70,7 +70,7 @@ namespace NanoDMSAuthService.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Role_Claims", (string)null);
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -95,7 +95,7 @@ namespace NanoDMSAuthService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("User_Claims", (string)null);
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -117,7 +117,7 @@ namespace NanoDMSAuthService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("User_Logins", (string)null);
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -132,7 +132,7 @@ namespace NanoDMSAuthService.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User_Roles", (string)null);
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -151,7 +151,7 @@ namespace NanoDMSAuthService.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("User_Tokens", (string)null);
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSAuthService.Models.AppUser", b =>
@@ -215,7 +215,7 @@ namespace NanoDMSAuthService.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("NanoDMSAuthService.Models.AuditLogin", b =>

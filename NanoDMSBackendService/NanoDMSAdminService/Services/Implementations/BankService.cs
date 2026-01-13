@@ -1,5 +1,6 @@
 ﻿using NanoDMSAdminService.Common;
 using NanoDMSAdminService.DTO.Bank;
+using NanoDMSAdminService.DTO.Currency;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.UnitOfWorks;
@@ -40,7 +41,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Business_Id = b.Business_Id,
                 BusinessLocation_Id = b.BusinessLocation_Id,
                 Is_Active = b.Is_Active,
-                Status = b.Status,
+                RecordStatus = b.RecordStatus,
             });
         }
 
@@ -59,6 +60,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Short_Name = bank.Short_Name,
                 Swift_Code = bank.Swift_Code,
                 Country_Id = bank.Country_Id,
+                Country_Name = bank.Country?.Name,
                 Deleted = bank.Deleted,
                 Published = bank.Published,
                 Create_Date = bank.Create_Date,
@@ -68,7 +70,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Business_Id = bank.Business_Id,
                 BusinessLocation_Id = bank.BusinessLocation_Id,
                 Is_Active = bank.Is_Active,
-                Status = bank.Status,
+                RecordStatus = bank.RecordStatus,
             };
         }
         //List 
@@ -90,7 +92,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Country_Id = b.Country_Id,
                 Country_Name = b.Country?.Name ?? "",
                 Is_Active = b.Is_Active,
-                Status = b.Status,
+                RecordStatus = b.RecordStatus,
                 Published = b.Published,
                 Deleted = b.Deleted,
                 Create_Date = b.Create_Date,
@@ -129,38 +131,20 @@ namespace NanoDMSAdminService.Services.Implementations
                 Business_Id = dto.Business_Id,
                 BusinessLocation_Id = dto.BusinessLocation_Id,
                 Is_Active = true,
-                Status = Blocks.RecordStatus.Active,
+                RecordStatus = Blocks.RecordStatus.Active,
             };
 
             await _uow.Banks.AddAsync(bank);
             await _uow.SaveAsync();
 
-            return new BankDto
-            {
-                Id = bank.Id,
-                Name = bank.Name,
-                Short_Code = bank.Short_Code,
-                Short_Name = bank.Short_Name,
-                Swift_Code = bank.Swift_Code,
-                Country_Id = bank.Country_Id,
-                Deleted = bank.Deleted,
-                Published = bank.Published,
-                Create_Date = bank.Create_Date,
-                Create_User = bank.Create_User,
-                Last_Update_Date = bank.Last_Update_Date,
-                Last_Update_User = bank.Last_Update_User,
-                Business_Id = bank.Business_Id,
-                BusinessLocation_Id = bank.BusinessLocation_Id,
-                Is_Active = bank.Is_Active,
-                Status = bank.Status,
-            };
+            return await GetByIdAsync(bank.Id) ?? new BankDto();
         }
 
         // Update
         public async Task<BankDto> UpdateAsync(Guid id, BankUpdateDto dto,string userId)
         {
             var bank = await _uow.Banks.GetByIdAsync(id);
-            if (bank == null) return null;
+            if (bank == null) return new BankDto();
 
             bank.Name = dto.Name;
             bank.Short_Code = dto.Short_Code;
@@ -175,66 +159,30 @@ namespace NanoDMSAdminService.Services.Implementations
             bank.Last_Update_Date = DateTime.UtcNow;
             bank.Last_Update_User = Guid.Parse(userId);
             bank.Is_Active = true;
-            bank.Status = Blocks.RecordStatus.Active;
+            bank.RecordStatus = Blocks.RecordStatus.Active;
 
 
             _uow.Banks.Update(bank);
             await _uow.SaveAsync();
-           return new BankDto
-            {
-                Id = bank.Id,
-                Name = bank.Name,
-                Short_Code = bank.Short_Code,
-                Short_Name = bank.Short_Name,
-                Swift_Code = bank.Swift_Code,
-                Country_Id = bank.Country_Id,
-                Deleted = bank.Deleted,
-                Published = bank.Published,
-                Create_Date = bank.Create_Date,
-                Create_User = bank.Create_User,
-                Last_Update_Date = bank.Last_Update_Date,
-                Last_Update_User = bank.Last_Update_User,
-                Business_Id = bank.Business_Id,
-                BusinessLocation_Id = bank.BusinessLocation_Id,
-                Is_Active = bank.Is_Active,
-                Status = bank.Status,
-            };
+            return await GetByIdAsync(bank.Id) ?? new BankDto();
         }
 
         // Delete
         public async Task<BankDto> DeleteAsync(Guid id,string userId)
         {
             var bank = await _uow.Banks.GetByIdAsync(id);
-            if (bank == null) return null;
+            if (bank == null) return new BankDto();
 
             bank.Deleted = true;
             bank.Published = false;
             bank.Last_Update_Date = DateTime.UtcNow;
             bank.Last_Update_User = Guid.Parse(userId);
-            bank.Status = Blocks.RecordStatus.Inactive;
+            bank.RecordStatus = Blocks.RecordStatus.Inactive;
             bank.Is_Active = false;
 
             _uow.Banks.Update(bank);
             await _uow.SaveAsync();
-            return new BankDto
-            {
-                Id = bank.Id,
-                Name = bank.Name,
-                Short_Code = bank.Short_Code,
-                Short_Name = bank.Short_Name,
-                Swift_Code = bank.Swift_Code,
-                Country_Id = bank.Country_Id,
-                Deleted = bank.Deleted,
-                Published = bank.Published,
-                Create_Date = bank.Create_Date,
-                Create_User = bank.Create_User,
-                Last_Update_Date = bank.Last_Update_Date,
-                Last_Update_User = bank.Last_Update_User,
-                Business_Id = bank.Business_Id,
-                BusinessLocation_Id = bank.BusinessLocation_Id,
-                Is_Active = bank.Is_Active,
-                Status = bank.Status,
-            };
+            return await GetByIdAsync(bank.Id) ?? new BankDto();
         }
     }
 

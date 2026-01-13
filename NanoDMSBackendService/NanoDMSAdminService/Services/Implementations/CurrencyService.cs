@@ -40,7 +40,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Business_Id = b.Business_Id,
                 BusinessLocation_Id = b.BusinessLocation_Id,
                 Is_Active = b.Is_Active,
-                Status = b.Status,
+                RecordStatus = b.RecordStatus,
             });
         }
 
@@ -108,6 +108,8 @@ namespace NanoDMSAdminService.Services.Implementations
                 Published = currency.Published,
                 Is_Active = currency.Is_Active,
                 Create_Date = currency.Create_Date,
+                Create_User = currency.Create_User,
+                Last_Update_User = currency.Last_Update_User,
                 Last_Update_Date = currency.Last_Update_Date
             };
         }
@@ -127,9 +129,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Published = true,
                 Deleted = false,
                 Is_Active = true,
-                Status = Blocks.RecordStatus.Active,
-                Business_Id = dto.Business_Id,
-                BusinessLocation_Id = dto.BusinessLocation_Id
+                RecordStatus = Blocks.RecordStatus.Active,
             };
 
             await _uow.Currencies.AddAsync(currency);
@@ -165,7 +165,7 @@ namespace NanoDMSAdminService.Services.Implementations
             currency.Deleted = true;
             currency.Published = false;
             currency.Is_Active = false;
-            currency.Status = Blocks.RecordStatus.Inactive;
+            currency.RecordStatus = Blocks.RecordStatus.Inactive;
             currency.Last_Update_User = Guid.Parse(userId);
             currency.Last_Update_Date = DateTime.UtcNow;
 

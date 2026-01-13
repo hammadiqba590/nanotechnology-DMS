@@ -5,6 +5,1257 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Campaign/get-campaigns": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-list": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "Campaign_Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/CampaginStatus"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-by-id": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/register-campaign": {
+      "post": {
+        "tags": [
+          "Campaign"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/update-campaign": {
+      "put": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/delete-campaign": {
+      "delete": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-banks": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-bank-list": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "Campaign_Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Bank_Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Tax_On_Merchant_Share",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TaxOnMerchantStatus"
+            }
+          },
+          {
+            "name": "Budget_Limit_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+            }
+          },
+          {
+            "name": "Discount_Mode",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DiscountModeStatus"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/RecordStatus"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-bank-by-id": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/register-campaign-bank": {
+      "post": {
+        "tags": [
+          "Campaign"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignBankCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignBankCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignBankCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/update-campaign-bank": {
+      "put": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignBankUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignBankUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignBankUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/delete-campaign-bank": {
+      "delete": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-card-bins": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-card-bin-list": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/CampaginCardBinStatus"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/get-campaign-card-bin-by-id": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/register-campaign-card-bin": {
+      "post": {
+        "tags": [
+          "Campaign"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCardBinCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCardBinCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCardBinCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/update-campaign-card-bin": {
+      "put": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCardBinUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCardBinUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCardBinUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/delete-campaign-card-bin": {
+      "delete": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-bins": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-bin-list": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "Card_Bin_Value",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Bank_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Card_Brand_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Card_Type_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Card_Level_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Country_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Local_International",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/LocalInternationalStatus"
+            }
+          },
+          {
+            "name": "Is_Active",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-bin-by-id": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/register-card-bin": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBinCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBinCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBinCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/update-card-bin": {
+      "put": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBinUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBinUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBinUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/delete-card-bin": {
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-brands": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-brand-list": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-brand-by-id": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/register-card-brand": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBrandCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBrandCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBrandCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/update-card-brand": {
+      "put": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBrandUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBrandUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardBrandUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/delete-card-brand": {
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-levels": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-level-list": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-level-by-id": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/register-card-level": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardLevelCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardLevelCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardLevelCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/update-card-level": {
+      "put": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardLevelUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardLevelUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardLevelUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/delete-card-level": {
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-types": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-type-list": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-type-by-id": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/register-card-type": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardTypeCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardTypeCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardTypeCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/update-card-type": {
+      "put": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardTypeUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardTypeUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardTypeUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/delete-card-type": {
+      "delete": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/MasterEntry/get-banks": {
       "get": {
         "tags": [
@@ -934,6 +2185,1659 @@
           }
         }
       }
+    },
+    "/api/PosTerminal/get-pos-terminals": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-list": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "Serial_Number",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Terminal_Code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Company",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Model_Number",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-by-id": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/register-pos-terminal": {
+      "post": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalMasterCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalMasterCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalMasterCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/update-pos-terminal": {
+      "put": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalMasterUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalMasterUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalMasterUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/delete-pos-terminal": {
+      "delete": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-assignments": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-assignment-list": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "PosTerminal_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Mid",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Tid",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-assignment-by-id": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/register-pos-terminal-assignment": {
+      "post": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalAssignmentCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalAssignmentCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalAssignmentCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/update-pos-terminal-assignment": {
+      "put": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalAssignmentUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalAssignmentUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalAssignmentUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/delete-pos-terminal-assignment": {
+      "delete": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-configurations": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-configuration-list": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "Pos_Terminal_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Config_Key",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Config_Value",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-configuration-by-id": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/register-pos-terminal-configuration": {
+      "post": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalConfigurationCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalConfigurationCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalConfigurationCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/update-pos-terminal-configuration": {
+      "put": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalConfigurationUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalConfigurationUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalConfigurationUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/delete-pos-terminal-configuration": {
+      "delete": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-status-histories": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-status-history-list": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "Pos_Terminal_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TerminalHistoryStatus"
+            }
+          },
+          {
+            "name": "Notes",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/get-pos-terminal-status-history-by-id": {
+      "get": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/register-pos-terminal-status-history": {
+      "post": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalStatusHistoryCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalStatusHistoryCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalStatusHistoryCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/update-pos-terminal-status-history": {
+      "put": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalStatusHistoryUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalStatusHistoryUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PosTerminalStatusHistoryUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PosTerminal/delete-pos-terminal-status-history": {
+      "delete": {
+        "tags": [
+          "PosTerminal"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psps": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-list": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Short_Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Currency_Code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Registration_Number",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Compliance_Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ComplianceStatus"
+            }
+          },
+          {
+            "name": "Contact_Email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Contact_Phone",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Api_Key",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Integration_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/IntegrationTypeStatus"
+            }
+          },
+          {
+            "name": "Settlement_Frequency",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/SettlementFrequencyStatus"
+            }
+          },
+          {
+            "name": "Requires_Kyc",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-by-id": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/register-psp": {
+      "post": {
+        "tags": [
+          "Psp"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/update-psp": {
+      "put": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/delete-psp": {
+      "delete": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-categories": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-category-list": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-category-by-id": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/register-psp-category": {
+      "post": {
+        "tags": [
+          "Psp"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCategoryCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCategoryCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCategoryCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/update-psp-category": {
+      "put": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCategoryUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCategoryUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCategoryUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/delete-psp-category": {
+      "delete": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-currencies": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-currency-list": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "Psp_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Currency_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-currency-by-id": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/register-psp-currency": {
+      "post": {
+        "tags": [
+          "Psp"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCurrencyCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCurrencyCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCurrencyCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/update-psp-currency": {
+      "put": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCurrencyUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCurrencyUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspCurrencyUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/delete-psp-currency": {
+      "delete": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-documents": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-document-list": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "Psp_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Doc_Type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-document-by-id": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/register-psp-document": {
+      "post": {
+        "tags": [
+          "Psp"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspDocumentCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspDocumentCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspDocumentCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/update-psp-document": {
+      "put": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspDocumentUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspDocumentUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspDocumentUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/delete-psp-document": {
+      "delete": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-payment-methods": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-payment-method-list": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "Psp_Id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Payment_Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/PspPaymentTypeStatus"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/get-psp-payment-method-by-id": {
+      "get": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/register-psp-payment-method": {
+      "post": {
+        "tags": [
+          "Psp"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspPaymentMethodCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspPaymentMethodCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspPaymentMethodCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/update-psp-payment-method": {
+      "put": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspPaymentMethodUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspPaymentMethodUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PspPaymentMethodUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Psp/delete-psp-payment-method": {
+      "delete": {
+        "tags": [
+          "Psp"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1040,7 +3944,544 @@
         "type": "integer",
         "format": "int32"
       },
+      "CampaginCardBinStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "CampaginStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "CampaignBankCreateDto": {
+        "required": [
+          "bank_Id",
+          "business_Id",
+          "business_Location_Id",
+          "campagin_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campagin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "budget": {
+            "type": "number",
+            "format": "double"
+          },
+          "discount_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax_On_Merchant_Share": {
+            "$ref": "#/components/schemas/TaxOnMerchantStatus"
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "discount_Mode": {
+            "$ref": "#/components/schemas/DiscountModeStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignBankUpdateDto": {
+        "required": [
+          "bank_Id",
+          "business_Id",
+          "business_Location_Id",
+          "campagin_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campagin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "budget": {
+            "type": "number",
+            "format": "double"
+          },
+          "discount_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax_On_Merchant_Share": {
+            "$ref": "#/components/schemas/TaxOnMerchantStatus"
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "discount_Mode": {
+            "$ref": "#/components/schemas/DiscountModeStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RecordStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignCardBinCreateDto": {
+        "required": [
+          "business_Id",
+          "business_Location_Id",
+          "campagin_Bank_Id",
+          "card_Bin_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campagin_Bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Bin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CampaginCardBinStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignCardBinUpdateDto": {
+        "required": [
+          "business_Id",
+          "business_Location_Id",
+          "campagin_Bank_Id",
+          "card_Bin_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campagin_Bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Bin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CampaginCardBinStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignCreateDto": {
+        "required": [
+          "business_Id",
+          "business_Location_Id",
+          "campaign_Name",
+          "currency_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campaign_Name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tax_Amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fbr": {
+            "type": "string",
+            "nullable": true
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignUpdateDto": {
+        "required": [
+          "business_Id",
+          "business_Location_Id",
+          "campaign_Name",
+          "currency_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campaign_Name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tax_Amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fbr": {
+            "type": "string",
+            "nullable": true
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CampaginStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardBinCreateDto": {
+        "required": [
+          "bank_Id",
+          "card_Bin_Value",
+          "card_Brand_Id",
+          "card_Level_Id",
+          "card_Type_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Bin_Value": {
+            "maxLength": 12,
+            "minLength": 1,
+            "type": "string"
+          },
+          "card_Brand_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Type_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Level_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "local_International": {
+            "$ref": "#/components/schemas/LocalInternationalStatus"
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "country_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardBinUpdateDto": {
+        "required": [
+          "bank_Id",
+          "card_Bin_Value",
+          "card_Brand_Id",
+          "card_Level_Id",
+          "card_Type_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Bin_Value": {
+            "maxLength": 12,
+            "minLength": 1,
+            "type": "string"
+          },
+          "card_Brand_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Type_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "card_Level_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "local_International": {
+            "$ref": "#/components/schemas/LocalInternationalStatus"
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "country_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardBrandCreateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardBrandUpdateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardLevelCreateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardLevelUpdateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardTypeCreateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardTypeUpdateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
       "ChangeTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ComplianceStatus": {
         "enum": [
           0,
           1,
@@ -1052,8 +4493,6 @@
       },
       "CountryCreateDto": {
         "required": [
-          "business_Id",
-          "businessLocation_Id",
           "iso2",
           "iso3",
           "name"
@@ -1103,14 +4542,6 @@
             "nullable": true
           },
           "time_Zone": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "business_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "businessLocation_Id": {
             "type": "string",
             "format": "uuid"
           }
@@ -1119,8 +4550,6 @@
       },
       "CountryUpdateDto": {
         "required": [
-          "business_Id",
-          "businessLocation_Id",
           "iso2",
           "iso3",
           "name"
@@ -1172,22 +4601,12 @@
           "time_Zone": {
             "type": "string",
             "format": "uuid"
-          },
-          "business_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "businessLocation_Id": {
-            "type": "string",
-            "format": "uuid"
           }
         },
         "additionalProperties": false
       },
       "CurrencyCreateDto": {
         "required": [
-          "business_Id",
-          "businessLocation_Id",
           "code",
           "country_Id",
           "name"
@@ -1210,14 +4629,6 @@
             "nullable": true
           },
           "country_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "business_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "businessLocation_Id": {
             "type": "string",
             "format": "uuid"
           }
@@ -1226,8 +4637,6 @@
       },
       "CurrencyUpdateDto": {
         "required": [
-          "business_Id",
-          "businessLocation_Id",
           "code",
           "country_Id",
           "name"
@@ -1252,17 +4661,20 @@
           "country_Id": {
             "type": "string",
             "format": "uuid"
-          },
-          "business_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "businessLocation_Id": {
-            "type": "string",
-            "format": "uuid"
           }
         },
         "additionalProperties": false
+      },
+      "DiscountModeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "DiscountRuleCreateDto": {
         "required": [
@@ -1559,7 +4971,857 @@
         "type": "integer",
         "format": "int32"
       },
+      "IntegrationTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "LocalInternationalStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "PaymentTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PosTerminalAssignmentCreateDto": {
+        "type": "object",
+        "properties": {
+          "posTerminal_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mid": {
+            "type": "string",
+            "nullable": true
+          },
+          "tid": {
+            "type": "string",
+            "nullable": true
+          },
+          "assigned_At": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "unassigned_At": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosTerminalAssignmentUpdateDto": {
+        "type": "object",
+        "properties": {
+          "posTerminal_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mid": {
+            "type": "string",
+            "nullable": true
+          },
+          "tid": {
+            "type": "string",
+            "nullable": true
+          },
+          "assigned_At": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "unassigned_At": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosTerminalConfigurationCreateDto": {
+        "type": "object",
+        "properties": {
+          "pos_Terminal_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "config_Key": {
+            "type": "string",
+            "nullable": true
+          },
+          "config_Value": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosTerminalConfigurationUpdateDto": {
+        "type": "object",
+        "properties": {
+          "pos_Terminal_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "config_Key": {
+            "type": "string",
+            "nullable": true
+          },
+          "config_Value": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosTerminalMasterCreateDto": {
+        "required": [
+          "serial_Number"
+        ],
+        "type": "object",
+        "properties": {
+          "serial_Number": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "terminal_Code": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "company": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "model_Number": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "software_Version": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosTerminalMasterUpdateDto": {
+        "required": [
+          "serial_Number"
+        ],
+        "type": "object",
+        "properties": {
+          "serial_Number": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "terminal_Code": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "company": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "model_Number": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "software_Version": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosTerminalStatusHistoryCreateDto": {
+        "type": "object",
+        "properties": {
+          "pos_Terminal_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TerminalHistoryStatus"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosTerminalStatusHistoryUpdateDto": {
+        "type": "object",
+        "properties": {
+          "pos_Terminal_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TerminalHistoryStatus"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspCategoryCreateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspCategoryUpdateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspCreateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "short_Name": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "psp_Category_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "psp_Category_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "country_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "currency_Code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Symbol": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "registration_Number": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "reg_Doc_Url": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "compliance_Status": {
+            "$ref": "#/components/schemas/ComplianceStatus"
+          },
+          "website": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "contact_Email": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "contact_Phone": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "api_Endpoint": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "sandbox_Endpoint": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "webhook_Url": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "api_Key": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "documentation_Url": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "integration_Type": {
+            "$ref": "#/components/schemas/IntegrationTypeStatus"
+          },
+          "supported_Payment_Methods": {
+            "type": "string",
+            "nullable": true
+          },
+          "supported_Currencies": {
+            "type": "string",
+            "nullable": true
+          },
+          "settlement_Frequency": {
+            "$ref": "#/components/schemas/SettlementFrequencyStatus"
+          },
+          "transaction_Limit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "daily_Volume_Limit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "risk_Score": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "requires_Kyc": {
+            "type": "boolean"
+          },
+          "onboarded_By": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "onboarded_At": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspCurrencyCreateDto": {
+        "required": [
+          "currency_Id",
+          "psp_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "currency_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspCurrencyUpdateDto": {
+        "required": [
+          "currency_Id",
+          "psp_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "currency_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspDocumentCreateDto": {
+        "type": "object",
+        "properties": {
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "doc_Type": {
+            "type": "string",
+            "nullable": true
+          },
+          "doc_Url": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspDocumentUpdateDto": {
+        "type": "object",
+        "properties": {
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "doc_Type": {
+            "type": "string",
+            "nullable": true
+          },
+          "doc_Url": {
+            "type": "string",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspPaymentMethodCreateDto": {
+        "required": [
+          "psp_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "payment_Type": {
+            "$ref": "#/components/schemas/PspPaymentTypeStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspPaymentMethodUpdateDto": {
+        "required": [
+          "psp_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "payment_Type": {
+            "$ref": "#/components/schemas/PspPaymentTypeStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PspPaymentTypeStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "PspUpdateDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "short_Name": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "psp_Category_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "psp_Category_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "country_Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "country_Id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "currency_Code": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "currency_Symbol": {
+            "maxLength": 10,
+            "type": "string",
+            "nullable": true
+          },
+          "registration_Number": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "reg_Doc_Url": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "compliance_Status": {
+            "$ref": "#/components/schemas/ComplianceStatus"
+          },
+          "website": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "contact_Email": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "contact_Phone": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "api_Endpoint": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "sandbox_Endpoint": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "webhook_Url": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "api_Key": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "documentation_Url": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "integration_Type": {
+            "$ref": "#/components/schemas/IntegrationTypeStatus"
+          },
+          "supported_Payment_Methods": {
+            "type": "string",
+            "nullable": true
+          },
+          "supported_Currencies": {
+            "type": "string",
+            "nullable": true
+          },
+          "settlement_Frequency": {
+            "$ref": "#/components/schemas/SettlementFrequencyStatus"
+          },
+          "transaction_Limit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "daily_Volume_Limit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "risk_Score": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "requires_Kyc": {
+            "type": "boolean"
+          },
+          "onboarded_By": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "onboarded_At": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RecordStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "SettlementFrequencyStatus": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TaxOnMerchantStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TerminalHistoryStatus": {
         "enum": [
           0,
           1,

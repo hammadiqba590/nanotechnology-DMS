@@ -9,8 +9,8 @@ namespace NanoDMSAdminService.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public Guid Terminal_Id { get; set; }
-        [ForeignKey(nameof(Terminal_Id))]
+        public Guid Pos_Terminal_Id { get; set; }
+        [ForeignKey(nameof(Pos_Terminal_Id))]
         public PosTerminalMaster? Pos_Terminal { get; set; }
         public TerminalHistoryStatus? Status { get; set; }  // active, inactive, maintenance,decommissioned
         public string? Notes { get; set; }

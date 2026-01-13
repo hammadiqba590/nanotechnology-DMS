@@ -1,0 +1,10 @@
+wwwroot\assets\css\style.css
+wwwroot\assets\favicon\android-chrome-192x192.png
+wwwroot\assets\favicon\android-chrome-512x512.png
+wwwroot\assets\favicon\apple-touch-icon.png
+wwwroot\assets\favicon\favicon.ico
+wwwroot\assets\favicon\favicon-16x16.png
+wwwroot\assets\favicon\favicon-32x32.png
+wwwroot\assets\favicon\site.webmanifest
+wwwroot\assets\images\logo.png
+wwwroot\assets\js\main.js

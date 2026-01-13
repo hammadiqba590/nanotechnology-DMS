@@ -22,10 +22,7 @@ namespace NanoDMSAdminService.DTO.Country
         [MaxLength(10)]
         public string? Flag_Emoji { get; set; }
         public Guid Time_Zone { get; set; }
-        [Required]
-        public Guid Business_Id { get; set; }
-        [Required]
-        public Guid BusinessLocation_Id { get; set; }
+        
     }
 
 }

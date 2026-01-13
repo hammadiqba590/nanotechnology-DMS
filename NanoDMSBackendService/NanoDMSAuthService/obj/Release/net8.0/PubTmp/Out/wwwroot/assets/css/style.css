@@ -1,0 +1,157 @@
+/* Generic CSS  */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 20px 0;
+}
+
+/* Generic CSS end */
+
+/* OTP CSS START */
+
+.email-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.header {
+  background: #ff5a5a;
+  color: #ffffff;
+  text-align: center;
+  padding: 20px;
+}
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+.content {
+  padding: 20px;
+  text-align: center;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.content h2 {
+  color: #333333;
+  font-size: 20px;
+}
+
+.user p, .content p:first-of-type {
+  margin: 10px 0;
+}
+.otp {
+  display: inline-block;
+  font-size: 32px;
+  color: #007bff;
+  background: #f4f4f4;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin: 20px 0;
+  font-weight: bold;
+}
+.footer {
+  text-align: center;
+  padding: 10px;
+  background: #ff5a5a;
+  font-size: 12px;
+  color: #fff;
+}
+/* OTP CSS END */
+
+.registration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 500px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container h2 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #555555;
+}
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333333;
+}
+input[type="password"]:focus,
+input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff5a5a;
+  border: 1px solid #ff5a5a;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.button:hover {
+  background-color: #fff;
+  color: #ff5a5a;
+  border: 1px solid #ff5a5a;
+}
+.error-message {
+  color: #ff0000;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+.success-message {
+  color: #28a745;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+.pass-wrapper {
+  position: relative;
+}
+.toggle-icon {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  cursor: pointer;
+  height: 15px;
+}

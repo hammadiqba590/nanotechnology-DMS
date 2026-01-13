@@ -3919,11 +3919,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSAdminService\\NanoDMSAdminService.csproj",
+      "projectUniqueName": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSAdminService\\NanoDMSAdminService.csproj",
       "projectName": "NanoDMSAdminService",
-      "projectPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSAdminService\\NanoDMSAdminService.csproj",
+      "projectPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSAdminService\\NanoDMSAdminService.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSAdminService\\obj\\",
+      "outputPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSAdminService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3945,8 +3945,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj": {
-              "projectPath": "D:\\NanoDMS Project\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj"
+            "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj": {
+              "projectPath": "D:\\NanoDMS Project\\NanoTechnologyApi\\nanotechnology-DMS\\NanoDMSBackendService\\NanoDMSSharedLibrary\\NanoDMSSharedLibrary.csproj"
             }
           }
         }
@@ -4018,5 +4018,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
+    }
+  ]
 }

@@ -13,9 +13,10 @@ namespace NanoDMSAdminService.Models
         public string Campaign_Name { get; set; } = "";
 
         public string? Description { get; set; }
-
-        [StringLength(3)]
-        public string Currency { get; set; } = "PKR";
+        [Required]
+        public Guid Currency_Id { get; set; }
+        [ForeignKey(nameof(Currency_Id))]
+        public Currency? Currency { get; set; }
         public decimal? Tax_Amount { get; set; }
         public string? Fbr { get; set; }
         public CampaginStatus? Status { get; set; } //active, inactive,expired 

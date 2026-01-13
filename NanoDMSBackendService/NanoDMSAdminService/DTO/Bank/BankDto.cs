@@ -13,7 +13,7 @@ namespace NanoDMSAdminService.DTO.Bank
         public string Short_Code { get; set; } = string.Empty;
         public string? Swift_Code { get; set; }
         public Guid Country_Id { get; set; }
-        public string Country_Name { get; set; } = string.Empty;
+        public string? Country_Name { get; set; }
     }
 
     
