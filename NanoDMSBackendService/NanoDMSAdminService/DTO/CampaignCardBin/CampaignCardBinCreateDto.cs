@@ -1,4 +1,5 @@
 ﻿using NanoDMSAdminService.Blocks;
+using NanoDMSAdminService.DTO.DiscountRule;
 using System.ComponentModel.DataAnnotations;
 
 namespace NanoDMSAdminService.DTO.CampaignCardBin
@@ -16,5 +17,7 @@ namespace NanoDMSAdminService.DTO.CampaignCardBin
 
         [Required]
         public Guid Business_Location_Id { get; set; }
+
+        public List<DiscountRuleCreateDto> DiscountRules { get; set; } = [];
     }
 }

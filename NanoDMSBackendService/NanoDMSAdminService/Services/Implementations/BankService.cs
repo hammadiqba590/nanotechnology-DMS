@@ -1,29 +1,43 @@
-﻿using NanoDMSAdminService.Common;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using NanoDMSAdminService.Common;
 using NanoDMSAdminService.DTO.Bank;
 using NanoDMSAdminService.DTO.Currency;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
+using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class BankService : IBankService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IDistributedCache _cache;
 
-        public BankService(IUnitOfWork uow)
+        public BankService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
+            _cache = cache;
         }
 
         // Get all banks
         public async Task<IEnumerable<BankDto>> GetAllAsync()
         {
+            const string cacheKey = "banks:all";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<BankDto>>(cached)!;
+
+
             var banks = await _uow.Banks.GetAllByConditionAsync(b =>
                 !b.Deleted && b.Is_Active
             );
 
-            return banks.Select(b => new BankDto
+            var result =  banks.Select(b => new BankDto
             {
                 Id = b.Id,
                 Name = b.Name,
@@ -38,21 +52,33 @@ namespace NanoDMSAdminService.Services.Implementations
                 Create_User = b.Create_User,
                 Last_Update_Date = b.Last_Update_Date,
                 Last_Update_User = b.Last_Update_User,
-                Business_Id = b.Business_Id,
-                BusinessLocation_Id = b.BusinessLocation_Id,
+                Business_Id = Guid.Empty,
+                BusinessLocation_Id = Guid.Empty,
                 Is_Active = b.Is_Active,
                 RecordStatus = b.RecordStatus,
-            });
+            }).ToList();
+
+
+            await _cache.SetStringAsync(cacheKey,JsonSerializer.Serialize(result),new DistributedCacheEntryOptions{AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)});
+
+            return result;
+
         }
 
 
         // Get by Id
         public async Task<BankDto?> GetByIdAsync(Guid id)
         {
+            var cacheKey = $"banks:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<BankDto>(cached);
+
             var bank = await _uow.Banks.GetWithCountryAsync(id);
             if (bank == null) return null;
 
-            return new BankDto
+            var dto = new BankDto
             {
                 Id = bank.Id,
                 Name = bank.Name,
@@ -67,16 +93,26 @@ namespace NanoDMSAdminService.Services.Implementations
                 Create_User = bank.Create_User,
                 Last_Update_Date = bank.Last_Update_Date,
                 Last_Update_User = bank.Last_Update_User,
-                Business_Id = bank.Business_Id,
-                BusinessLocation_Id = bank.BusinessLocation_Id,
+                Business_Id = Guid.Empty,
+                BusinessLocation_Id = Guid.Empty,
                 Is_Active = bank.Is_Active,
                 RecordStatus = bank.RecordStatus,
             };
+
+            await _cache.SetStringAsync(cacheKey,JsonSerializer.Serialize(dto),new DistributedCacheEntryOptions{AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15)});
+
+            return dto;
         }
         //List 
 
         public async Task<PaginatedResponseDto<BankDto>> GetPagedAsync(BankFilterModel filter)
         {
+            var cacheKey = BankCacheKeys.Paged(filter.PageNumber,filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<BankDto>>(cached)!;
+
             var (banks, totalRecords) = await _uow.Banks.GetPagedAsync(filter);
 
             if (!banks.Any())
@@ -96,13 +132,13 @@ namespace NanoDMSAdminService.Services.Implementations
                 Published = b.Published,
                 Deleted = b.Deleted,
                 Create_Date = b.Create_Date,
-                Business_Id = b.Business_Id,
-                BusinessLocation_Id = b.BusinessLocation_Id,
+                Business_Id = Guid.Empty,
+                BusinessLocation_Id = Guid.Empty,
                 Last_Update_Date = b.Last_Update_Date,
                 Last_Update_User = b.Last_Update_User,
             });
 
-            return new PaginatedResponseDto<BankDto>
+            var result =  new PaginatedResponseDto<BankDto>
             {
                 TotalRecords = totalRecords,
                 PageNumber = filter.PageNumber,
@@ -110,6 +146,10 @@ namespace NanoDMSAdminService.Services.Implementations
                 TotalPages = (int)Math.Ceiling(totalRecords / (double)filter.PageSize),
                 Data = mapped
             };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return result;
         }
 
 
@@ -128,14 +168,17 @@ namespace NanoDMSAdminService.Services.Implementations
                 Published = true,
                 Create_Date = DateTime.UtcNow,
                 Create_User = Guid.Parse(userId),
-                Business_Id = dto.Business_Id,
-                BusinessLocation_Id = dto.BusinessLocation_Id,
+                Business_Id = Guid.Empty,
+                BusinessLocation_Id = Guid.Empty,
                 Is_Active = true,
                 RecordStatus = Blocks.RecordStatus.Active,
             };
 
             await _uow.Banks.AddAsync(bank);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(BankCacheKeys.All);
 
             return await GetByIdAsync(bank.Id) ?? new BankDto();
         }
@@ -151,8 +194,8 @@ namespace NanoDMSAdminService.Services.Implementations
             bank.Short_Name = dto.Short_Name;
             bank.Swift_Code = dto.Swift_Code;
             bank.Country_Id = dto.Country_Id;
-            bank.Business_Id = dto.Business_Id;
-            bank.BusinessLocation_Id = dto. BusinessLocation_Id;
+            //bank.Business_Id = dto.Business_Id;
+            //bank.BusinessLocation_Id = dto. BusinessLocation_Id;
 
             bank.Deleted = false;
             bank.Published  = true;
@@ -164,6 +207,11 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.Banks.Update(bank);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(BankCacheKeys.All);
+            await _cache.RemoveAsync(BankCacheKeys.ById(id));
+
             return await GetByIdAsync(bank.Id) ?? new BankDto();
         }
 
@@ -182,6 +230,11 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.Banks.Update(bank);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(BankCacheKeys.All);
+            await _cache.RemoveAsync(BankCacheKeys.ById(id));
+
             return await GetByIdAsync(bank.Id) ?? new BankDto();
         }
     }

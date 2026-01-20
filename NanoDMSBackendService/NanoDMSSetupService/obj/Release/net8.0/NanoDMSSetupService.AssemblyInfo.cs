@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NanoDMSSetupService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70ce4b0b3c33dd2f719869fc566f8a6af8fded48")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+058f1a03e8608c6b82e9c74b30947044a826c7d0")]
 [assembly: System.Reflection.AssemblyProductAttribute("NanoDMSSetupService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NanoDMSSetupService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

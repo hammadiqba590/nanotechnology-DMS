@@ -11,9 +11,9 @@ namespace NanoDMSAdminService.DTO.Psp
         public string? Short_Name { get; set; }
         [MaxLength(20)]
         public string? Code { get; set; }
-        public string Psp_Category_Name { get; set; } = null!;
+        //public string Psp_Category_Name { get; set; } = null!;
         public Guid Psp_Category_Id { get; set; }
-        public string? Country_Name { get; set; }
+       // public string? Country_Name { get; set; }
         public Guid? Country_Id { get; set; }
         [StringLength(3)]
         public string? Currency_Code { get; set; }

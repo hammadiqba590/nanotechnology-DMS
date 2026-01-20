@@ -1,29 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using NanoDMSAdminService.Common;
 using NanoDMSAdminService.DTO.Country;
 using NanoDMSAdminService.DTO.Currency;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
+using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class CurrencyService : ICurrencyService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IDistributedCache _cache;
 
-        public CurrencyService(IUnitOfWork uow)
+        public CurrencyService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
+            _cache = cache;
         }
 
         public async Task<IEnumerable<CurrencyDto>> GetAllAsync()
         {
-            var currencies = await _uow.Currencies.GetAllByConditionAsync(b =>
-                !b.Deleted && b.Is_Active
-            );
+            const string cacheKey = "currencies:all";
 
-            return currencies.Select(b => new CurrencyDto
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<CurrencyDto>>(cached)!;
+
+            var currencies = await _uow.Currencies.GetAllByConditionAsync(b => !b.Deleted && b.Is_Active);
+
+            var result = currencies.Select(b => new CurrencyDto
             {
                 Id = b.Id,
                 Name = b.Name,
@@ -42,10 +52,51 @@ namespace NanoDMSAdminService.Services.Implementations
                 Is_Active = b.Is_Active,
                 RecordStatus = b.RecordStatus,
             });
-        }
 
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
+
+            return result;
+        }
+        public async Task<CurrencyDto?> GetByIdAsync(Guid id)
+        {
+            var cacheKey = $"currencies:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<CurrencyDto>(cached);
+
+            var currency = await _uow.Currencies.GetByIdAsync(id);
+            if (currency == null) return null;
+
+            var dto = new CurrencyDto
+            {
+                Id = currency.Id,
+                Code = currency.Code,
+                Name = currency.Name,
+                Symbol = currency.Symbol,
+                Country_Id = currency.Country_Id,
+                Country_Name = currency.Country?.Name,
+                Deleted = currency.Deleted,
+                Published = currency.Published,
+                Is_Active = currency.Is_Active,
+                Create_Date = currency.Create_Date,
+                Create_User = currency.Create_User,
+                Last_Update_User = currency.Last_Update_User,
+                Last_Update_Date = currency.Last_Update_Date
+            };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(dto), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15)});
+
+            return dto;
+        }
         public async Task<PaginatedResponseDto<CurrencyDto>> GetPagedAsync(CurrencyFilterModel filter)
         {
+            var cacheKey = CurrencyCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<CurrencyDto>>(cached)!;
+
             var query = _uow.Currencies.GetQueryable()
                 .Where(x => !x.Deleted);
 
@@ -81,7 +132,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 .AsNoTracking()
                 .ToListAsync();
 
-            return new PaginatedResponseDto<CurrencyDto>
+            var result = new PaginatedResponseDto<CurrencyDto>
             {
                 TotalRecords = totalRecords,
                 PageNumber = filter.PageNumber,
@@ -89,30 +140,13 @@ namespace NanoDMSAdminService.Services.Implementations
                 TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
                 Data = data
             };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return result;
         }
 
-        public async Task<CurrencyDto?> GetByIdAsync(Guid id)
-        {
-            var currency = await _uow.Currencies.GetByIdAsync(id);
-            if (currency == null) return null;
-
-            return new CurrencyDto
-            {
-                Id = currency.Id,
-                Code = currency.Code,
-                Name = currency.Name,
-                Symbol = currency.Symbol,
-                Country_Id = currency.Country_Id,
-                Country_Name = currency.Country?.Name,
-                Deleted = currency.Deleted,
-                Published = currency.Published,
-                Is_Active = currency.Is_Active,
-                Create_Date = currency.Create_Date,
-                Create_User = currency.Create_User,
-                Last_Update_User = currency.Last_Update_User,
-                Last_Update_Date = currency.Last_Update_Date
-            };
-        }
+        
 
         public async Task<CurrencyDto> CreateAsync(CurrencyCreateDto dto, string userId)
         {
@@ -123,7 +157,6 @@ namespace NanoDMSAdminService.Services.Implementations
                 Name = dto.Name,
                 Symbol = dto.Symbol,
                 Country_Id = dto.Country_Id,
-
                 Create_Date = DateTime.UtcNow,
                 Create_User = Guid.Parse(userId),
                 Published = true,
@@ -134,6 +167,9 @@ namespace NanoDMSAdminService.Services.Implementations
 
             await _uow.Currencies.AddAsync(currency);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(CurrencyCacheKeys.All);
 
             return await GetByIdAsync(currency.Id) ?? new CurrencyDto();
         }
@@ -154,6 +190,11 @@ namespace NanoDMSAdminService.Services.Implementations
             _uow.Currencies.Update(currency);
             await _uow.SaveAsync();
 
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(CurrencyCacheKeys.All);
+            await _cache.RemoveAsync(CurrencyCacheKeys.ById(id));
+
+
             return await GetByIdAsync(id) ?? new CurrencyDto();
         }
 
@@ -171,6 +212,10 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.Currencies.Update(currency);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(CurrencyCacheKeys.All);
+            await _cache.RemoveAsync(CurrencyCacheKeys.ById(id));
 
             return await GetByIdAsync(id) ?? new CurrencyDto();
         }

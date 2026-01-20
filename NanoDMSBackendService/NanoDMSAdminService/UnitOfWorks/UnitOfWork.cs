@@ -1,4 +1,6 @@
-﻿using NanoDMSAdminService.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using NanoDMSAdminService.Data;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Repositories;
 using NanoDMSAdminService.Repositories.Implementations;
@@ -58,7 +60,27 @@ namespace NanoDMSAdminService.UnitOfWorks
         public ICurrencyRepository Currencies { get;}
         public IDiscountRuleRepository DiscountRules { get; }
         public IDiscountRuleHistoryRepository DiscountRuleHistories { get;}
-        
+        public async Task ExecuteInTransactionAsync(Func<Task> action)
+        {
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            await strategy.ExecuteAsync(async () =>
+            {
+                await using var transaction = await _context.Database.BeginTransactionAsync();
+                try
+                {
+                    await action();
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            });
+        }
+
         public async Task<int> SaveAsync()
             => await _context.SaveChangesAsync();
     }

@@ -1,31 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using NanoDMSAdminService.Blocks;
 using NanoDMSAdminService.Common;
+using NanoDMSAdminService.DTO.Currency;
 using NanoDMSAdminService.DTO.DiscountRule;
 using NanoDMSAdminService.DTO.DiscountRuleHistory;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class DiscountRuleHistoryService : IDiscountRuleHistoryService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IDistributedCache _cache;
 
-        public DiscountRuleHistoryService(IUnitOfWork uow)
+        public DiscountRuleHistoryService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
+            _cache = cache;
         }
+
         //Get All
         public async Task<IEnumerable<DiscountRuleHistoryDto>> GetAllAsync()
         {
-            var rules = await _uow.DiscountRuleHistories.GetAllByConditionAsync(b =>
-                !b.Deleted && b.Is_Active
-            );
+            const string cacheKey = "discountrulehistories:all";
 
-            return rules.Select(b => new DiscountRuleHistoryDto
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<DiscountRuleHistoryDto>>(cached)!;
+
+            var rules = await _uow.DiscountRuleHistories.GetAllByConditionAsync(b => !b.Deleted && b.Is_Active);
+
+            var result = rules.Select(b => new DiscountRuleHistoryDto
             {
                 Id = b.Id,
                 Discount_Rule_Id = b.Discount_Rule_Id,
@@ -52,11 +63,37 @@ namespace NanoDMSAdminService.Services.Implementations
                 Is_Active = b.Is_Active,
                 RecordStatus = b.RecordStatus,
             });
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
+
+            return result;
         }
-        
+        public async Task<DiscountRuleHistoryDto?> GetByIdAsync(Guid id)
+        {
+            var cacheKey = $"discountrulehistories:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<DiscountRuleHistoryDto>(cached);
+
+            var x = await _uow.DiscountRuleHistories.GetByIdAsync(id);
+            if (x == null) return null;
+
+            var dto = MapToDto(x);
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(dto), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return dto;
+        }
         // Get paginated histories
         public async Task<PaginatedResponseDto<DiscountRuleHistoryDto>> GetPagedAsync(DiscountRuleHistoryFilterModel filter)
         {
+            var cacheKey = DiscountRuleHistoryCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<DiscountRuleHistoryDto>>(cached)!;
+
             var query = _uow.DiscountRuleHistories.GetQueryable().Where(x => !x.Deleted);
 
             if (filter.Discount_Rule_Id.HasValue)
@@ -113,7 +150,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 RecordStatus = x.RecordStatus
             }).ToList();
 
-            return new PaginatedResponseDto<DiscountRuleHistoryDto>
+            var result = new PaginatedResponseDto<DiscountRuleHistoryDto>
             {
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
@@ -121,15 +158,13 @@ namespace NanoDMSAdminService.Services.Implementations
                 TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
                 Data = dtoData
             };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15)});
+
+            return result;
         }
 
-        public async Task<DiscountRuleHistoryDto?> GetByIdAsync(Guid id)
-        {
-            var x = await _uow.DiscountRuleHistories.GetByIdAsync(id);
-            if (x == null) return null;
-
-            return MapToDto(x);
-        }
+       
 
         public async Task<DiscountRuleHistoryDto> CreateAsync(DiscountRuleHistoryCreateDto dto, Guid userId)
         {
@@ -160,6 +195,10 @@ namespace NanoDMSAdminService.Services.Implementations
             await _uow.DiscountRuleHistories.AddAsync(entity);
             await _uow.SaveAsync();
 
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(DiscountRuleHistoryCacheKeys.All);
+
+
             return MapToDto(entity);
         }
 
@@ -188,6 +227,10 @@ namespace NanoDMSAdminService.Services.Implementations
             _uow.DiscountRuleHistories.Update(entity);
             await _uow.SaveAsync();
 
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(DiscountRuleHistoryCacheKeys.All);
+            await _cache.RemoveAsync(DiscountRuleHistoryCacheKeys.ById(id));
+
             return MapToDto(entity);
         }
 
@@ -205,6 +248,10 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.DiscountRuleHistories.Update(entity);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(DiscountRuleHistoryCacheKeys.All);
+            await _cache.RemoveAsync(DiscountRuleHistoryCacheKeys.ById(id));
 
             return MapToDto(entity);
         }

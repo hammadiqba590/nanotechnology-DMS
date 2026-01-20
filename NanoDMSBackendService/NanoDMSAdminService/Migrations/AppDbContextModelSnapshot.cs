@@ -171,6 +171,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<int>("Priority")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("Psp_Id")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
 
@@ -193,6 +196,8 @@ namespace NanoDMSAdminService.Migrations
                     b.HasIndex("Campaign_Name");
 
                     b.HasIndex("Currency_Id");
+
+                    b.HasIndex("Psp_Id");
 
                     b.ToTable("Campaigns");
                 });
@@ -298,6 +303,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<Guid>("Campagin_Bank_Id")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("Campagin_Id")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("Card_Bin_Id")
                         .HasColumnType("uuid");
 
@@ -339,6 +347,8 @@ namespace NanoDMSAdminService.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Campagin_Bank_Id");
+
+                    b.HasIndex("Campagin_Id");
 
                     b.HasIndex("Card_Bin_Id");
 
@@ -1626,7 +1636,15 @@ namespace NanoDMSAdminService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("NanoDMSAdminService.Models.Psp", "Psps")
+                        .WithMany("Campaigns")
+                        .HasForeignKey("Psp_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Currency");
+
+                    b.Navigation("Psps");
                 });
 
             modelBuilder.Entity("NanoDMSAdminService.Models.CampaignBank", b =>
@@ -1656,11 +1674,19 @@ namespace NanoDMSAdminService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("NanoDMSAdminService.Models.Campaign", "Campaign")
+                        .WithMany("CampaignCardBins")
+                        .HasForeignKey("Campagin_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NanoDMSAdminService.Models.CardBin", "Card_Bin")
                         .WithMany("Campaign_Card_Bins")
                         .HasForeignKey("Card_Bin_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Campaign");
 
                     b.Navigation("Campaign_Bank");
 
@@ -1854,6 +1880,8 @@ namespace NanoDMSAdminService.Migrations
             modelBuilder.Entity("NanoDMSAdminService.Models.Campaign", b =>
                 {
                     b.Navigation("CampaignBanks");
+
+                    b.Navigation("CampaignCardBins");
                 });
 
             modelBuilder.Entity("NanoDMSAdminService.Models.CampaignBank", b =>
@@ -1920,6 +1948,8 @@ namespace NanoDMSAdminService.Migrations
 
             modelBuilder.Entity("NanoDMSAdminService.Models.Psp", b =>
                 {
+                    b.Navigation("Campaigns");
+
                     b.Navigation("PspCurrencies");
 
                     b.Navigation("PspDocuments");

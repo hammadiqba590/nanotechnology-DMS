@@ -10,6 +10,10 @@ namespace NanoDMSAdminService.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
+        public Guid Campagin_Id { get; set; }
+        [ForeignKey(nameof(Campagin_Id))]
+        public Campaign? Campaign { get; set; }
+        [Required]
         public Guid Campagin_Bank_Id { get; set; }
         [ForeignKey(nameof(Campagin_Bank_Id))]
         public CampaignBank? Campaign_Bank { get; set; }

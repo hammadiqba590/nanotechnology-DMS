@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -9,10 +10,41 @@ using NanoDMSAuthService.Data;
 using NanoDMSAuthService.Models;
 using NanoDMSAuthService.Services;
 using NanoDMSSharedLibrary;
+using Serilog;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Serial log
+
+builder.Host.UseSerilog((context, services, logger) =>
+{
+    logger
+        .MinimumLevel.Information()
+        .Enrich.FromLogContext()
+        .Enrich.WithMachineName()
+        .Enrich.WithEnvironmentName()
+        .Enrich.WithProperty("ServiceName", "dms-auth-service") // CHANGE PER SERVICE
+        .WriteTo.Console()
+        .WriteTo.Seq("http://207.180.234.174:5341");
+});
+
+// =======================
+// Standard Health Checks
+// =======================
+
+var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(defaultConnectionString))
+{
+    throw new InvalidOperationException("DefaultConnection connection string is missing or null.");
+}
+
+builder.Services.AddHealthChecks()
+    .AddNpgSql(
+        defaultConnectionString,
+        name: "PostgreSQL",
+        failureStatus: Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy
+    );
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -120,6 +152,31 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Logs every HTTP request automatically
+app.UseSerilogRequestLogging();
+
+// Map health endpoint
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+
+        var result = new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(e => new {
+                name = e.Key,
+                status = e.Value.Status.ToString(),
+                exception = e.Value.Exception?.Message,
+                duration = e.Value.Duration.TotalMilliseconds
+            })
+        };
+
+        await context.Response.WriteAsJsonAsync(result);
+    }
+});
+
 // 1. ADD THIS AT THE VERY TOP OF THE PIPELINE
 // This tells .NET to trust the headers from Nginx (X-Forwarded-Proto, etc.)
 app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -134,7 +191,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseStaticFiles();
+//app.UseStaticFiles();
 // 2. PATH BASE
 // Ensure this matches exactly how you call the URL (see Step 2 below)
 app.UsePathBase("/apigateway/AuthService");

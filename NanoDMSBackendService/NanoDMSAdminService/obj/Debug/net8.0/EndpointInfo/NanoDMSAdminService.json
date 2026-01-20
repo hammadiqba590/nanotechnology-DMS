@@ -17,6 +17,58 @@
         }
       }
     },
+    "/api/Campaign/active-campaign-by-serial": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Campaign/create-full-campaign": {
+      "post": {
+        "tags": [
+          "Campaign"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignFullCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignFullCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignFullCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Campaign/get-campaign-list": {
       "get": {
         "tags": [
@@ -4002,6 +4054,14 @@
           "discount_Mode": {
             "$ref": "#/components/schemas/DiscountModeStatus"
           },
+          "start_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
           "business_Id": {
             "type": "string",
             "format": "uuid"
@@ -4009,6 +4069,76 @@
           "business_Location_Id": {
             "type": "string",
             "format": "uuid"
+          },
+          "cardBins": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CampaignCardBinCreateDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignBankFullCreateDto": {
+        "required": [
+          "bank_Id",
+          "business_Id",
+          "business_Location_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "budget": {
+            "type": "number",
+            "format": "double"
+          },
+          "discount_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RecordStatus"
+          },
+          "tax_On_Merchant_Share": {
+            "$ref": "#/components/schemas/TaxOnMerchantStatus"
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "discount_Mode": {
+            "$ref": "#/components/schemas/DiscountModeStatus"
+          },
+          "start_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cardBins": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CampaignCardBinFullCreateDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4052,6 +4182,14 @@
           "discount_Mode": {
             "$ref": "#/components/schemas/DiscountModeStatus"
           },
+          "start_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
           "business_Id": {
             "type": "string",
             "format": "uuid"
@@ -4059,6 +4197,13 @@
           "business_Location_Id": {
             "type": "string",
             "format": "uuid"
+          },
+          "cardBins": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CampaignCardBinCreateDto"
+            },
+            "nullable": true
           },
           "status": {
             "$ref": "#/components/schemas/RecordStatus"
@@ -4093,6 +4238,46 @@
           "business_Location_Id": {
             "type": "string",
             "format": "uuid"
+          },
+          "discountRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiscountRuleCreateDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignCardBinFullCreateDto": {
+        "required": [
+          "business_Id",
+          "business_Location_Id",
+          "card_Bin_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "card_Bin_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CampaginCardBinStatus"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "discountRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiscountRuleFullCreateDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4124,6 +4309,13 @@
           "business_Location_Id": {
             "type": "string",
             "format": "uuid"
+          },
+          "discountRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiscountRuleCreateDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4133,7 +4325,8 @@
           "business_Id",
           "business_Location_Id",
           "campaign_Name",
-          "currency_Id"
+          "currency_Id",
+          "psp_Id"
         ],
         "type": "object",
         "properties": {
@@ -4144,6 +4337,13 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/CampaginStatus"
+          },
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
           },
           "currency_Id": {
             "type": "string",
@@ -4169,6 +4369,14 @@
           "priority": {
             "type": "integer",
             "format": "int32"
+          },
+          "start_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_Date": {
+            "type": "string",
+            "format": "date-time"
           },
           "business_Id": {
             "type": "string",
@@ -4181,12 +4389,13 @@
         },
         "additionalProperties": false
       },
-      "CampaignUpdateDto": {
+      "CampaignFullCreateDto": {
         "required": [
           "business_Id",
           "business_Location_Id",
           "campaign_Name",
-          "currency_Id"
+          "currency_Id",
+          "psp_Id"
         ],
         "type": "object",
         "properties": {
@@ -4197,6 +4406,10 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
           },
           "currency_Id": {
             "type": "string",
@@ -4223,6 +4436,17 @@
             "type": "integer",
             "format": "int32"
           },
+          "start_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CampaginStatus"
+          },
           "business_Id": {
             "type": "string",
             "format": "uuid"
@@ -4231,8 +4455,81 @@
             "type": "string",
             "format": "uuid"
           },
+          "banks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CampaignBankFullCreateDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CampaignUpdateDto": {
+        "required": [
+          "business_Id",
+          "business_Location_Id",
+          "campaign_Name",
+          "currency_Id",
+          "psp_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "campaign_Name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
           "status": {
             "$ref": "#/components/schemas/CampaginStatus"
+          },
+          "psp_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "currency_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tax_Amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fbr": {
+            "type": "string",
+            "nullable": true
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "start_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "business_Location_Id": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -4274,10 +4571,6 @@
           "country_Id": {
             "type": "string",
             "format": "uuid",
-            "nullable": true
-          },
-          "country_Name": {
-            "type": "string",
             "nullable": true
           },
           "business_Id": {
@@ -4328,10 +4621,6 @@
           "country_Id": {
             "type": "string",
             "format": "uuid",
-            "nullable": true
-          },
-          "country_Name": {
-            "type": "string",
             "nullable": true
           },
           "business_Id": {
@@ -4728,6 +5017,81 @@
             "type": "integer",
             "format": "int32"
           },
+          "stackable": {
+            "type": "boolean"
+          },
+          "start_Time": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "end_Time": {
+            "type": "string",
+            "format": "date-span",
+            "nullable": true
+          },
+          "business_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "businessLocation_Id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiscountRuleFullCreateDto": {
+        "required": [
+          "business_Id",
+          "businessLocation_Id"
+        ],
+        "type": "object",
+        "properties": {
+          "discount_Type": {
+            "$ref": "#/components/schemas/DiscountTypeStatus"
+          },
+          "discount_Value": {
+            "type": "number",
+            "format": "double"
+          },
+          "min_Spend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "max_Discount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "payment_Type": {
+            "$ref": "#/components/schemas/PaymentTypeStatus"
+          },
+          "budget_Limit_Type": {
+            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
+          },
+          "budget_Limit_Value": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "applicable_Days": {
+            "type": "string",
+            "nullable": true
+          },
+          "transaction_Cap": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stackable": {
+            "type": "boolean"
+          },
           "start_Time": {
             "type": "string",
             "format": "date-span",
@@ -4940,6 +5304,9 @@
           "priority": {
             "type": "integer",
             "format": "int32"
+          },
+          "stackable": {
+            "type": "boolean"
           },
           "start_Time": {
             "type": "string",
@@ -5342,17 +5709,9 @@
             "type": "string",
             "nullable": true
           },
-          "psp_Category_Name": {
-            "type": "string",
-            "nullable": true
-          },
           "psp_Category_Id": {
             "type": "string",
             "format": "uuid"
-          },
-          "country_Name": {
-            "type": "string",
-            "nullable": true
           },
           "country_Id": {
             "type": "string",
@@ -5660,17 +6019,9 @@
             "type": "string",
             "nullable": true
           },
-          "psp_Category_Name": {
-            "type": "string",
-            "nullable": true
-          },
           "psp_Category_Id": {
             "type": "string",
             "format": "uuid"
-          },
-          "country_Name": {
-            "type": "string",
-            "nullable": true
           },
           "country_Id": {
             "type": "string",

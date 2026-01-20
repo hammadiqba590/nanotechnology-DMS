@@ -17,7 +17,7 @@ namespace NanoDMSAdminService.DTO.CardBin
         public Guid? Card_Level_Id { get; set; }
         public LocalInternationalStatus? Local_International { get; set; }
         public Guid? Country_Id { get; set; }
-        public string? Country_Name { get; set; }
+        //public string? Country_Name { get; set; }
         public Guid Business_Id { get; set; }
         public Guid Business_Location_Id { get; set; }
     }

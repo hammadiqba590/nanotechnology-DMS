@@ -42,6 +42,39 @@ namespace NanoDMSAdminService.Controllers
         }
 
         [Authorize]
+        [HttpGet("active-campaign-by-serial")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        public async Task<IActionResult> GetActiveCampaigns(string serialNumber)
+        {
+            if (string.IsNullOrWhiteSpace(serialNumber))
+                return BadRequest("Terminal serial number is required");
+
+            var campaigns = await _campaign.GetActiveCampaignsByTerminalAsync(serialNumber);
+
+            if (!campaigns.Any())
+                return NoContent();
+
+            return Ok(campaigns);
+        }
+
+        [Authorize]
+        [HttpPost("create-full-campaign")]
+        public async Task<IActionResult> CreateFullCampaign([FromBody] CampaignFullCreateDto dto)
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
+            if (user == null) return Unauthorized();
+
+            var campaign = await _campaign.CreateFullCampaignAsync(dto, Guid.Parse(user.Id));
+
+            return Ok(new
+            {
+                Message = "Campaign created successfully",
+                Data = campaign
+            });
+        }
+
+
+        [Authorize]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
         [HttpGet("get-campaign-list")]
         public async Task<IActionResult> GetList([FromQuery] CampaignFilterModel filter)

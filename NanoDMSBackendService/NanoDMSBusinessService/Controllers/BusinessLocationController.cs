@@ -212,7 +212,7 @@ namespace NanoDMSBusinessService.Controllers
                 // Step 6: Fetch external location names
                 var apiService = new ApiServiceHelper(new HttpClient());
 
-                var countryNames = await FetchLocationNamesAsync(apiService, "Country", "countrie", countryIds, jwtToken);
+                var countryNames = await FetchLocationNameAsync(apiService, "MasterEntry", "countrie", countryIds, jwtToken);
                 var stateNames = await FetchLocationNamesAsync(apiService, "State", "state", stateIds, jwtToken);
                 var cityNames = await FetchLocationNamesAsync(apiService, "City", "citie", cityIds, jwtToken);
 
@@ -333,6 +333,75 @@ namespace NanoDMSBusinessService.Controllers
             {
                 // log ex as usual
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [HttpGet("get-business-location-by-business-id")]
+        public async Task<IActionResult> GetBusinessLocationsByBusinessId(Guid businessId)
+        {
+            try
+            {
+                if (businessId == Guid.Empty)
+                    return BadRequest(new { Message = "Business Id Is Required." });
+
+                var locations = await _context.BusinessLocation
+                    .Where(x => x.Business_Id == businessId && !x.Deleted)
+                    .OrderByDescending(x => x.Create_Date)
+                    .ToListAsync();
+
+                if (!locations.Any())
+                    return NoContent();
+
+                // Collect IDs for lookup
+                var countryIds = locations.Select(x => x.Country).Distinct().ToList();
+                var stateIds = locations.Select(x => x.State).Distinct().ToList();
+                var cityIds = locations.Select(x => x.City).Distinct().ToList();
+
+                // Token
+                var jwtToken = HttpContext.Request.Headers["Authorization"]
+                    .FirstOrDefault()?.Split(" ").Last();
+
+                if (string.IsNullOrEmpty(jwtToken))
+                    return Unauthorized(new { Message = "Authorization Token Missing." });
+
+                var apiService = new ApiServiceHelper(new HttpClient());
+
+                var countryNames = await FetchLocationNameAsync(apiService, "MasterEntry", "countrie", countryIds, jwtToken);
+                var stateNames = await FetchLocationNamesAsync(apiService, "State", "state", stateIds, jwtToken);
+                var cityNames = await FetchLocationNamesAsync(apiService, "City", "citie", cityIds, jwtToken);
+
+                var result = locations.Select(x => new BusinessLocationsDto
+                {
+                    Id = x.Id,
+                    BusinessId = x.Business_Id,
+                    BusinessName = x.Business?.Name ?? string.Empty,
+                    Name = x.Name,
+                    Address = x.Address,
+                    Country = x.Country,
+                    CountryName = countryNames.TryGetValue(x.Country, out var cName) ? cName : "Unknown",
+                    State = x.State,
+                    StateName = stateNames.TryGetValue(x.State, out var sName) ? sName : "Unknown",
+                    City = x.City,
+                    CityName = cityNames.TryGetValue(x.City, out var ctName) ? ctName : "Unknown",
+                    PostalCode = x.Postal_Code,
+                    Phone = x.Phone,
+                    Mobile = x.Mobile,
+                    Email = x.Email,
+                    Website = x.Website,
+                    Published = x.Published,
+                    Deleted = x.Deleted,
+                    CreateDate = x.Create_Date,
+                    CreateUser = x.Create_User,
+                    LastUpdateDate = x.Last_Update_Date,
+                    LastUpdateUser = x.Last_Update_User
+                }).ToList();
+
+                return Ok(new { BusinessLocations = result });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
             }
         }
 
@@ -499,9 +568,9 @@ namespace NanoDMSBusinessService.Controllers
             if (ids == null || !ids.Any())
                 return new Dictionary<Guid, string>();
 
-            //var apiUrl = $"http://192.168.100.61/apigateway/SetupService/{locationType}/get-{actiontype.ToLower()}s";
+            var BaseUrl = _configuration["GlobalConfiguration:BaseUrl"];
 
-            var apiUrl = $"http://localhost:8010/apigateway/SetupService/{locationType}/get-{actiontype.ToLower()}s";
+            var apiUrl = $"{BaseUrl}/apigateway/SetupService/{locationType}/get-{actiontype.ToLower()}s";
 
             var response = await apiService.SendRequestAsync<object, Dictionary<string, object>>(apiUrl, HttpMethod.Get, ids, jwtToken)
                            ?? new Dictionary<string, object>();
@@ -521,6 +590,31 @@ namespace NanoDMSBusinessService.Controllers
             }
 
             return new Dictionary<Guid, string>();
+        }
+
+        private async Task<Dictionary<Guid, string>> FetchLocationNameAsync(ApiServiceHelper apiService, string locationType, string actiontype, List<Guid> ids, string jwtToken)
+        {
+            if (ids == null || !ids.Any())
+                return new Dictionary<Guid, string>();
+
+            var BaseUrl = _configuration["GlobalConfiguration:BaseUrl"];
+
+            var apiUrl = $"{BaseUrl}/apigateway/AdminService/{locationType}/get-{actiontype.ToLower()}s";
+
+            var response = await apiService.SendRequestAsync<object, List<Dictionary<string, object>>>(
+    apiUrl,
+    HttpMethod.Get,
+    null,
+    jwtToken
+) ?? new List<Dictionary<string, object>>();
+
+            return response
+                .Where(c => c.ContainsKey("id") && c.ContainsKey("name"))
+                .ToDictionary(
+                    c => Guid.Parse(c["id"]!.ToString()!),
+                    c => c["name"]!.ToString()!
+                );
+
         }
 
         #endregion

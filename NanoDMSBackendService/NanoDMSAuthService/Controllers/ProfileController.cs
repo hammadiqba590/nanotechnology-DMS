@@ -177,7 +177,12 @@ namespace NanoDMSAuthService.Controllers
                 if (model.Profile.Image != null && model.Profile.Image.Length > 0)
                 {
                     // Define the root directory for images
-                    var imagesRootPath = @"C:\Repos\dot net\PosApi\Images";
+                    var imagesRootPath = _configuration["ImageSettings:ImagesRootPath"];
+
+                    if (string.IsNullOrWhiteSpace(imagesRootPath))
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, "Image root path configuration is missing.");
+                    }
 
                     // Define subfolder dynamically (e.g., UserProfile, ProductImages, etc.)
                     var subFolder = "UserProfile"; // Change this dynamically based on use case
@@ -652,8 +657,12 @@ namespace NanoDMSAuthService.Controllers
                 //var staticPath = @"C:\Repos\dot net\PosApi\Images\UserProfile";
 
                 // Define the root directory for images
-                var imagesRootPath = @"C:\Repos\dot net\PosApi\Images";
+                var imagesRootPath = _configuration["ImageSettings:ImagesRootPath"];
 
+                if (string.IsNullOrWhiteSpace(imagesRootPath))
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Image root path configuration is missing.");
+                }
                 // Define subfolder dynamically (e.g., UserProfile, ProductImages, etc.)
                 var subFolder = "UserProfile"; // Change this dynamically based on use case
                 var staticPath = Path.Combine(imagesRootPath, subFolder);

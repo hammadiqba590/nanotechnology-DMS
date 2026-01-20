@@ -81,5 +81,7 @@ namespace NanoDMSAdminService.Models
         public ICollection<PspDocument>? PspDocuments { get; set; }
         public ICollection<PspPaymentMethod>? PspPaymentMethods { get; set; }
         public ICollection<PspCurrency>? PspCurrencies { get; set; }
+
+        public ICollection<Campaign> Campaigns { get; set; } = new List<Campaign>();
     }
 }

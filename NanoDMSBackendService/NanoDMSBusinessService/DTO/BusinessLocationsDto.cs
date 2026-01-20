@@ -8,8 +8,11 @@
         public string Name { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public Guid Country { get; set; }
+        public string CountryName { get; set; } = "";
         public Guid State { get; set; }
+        public string StateName { get; set; } = "";
         public Guid City { get; set; }
+        public string CityName { get; set; } = "";
         public string PostalCode { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Mobile { get; set; } = string.Empty;

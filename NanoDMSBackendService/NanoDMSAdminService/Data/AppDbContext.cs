@@ -6,8 +6,6 @@ using NanoDMSAdminService.Models;
 
 namespace NanoDMSAdminService.Data
 {
-    
-
     public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -294,7 +292,12 @@ namespace NanoDMSAdminService.Data
             modelBuilder.Entity<Bank>()
                 .HasOne(x => x.Country)
                 .WithMany(x => x.Banks)
-                .HasForeignKey(x => x.Country_Id); 
+                .HasForeignKey(x => x.Country_Id);
+
+            modelBuilder.Entity<Campaign>()
+               .HasOne(x => x.Psps)
+               .WithMany(x => x.Campaigns)
+               .HasForeignKey(x => x.Psp_Id);
 
             modelBuilder.Entity<CampaignBank>()
                 .HasOne(x => x.Campaign)
@@ -310,6 +313,11 @@ namespace NanoDMSAdminService.Data
                 .HasOne(x => x.Campaign_Bank)
                 .WithMany(x => x.Campaign_Card_Bins)
                 .HasForeignKey(x => x.Campagin_Bank_Id);
+
+            modelBuilder.Entity<CampaignCardBin>()
+                .HasOne(x => x.Campaign)
+                .WithMany(x => x.CampaignCardBins)
+                .HasForeignKey(x => x.Campagin_Id);
 
             modelBuilder.Entity<CampaignCardBin>()
                 .HasOne(x => x.Card_Bin)

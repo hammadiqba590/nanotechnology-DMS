@@ -567,6 +567,28 @@
         }
       }
     },
+    "/api/BusinessLocation/get-business-location-by-business-id": {
+      "get": {
+        "tags": [
+          "BusinessLocation"
+        ],
+        "parameters": [
+          {
+            "name": "businessId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/BusinessLocation/get-business-location-by-id": {
       "post": {
         "tags": [

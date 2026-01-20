@@ -44,6 +44,7 @@ namespace NanoDMSAdminService.Extensions
             services.AddScoped<IPspCategoryRepository, PspCategoryRepository>();
             services.AddScoped<IPspCurrencyRepository, PspCurrencyRepository>();
             services.AddScoped<IPspDocumentRepository, PspDocumentRepository>();
+            services.AddScoped<IPspPaymentMethodRepository, PspPaymentMethodRepository>();
 
             // Services
 
@@ -76,6 +77,8 @@ namespace NanoDMSAdminService.Extensions
             services.AddScoped<IPspCategoryService, PspCategoryService>();
             services.AddScoped<IPspCurrencyService, PspCurrencyService>();
             services.AddScoped<IPspDocumentService, PspDocumentService>();
+            services.AddScoped<IPspPaymentMethodService, PspPaymentMethodService>();
+
             return services;
         }
     }

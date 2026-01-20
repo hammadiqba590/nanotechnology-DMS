@@ -3,7 +3,7 @@ using NanoDMSAdminService.DTO.Country;
 using NanoDMSAdminService.DTO.Currency;
 using NanoDMSAdminService.Filters;
 
-namespace NanoDMSAdminService.Services.Implementations
+namespace NanoDMSAdminService.Services.Interfaces
 {
     public interface ICurrencyService
     {

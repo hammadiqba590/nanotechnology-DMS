@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using NanoDMSAdminService.Common;
 using NanoDMSAdminService.DTO.PosTerminalAssignment;
 using NanoDMSAdminService.DTO.PosTerminalConfiguration;
@@ -6,69 +7,35 @@ using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class PosTerminalConfigurationService : IPosTerminalConfigurationService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IDistributedCache _cache;
 
-        public PosTerminalConfigurationService(IUnitOfWork uow)
+        public PosTerminalConfigurationService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
-        }
-
-        public async Task<PosTerminalConfigurationDto> CreateAsync(PosTerminalConfigurationCreateDto dto, string userId)
-        {
-            var terminalConfiguration = new PosTerminalConfiguration
-            {
-                Id = Guid.NewGuid(),
-                Pos_Terminal_Id = dto.Pos_Terminal_Id,
-                Config_Key = dto.Config_Key,
-                Config_Value = dto.Config_Value,
-                BusinessLocation_Id = dto.Business_Location_Id,
-                Business_Id = dto.Business_Id,
-
-                Is_Active = true,
-                Deleted = false,
-                Published = true,
-                RecordStatus = Blocks.RecordStatus.Active,
-
-                Create_Date = DateTime.UtcNow,
-                Create_User = Guid.Parse(userId)
-            };
-
-            await _uow.PosTerminalConfigurations.AddAsync(terminalConfiguration);
-            await _uow.SaveAsync();
-
-            return MapToDto(terminalConfiguration);
-        }
-
-        public async Task<PosTerminalConfigurationDto> DeleteAsync(Guid id, string userId)
-        {
-            var terminalConfiguration = await _uow.PosTerminalConfigurations.GetByIdAsync(id);
-            if (terminalConfiguration == null) return new PosTerminalConfigurationDto();
-
-            terminalConfiguration.Deleted = true;
-            terminalConfiguration.Published = false;
-            terminalConfiguration.Is_Active = false;
-            terminalConfiguration.RecordStatus = Blocks.RecordStatus.Inactive;
-            terminalConfiguration.Last_Update_Date = DateTime.UtcNow;
-            terminalConfiguration.Last_Update_User = Guid.Parse(userId);
-
-            _uow.PosTerminalConfigurations.Update(terminalConfiguration);
-            await _uow.SaveAsync();
-
-            return MapToDto(terminalConfiguration);
+            _cache = cache;
         }
 
         public async Task<IEnumerable<PosTerminalConfigurationDto>> GetAllAsync()
         {
+            const string cacheKey = "posterminalconfigurations:all";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<PosTerminalConfigurationDto>>(cached)!;
+
             var terminalConfiguration = await _uow.PosTerminalConfigurations.GetAllByConditionAsync(b =>
                 !b.Deleted && b.Is_Active
             );
 
-            return terminalConfiguration.Select(x => new PosTerminalConfigurationDto
+            var result = terminalConfiguration.Select(x => new PosTerminalConfigurationDto
             {
                 Id = x.Id,
                 Pos_Terminal_Id = x.Pos_Terminal_Id,
@@ -85,16 +52,36 @@ namespace NanoDMSAdminService.Services.Implementations
                 Last_Update_User = x.Last_Update_User,
                 RecordStatus = x.RecordStatus
             });
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
+
+            return result;
         }
 
         public async Task<PosTerminalConfigurationDto?> GetByIdAsync(Guid id)
         {
+            var cacheKey = $"posterminalconfigurations:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PosTerminalConfigurationDto>(cached);
+
             var terminalConfiguration = await _uow.PosTerminalConfigurations.GetByIdAsync(id);
-            return terminalConfiguration == null ? null : MapToDto(terminalConfiguration);
+            var dto = terminalConfiguration == null ? null : MapToDto(terminalConfiguration);
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(dto), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return dto;
         }
 
         public async Task<PaginatedResponseDto<PosTerminalConfigurationDto>> GetPagedAsync(PosTerminalConfigurationFilterModel filter)
         {
+            var cacheKey = PosTerminalConfigurationCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<PosTerminalConfigurationDto>>(cached)!;
+
             var query = _uow.PosTerminalConfigurations.GetQueryable();
 
             if (filter.Pos_Terminal_Id.HasValue)
@@ -115,7 +102,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 .Take(filter.PageSize)
                 .ToListAsync();
 
-            return new PaginatedResponseDto<PosTerminalConfigurationDto>
+            var result = new PaginatedResponseDto<PosTerminalConfigurationDto>
             {
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
@@ -123,6 +110,36 @@ namespace NanoDMSAdminService.Services.Implementations
                 TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
                 Data = terminalConfiguration.Select(MapToDto).ToList()
             };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return result;
+        }
+        public async Task<PosTerminalConfigurationDto> CreateAsync(PosTerminalConfigurationCreateDto dto, string userId)
+        {
+            var terminalConfiguration = new PosTerminalConfiguration
+            {
+                Id = Guid.NewGuid(),
+                Pos_Terminal_Id = dto.Pos_Terminal_Id,
+                Config_Key = dto.Config_Key,
+                Config_Value = dto.Config_Value,
+                BusinessLocation_Id = dto.Business_Location_Id,
+                Business_Id = dto.Business_Id,
+                Is_Active = true,
+                Deleted = false,
+                Published = true,
+                RecordStatus = Blocks.RecordStatus.Active,
+                Create_Date = DateTime.UtcNow,
+                Create_User = Guid.Parse(userId)
+            };
+
+            await _uow.PosTerminalConfigurations.AddAsync(terminalConfiguration);
+            await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PosTerminalConfigurationCacheKeys.All);
+
+            return MapToDto(terminalConfiguration);
         }
 
         public async  Task<PosTerminalConfigurationDto> UpdateAsync(Guid id, PosTerminalConfigurationUpdateDto dto, string userId)
@@ -140,9 +157,35 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.PosTerminalConfigurations.Update(entity);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PosTerminalConfigurationCacheKeys.All);
+            await _cache.RemoveAsync(PosTerminalConfigurationCacheKeys.ById(id));
+
             return MapToDto(entity);
         }
 
+        public async Task<PosTerminalConfigurationDto> DeleteAsync(Guid id, string userId)
+        {
+            var terminalConfiguration = await _uow.PosTerminalConfigurations.GetByIdAsync(id);
+            if (terminalConfiguration == null) return new PosTerminalConfigurationDto();
+
+            terminalConfiguration.Deleted = true;
+            terminalConfiguration.Published = false;
+            terminalConfiguration.Is_Active = false;
+            terminalConfiguration.RecordStatus = Blocks.RecordStatus.Inactive;
+            terminalConfiguration.Last_Update_Date = DateTime.UtcNow;
+            terminalConfiguration.Last_Update_User = Guid.Parse(userId);
+
+            _uow.PosTerminalConfigurations.Update(terminalConfiguration);
+            await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PosTerminalConfigurationCacheKeys.All);
+            await _cache.RemoveAsync(PosTerminalConfigurationCacheKeys.ById(id));
+
+            return MapToDto(terminalConfiguration);
+        }
         private static PosTerminalConfigurationDto MapToDto(PosTerminalConfiguration x) => new()
         {
             Id = x.Id,

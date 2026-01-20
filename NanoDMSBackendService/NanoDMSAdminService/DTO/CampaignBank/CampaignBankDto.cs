@@ -17,5 +17,6 @@ namespace NanoDMSAdminService.DTO.CampaignBank
 
         public DiscountModeStatus? Discount_Mode { get; set; }
         public RecordStatus? Status { get; set; }
+
     }
 }

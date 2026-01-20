@@ -302,6 +302,22 @@
   },
   {
     "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
+    "Method": "GetBusinessLocationsByBusinessId",
+    "RelativePath": "api/BusinessLocation/get-business-location-by-business-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "businessId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSBusinessService.Controllers.BusinessLocationController",
     "Method": "GetBusinessLocationById",
     "RelativePath": "api/BusinessLocation/get-business-location-by-id",
     "HttpMethod": "POST",

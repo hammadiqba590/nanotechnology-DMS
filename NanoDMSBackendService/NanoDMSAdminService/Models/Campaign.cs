@@ -17,6 +17,11 @@ namespace NanoDMSAdminService.Models
         public Guid Currency_Id { get; set; }
         [ForeignKey(nameof(Currency_Id))]
         public Currency? Currency { get; set; }
+        [Required]
+        public Guid Psp_Id { get; set; }
+
+        [ForeignKey(nameof(Psp_Id))]
+        public Psp? Psps { get; set; }
         public decimal? Tax_Amount { get; set; }
         public string? Fbr { get; set; }
         public CampaginStatus? Status { get; set; } //active, inactive,expired 
@@ -25,6 +30,9 @@ namespace NanoDMSAdminService.Models
         public int Priority { get; set; }
         public ICollection<CampaignBank> CampaignBanks { get; set; } = new List<CampaignBank>();
 
+        public ICollection<CampaignCardBin> CampaignCardBins { get; set; } = new List<CampaignCardBin>();
+
+       
     }
 
 }

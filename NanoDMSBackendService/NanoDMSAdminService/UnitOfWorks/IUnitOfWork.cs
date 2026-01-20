@@ -1,4 +1,5 @@
-﻿using NanoDMSAdminService.Repositories.Interfaces;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using NanoDMSAdminService.Repositories.Interfaces;
 
 namespace NanoDMSAdminService.UnitOfWorks
 {
@@ -25,6 +26,7 @@ namespace NanoDMSAdminService.UnitOfWorks
         ICurrencyRepository Currencies { get; }
         IDiscountRuleRepository DiscountRules { get; }
         IDiscountRuleHistoryRepository DiscountRuleHistories { get; }
+        Task ExecuteInTransactionAsync(Func<Task> action);
         Task<int> SaveAsync();
     }
 }

@@ -1,78 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using NanoDMSAdminService.Blocks;
 using NanoDMSAdminService.Common;
+using NanoDMSAdminService.DTO.Bank;
+using NanoDMSAdminService.DTO.Campagin;
 using NanoDMSAdminService.DTO.CampaignCardBin;
 using NanoDMSAdminService.DTO.CardBin;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class CardBinService : ICardBinService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IDistributedCache _cache;
 
-        public CardBinService(IUnitOfWork uow)
+        public CardBinService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
-        }
-
-        public async Task<CardBinDto> CreateAsync(CardBinCreateDto dto, string userId)
-        {
-            var entity = new CardBin
-            {
-                Id = Guid.NewGuid(),
-                Bank_Id = dto.Bank_Id,
-                Card_Bin_Value = dto.Card_Bin_Value,
-                Card_Brand_Id = dto.Card_Brand_Id,
-                Card_Type_Id = dto.Card_Type_Id,
-                Card_Level_Id = dto.Card_Level_Id,
-                Local_International = dto.Local_International,
-                Country_Id = dto.Country_Id,
-                RecordStatus = RecordStatus.Active,
-
-                Published = true,
-                Deleted = false,
-                Is_Active = true,
-                Create_Date = DateTime.UtcNow,
-                Create_User = Guid.Parse(userId),
-                Business_Id = dto.Business_Id,
-                BusinessLocation_Id = dto.Business_Location_Id
-            };
-
-            await _uow.CardBins.AddAsync(entity);
-            await _uow.SaveAsync();
-
-            return MapToDto(entity);
-        }
-
-        public async Task<CardBinDto> DeleteAsync(Guid id, string userId)
-        {
-            var cardBin = await _uow.CardBins.GetByIdAsync(id);
-            if (cardBin == null) return new CardBinDto();
-
-            cardBin.Deleted = true;
-            cardBin.Published = false;
-            cardBin.Is_Active = false;
-            cardBin.RecordStatus = Blocks.RecordStatus.Inactive;
-            cardBin.Last_Update_Date = DateTime.UtcNow;
-            cardBin.Last_Update_User = Guid.Parse(userId);
-
-            _uow.CardBins.Update(cardBin);
-            await _uow.SaveAsync();
-
-            return MapToDto(cardBin);
+            _cache = cache;
         }
 
         public async Task<IEnumerable<CardBinDto>> GetAllAsync()
         {
-            var cardBin = await _uow.CardBins.GetAllByConditionAsync(b =>
-               !b.Deleted && b.Is_Active
-           );
+            const string cacheKey = "cardbins:all";
 
-            return cardBin.Select(x => new CardBinDto
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<CardBinDto>>(cached)!;
+
+            var cardBin = await _uow.CardBins.GetAllByConditionAsync(b => !b.Deleted && b.Is_Active);
+
+            var result =  cardBin.Select(x => new CardBinDto
             {
                 Id = x.Id,
                 Bank_Id = x.Bank_Id,
@@ -98,16 +62,36 @@ namespace NanoDMSAdminService.Services.Implementations
                 Last_Update_User = x.Last_Update_User,
                 RecordStatus = x.RecordStatus
             });
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
+
+            return result;
         }
 
         public async Task<CardBinDto?> GetByIdAsync(Guid id)
         {
+            var cacheKey = $"cardbins:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<CardBinDto>(cached);
+
             var cardBin = await _uow.CardBins.GetByIdAsync(id);
-            return cardBin == null ? null : MapToDto(cardBin);
+            var dto = cardBin == null ? null : MapToDto(cardBin);
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(dto), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return dto;
         }
 
         public async Task<PaginatedResponseDto<CardBinDto>> GetPagedAsync(CardBinFilterModel filter)
         {
+            var cacheKey = CardBinCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<CardBinDto>>(cached)!;
+
             var query = _uow.CardBins.GetQueryable();
 
             if (!string.IsNullOrWhiteSpace(filter.Card_Bin_Value))
@@ -143,7 +127,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 .Take(filter.PageSize)
                 .ToListAsync();
 
-            return new PaginatedResponseDto<CardBinDto>
+            var result = new PaginatedResponseDto<CardBinDto>
             {
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
@@ -151,6 +135,41 @@ namespace NanoDMSAdminService.Services.Implementations
                 TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
                 Data = cardBins.Select(MapToDto).ToList()
             };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return result;
+        }
+        public async Task<CardBinDto> CreateAsync(CardBinCreateDto dto, string userId)
+        {
+            var entity = new CardBin
+            {
+                Id = Guid.NewGuid(),
+                Bank_Id = dto.Bank_Id,
+                Card_Bin_Value = dto.Card_Bin_Value,
+                Card_Brand_Id = dto.Card_Brand_Id,
+                Card_Type_Id = dto.Card_Type_Id,
+                Card_Level_Id = dto.Card_Level_Id,
+                Local_International = dto.Local_International,
+                Country_Id = dto.Country_Id,
+                RecordStatus = RecordStatus.Active,
+
+                Published = true,
+                Deleted = false,
+                Is_Active = true,
+                Create_Date = DateTime.UtcNow,
+                Create_User = Guid.Parse(userId),
+                Business_Id = Guid.Empty,
+                BusinessLocation_Id = Guid.Empty
+            };
+
+            await _uow.CardBins.AddAsync(entity);
+            await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(CardBinCacheKeys.All);
+
+            return await GetByIdAsync(entity.Id) ?? new CardBinDto();
         }
 
         public async Task<CardBinDto> UpdateAsync(Guid id, CardBinUpdateDto dto, string userId)
@@ -172,7 +191,34 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.CardBins.Update(entity);
             await _uow.SaveAsync();
-            return MapToDto(entity);
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(CardBinCacheKeys.All);
+            await _cache.RemoveAsync(CardBinCacheKeys.ById(id));
+
+            return await GetByIdAsync(entity.Id) ?? new CardBinDto();
+        }
+
+        public async Task<CardBinDto> DeleteAsync(Guid id, string userId)
+        {
+            var cardBin = await _uow.CardBins.GetByIdAsync(id);
+            if (cardBin == null) return new CardBinDto();
+
+            cardBin.Deleted = true;
+            cardBin.Published = false;
+            cardBin.Is_Active = false;
+            cardBin.RecordStatus = RecordStatus.Inactive;
+            cardBin.Last_Update_Date = DateTime.UtcNow;
+            cardBin.Last_Update_User = Guid.Parse(userId);
+
+            _uow.CardBins.Update(cardBin);
+            await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(CardBinCacheKeys.All);
+            await _cache.RemoveAsync(CardBinCacheKeys.ById(id));
+
+            return await GetByIdAsync(cardBin.Id) ?? new CardBinDto();
         }
 
         private static CardBinDto MapToDto(CardBin x) => new()
@@ -197,6 +243,10 @@ namespace NanoDMSAdminService.Services.Implementations
             Create_User = x.Create_User,
             Last_Update_Date = x.Last_Update_Date,
             Last_Update_User = x.Last_Update_User,
+            BusinessLocation_Id = x.BusinessLocation_Id,
+            Business_Id = x.Business_Id,
+            Start_Date = x.Start_Date,
+            End_Date = x.End_Date,
             RecordStatus = x.RecordStatus
         };
     }

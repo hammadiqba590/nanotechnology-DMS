@@ -1,35 +1,35 @@
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Http.Timeouts;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Options;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add Ocelot and configuration support
+// Serilog setup
+builder.Host.UseSerilog((context, services, logger) =>
+{
+    logger
+        .MinimumLevel.Information()
+        .Enrich.FromLogContext()
+        .Enrich.WithMachineName()
+        .Enrich.WithEnvironmentName()
+        .Enrich.WithProperty("ServiceName", "dms-gateway-service")
+        .WriteTo.Console()
+        .WriteTo.Seq("http://207.180.234.174:5341");
+});
+
+// Health checks
+builder.Services.AddHealthChecks();
+
+// Ocelot and configuration
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-
-builder.Services.Configure<FormOptions>(options =>
-{
-
-    options.MultipartBodyLengthLimit = long.MaxValue; // or a reasonable large value like 1_000_000_000
-});
-
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.MaxRequestBodySize = long.MaxValue; // Allow large payloads
-    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(5);
-    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(10);
-});
-
-
-// Add Ocelot services
 builder.Services.AddOcelot();
 
+// Controllers
 builder.Services.AddControllers();
 
-// Configure CORS to allow all origins
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -40,18 +40,27 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Kestrel config
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = long.MaxValue;
+    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(5);
+    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(10);
+});
 
 var app = builder.Build();
 
-// Root of the application (works on any machine)
-var imagesRootPath = Path.Combine(app.Environment.ContentRootPath, "Images");
+// Serilog request logging
+app.UseSerilogRequestLogging();
+
+// Health endpoint — MUST be before Ocelot
+app.MapHealthChecks("/health");
+
+var imagesRootPath = "/opt/dms/dms-gateway/Images";
 
 if (!Directory.Exists(imagesRootPath))
-{
     Directory.CreateDirectory(imagesRootPath);
-}
 
-// Serve images from /Images
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(imagesRootPath),
@@ -59,13 +68,15 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 
-// Use Ocelot Middleware
+// Middleware
 app.UseHttpsRedirection();
-app.UseCors("AllowAll"); // Apply the CORS policy to allow all origins
+app.UseCors("AllowAll");
 app.UseAuthorization();
 
+// Map controllers
 app.MapControllers();
 
-await app.UseOcelot(); // Ensure this is before `app.Run()`
+// Ocelot middleware LAST
+await app.UseOcelot();
 
 app.Run();

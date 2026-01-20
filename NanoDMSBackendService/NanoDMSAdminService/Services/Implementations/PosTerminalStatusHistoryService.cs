@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using NanoDMSAdminService.Common;
 using NanoDMSAdminService.DTO.PosTerminalConfiguration;
 using NanoDMSAdminService.DTO.PosTerminalStatusHistory;
@@ -6,16 +7,114 @@ using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class PosTerminalStatusHistoryService : IPosTerminalStatusHistoryService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IDistributedCache _cache;
 
-        public PosTerminalStatusHistoryService(IUnitOfWork uow)
+        public PosTerminalStatusHistoryService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
+            _cache = cache;
+        }
+
+        
+        public async Task<IEnumerable<PosTerminalStatusHistoryDto>> GetAllAsync()
+        {
+            const string cacheKey = "posterminalstatushistories:all";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<PosTerminalStatusHistoryDto>>(cached)!;
+
+            var terminalStatusHistory = await _uow.PosTerminalStatusHistories.GetAllByConditionAsync(b =>
+                !b.Deleted && b.Is_Active
+            );
+
+            var result = terminalStatusHistory.Select(x => new PosTerminalStatusHistoryDto
+            {
+                Id = x.Id,
+                Pos_Terminal_Id = x.Pos_Terminal_Id,
+                Status = x.Status,
+                Notes = x.Notes,
+                Is_Active = x.Is_Active,
+                Deleted = x.Deleted,
+                Published = x.Published,
+                Business_Id = x.Business_Id,
+                BusinessLocation_Id = x.BusinessLocation_Id,
+                Create_Date = x.Create_Date,
+                Create_User = x.Create_User,
+                Last_Update_Date = x.Last_Update_Date,
+                Last_Update_User = x.Last_Update_User,
+                RecordStatus = x.RecordStatus
+            });
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
+
+            return result;
+        }
+
+        public async Task<PosTerminalStatusHistoryDto?> GetByIdAsync(Guid id)
+        {
+            var cacheKey = $"posterminalstatushistories:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PosTerminalStatusHistoryDto>(cached);
+
+            var terminalStatusHistory = await _uow.PosTerminalStatusHistories.GetByIdAsync(id);
+            var dto =  terminalStatusHistory == null ? null : MapToDto(terminalStatusHistory);
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(dto), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return dto;
+        }
+
+        public async Task<PaginatedResponseDto<PosTerminalStatusHistoryDto>> GetPagedAsync(PosTerminalStatusHistoryFilterModel filter)
+        {
+            var cacheKey = PosTerminalStatusHistoryCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<PosTerminalStatusHistoryDto>>(cached)!;
+
+            var query = _uow.PosTerminalStatusHistories.GetQueryable();
+
+            if (filter.Pos_Terminal_Id.HasValue)
+                query = query.Where(x => x.Pos_Terminal_Id == filter.Pos_Terminal_Id);
+
+            if (filter.Status.HasValue)
+                query = query.Where(x => x.Status == filter.Status);
+
+            if (!string.IsNullOrWhiteSpace(filter.Notes))
+                query = query.Where(x => x.Notes!.Contains(filter.Notes));
+
+            query = query.OrderByDescending(x => x.Create_Date);
+
+            var totalRecords = await query.CountAsync();
+
+            var terminalStatusHistory = await query
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize)
+                .ToListAsync();
+
+            var result = new PaginatedResponseDto<PosTerminalStatusHistoryDto>
+            {
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+                TotalRecords = totalRecords,
+                TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
+                Data = terminalStatusHistory.Select(MapToDto).ToList()
+            };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return result;
         }
 
         public async Task<PosTerminalStatusHistoryDto> CreateAsync(PosTerminalStatusHistoryCreateDto dto, string userId)
@@ -41,88 +140,10 @@ namespace NanoDMSAdminService.Services.Implementations
             await _uow.PosTerminalStatusHistories.AddAsync(terminalStatusHistory);
             await _uow.SaveAsync();
 
-            return MapToDto(terminalStatusHistory);
-        }
-
-        public async Task<PosTerminalStatusHistoryDto> DeleteAsync(Guid id, string userId)
-        {
-            var terminalStatusHistory = await _uow.PosTerminalStatusHistories.GetByIdAsync(id);
-            if (terminalStatusHistory == null) return new PosTerminalStatusHistoryDto();
-
-            terminalStatusHistory.Deleted = true;
-            terminalStatusHistory.Published = false;
-            terminalStatusHistory.Is_Active = false;
-            terminalStatusHistory.RecordStatus = Blocks.RecordStatus.Inactive;
-            terminalStatusHistory.Last_Update_Date = DateTime.UtcNow;
-            terminalStatusHistory.Last_Update_User = Guid.Parse(userId);
-
-            _uow.PosTerminalStatusHistories.Update(terminalStatusHistory);
-            await _uow.SaveAsync();
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PosTerminalStatusHistoryCacheKeys.All);
 
             return MapToDto(terminalStatusHistory);
-        }
-
-        public async Task<IEnumerable<PosTerminalStatusHistoryDto>> GetAllAsync()
-        {
-            var terminalStatusHistory = await _uow.PosTerminalStatusHistories.GetAllByConditionAsync(b =>
-                !b.Deleted && b.Is_Active
-            );
-
-            return terminalStatusHistory.Select(x => new PosTerminalStatusHistoryDto
-            {
-                Id = x.Id,
-                Pos_Terminal_Id = x.Pos_Terminal_Id,
-                Status = x.Status,
-                Notes = x.Notes,
-                Is_Active = x.Is_Active,
-                Deleted = x.Deleted,
-                Published = x.Published,
-                Business_Id = x.Business_Id,
-                BusinessLocation_Id = x.BusinessLocation_Id,
-                Create_Date = x.Create_Date,
-                Create_User = x.Create_User,
-                Last_Update_Date = x.Last_Update_Date,
-                Last_Update_User = x.Last_Update_User,
-                RecordStatus = x.RecordStatus
-            });
-        }
-
-        public async Task<PosTerminalStatusHistoryDto?> GetByIdAsync(Guid id)
-        {
-            var terminalStatusHistory = await _uow.PosTerminalStatusHistories.GetByIdAsync(id);
-            return terminalStatusHistory == null ? null : MapToDto(terminalStatusHistory);
-        }
-
-        public async Task<PaginatedResponseDto<PosTerminalStatusHistoryDto>> GetPagedAsync(PosTerminalStatusHistoryFilterModel filter)
-        {
-            var query = _uow.PosTerminalStatusHistories.GetQueryable();
-
-            if (filter.Pos_Terminal_Id.HasValue)
-                query = query.Where(x => x.Pos_Terminal_Id == filter.Pos_Terminal_Id);
-
-            if (filter.Status.HasValue)
-                query = query.Where(x => x.Status == filter.Status);
-
-            if (!string.IsNullOrWhiteSpace(filter.Notes))
-                query = query.Where(x => x.Notes!.Contains(filter.Notes));
-
-            query = query.OrderByDescending(x => x.Create_Date);
-
-            var totalRecords = await query.CountAsync();
-
-            var terminalStatusHistory = await query
-                .Skip((filter.PageNumber - 1) * filter.PageSize)
-                .Take(filter.PageSize)
-                .ToListAsync();
-
-            return new PaginatedResponseDto<PosTerminalStatusHistoryDto>
-            {
-                PageNumber = filter.PageNumber,
-                PageSize = filter.PageSize,
-                TotalRecords = totalRecords,
-                TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
-                Data = terminalStatusHistory.Select(MapToDto).ToList()
-            };
         }
 
         public async Task<PosTerminalStatusHistoryDto> UpdateAsync(Guid id, PosTerminalStatusHistoryUpdateDto dto, string userId)
@@ -140,9 +161,36 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.PosTerminalStatusHistories.Update(entity);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PosTerminalStatusHistoryCacheKeys.All);
+            await _cache.RemoveAsync(PosTerminalStatusHistoryCacheKeys.ById(id));
+
             return MapToDto(entity);
         }
 
+        public async Task<PosTerminalStatusHistoryDto> DeleteAsync(Guid id, string userId)
+        {
+            var terminalStatusHistory = await _uow.PosTerminalStatusHistories.GetByIdAsync(id);
+            if (terminalStatusHistory == null) return new PosTerminalStatusHistoryDto();
+
+            terminalStatusHistory.Deleted = true;
+            terminalStatusHistory.Published = false;
+            terminalStatusHistory.Is_Active = false;
+            terminalStatusHistory.RecordStatus = Blocks.RecordStatus.Inactive;
+            terminalStatusHistory.Last_Update_Date = DateTime.UtcNow;
+            terminalStatusHistory.Last_Update_User = Guid.Parse(userId);
+
+            _uow.PosTerminalStatusHistories.Update(terminalStatusHistory);
+            await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PosTerminalStatusHistoryCacheKeys.All);
+            await _cache.RemoveAsync(PosTerminalStatusHistoryCacheKeys.ById(id));
+
+
+            return MapToDto(terminalStatusHistory);
+        }
         private static PosTerminalStatusHistoryDto MapToDto(PosTerminalStatusHistory x) => new()
         {
             Id = x.Id,

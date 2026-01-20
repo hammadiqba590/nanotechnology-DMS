@@ -1,6 +1,38 @@
 [
   {
     "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "GetActiveCampaigns",
+    "RelativePath": "api/Campaign/active-campaign-by-serial",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serialNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
+    "Method": "CreateFullCampaign",
+    "RelativePath": "api/Campaign/create-full-campaign",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSAdminService.DTO.Campagin.CampaignFullCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CampaignController",
     "Method": "DeleteCampaign",
     "RelativePath": "api/Campaign/delete-campaign",
     "HttpMethod": "DELETE",

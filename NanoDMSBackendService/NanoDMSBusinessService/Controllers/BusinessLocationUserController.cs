@@ -432,9 +432,9 @@ namespace NanoDMSBusinessService.Controllers
 
         private async Task<string> FetchBusinessNameAsync(ApiServiceHelper apiService, string locationType, string actionType, Guid id, string jwtToken)
         {
-            var apiUrl = $"http://localhost:8010/apigateway/BusinessService/{locationType}/get-{actionType.ToLower()}s";
+            var BaseUrl = _configuration["GlobalConfiguration:BaseUrl"];
 
-           // var apiUrl = $"http://192.168.100.61/apigateway/BusinessService/{locationType}/get-{actionType.ToLower()}s";
+            var apiUrl = $"{BaseUrl}/apigateway/BusinessService/{locationType}/get-{actionType.ToLower()}s";
 
             var response = await apiService.SendRequestAsync<object, Dictionary<string, object>>(apiUrl, HttpMethod.Get, null, jwtToken)
                            ?? new Dictionary<string, object>();
@@ -466,9 +466,9 @@ return string.Empty; // Ensures no null reference return
             if (ids == null || ids.Count == 0)
                 return new Dictionary<Guid, string>();
 
-            var apiUrl = $"http://localhost:8010/apigateway/BusinessService/{locationType}/get-{actionType.ToLower()}s";
+            var BaseUrl = _configuration["GlobalConfiguration:BaseUrl"];
 
-            //var apiUrl = $"http://192.168.100.61/apigateway/BusinessService/{locationType}/get-{actionType.ToLower()}s";
+            var apiUrl = $"{BaseUrl}/apigateway/BusinessService/{locationType}/get-{actionType.ToLower()}s";
 
             // Send GET request expecting JSON response
             var response = await apiService.SendRequestAsync<object, Dictionary<string, object>>(
@@ -499,9 +499,9 @@ return string.Empty; // Ensures no null reference return
             if (ids == null || ids.Count == 0)
                 return new Dictionary<Guid, string>();
 
-            var apiUrl = $"http://localhost:8010/apigateway/BusinessService/{locationType}/get-{actiontype.ToLower()}s";
+            var BaseUrl = _configuration["GlobalConfiguration:BaseUrl"];
 
-            //var apiUrl = $"http://192.168.100.61/apigateway/BusinessService/{locationType}/get-{actiontype.ToLower()}s";
+            var apiUrl = $"{BaseUrl}/apigateway/BusinessService/{locationType}/get-{actiontype.ToLower()}s";
 
             var response = await apiService.SendRequestAsync<object, Dictionary<string, object>>(apiUrl, HttpMethod.Get, ids, jwtToken)
                            ?? new Dictionary<string, object>();
@@ -532,8 +532,10 @@ return string.Empty; // Ensures no null reference return
     List<Guid> userIds,
     string jwtToken)
         {
+            var BaseUrl = _configuration["GlobalConfiguration:BaseUrl"];
+
             var response = await apiService.SendRequestAsync<List<Guid>, List<Dictionary<string, object>>>(
-                $"http://localhost:8010/apigateway/AuthService/{service}/get-{endpoint.ToLower()}",
+                $"{BaseUrl}/apigateway/AuthService/{service}/get-{endpoint.ToLower()}",
                 HttpMethod.Get,
                 userIds,
                 jwtToken

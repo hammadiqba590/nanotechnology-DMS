@@ -20,7 +20,7 @@ namespace NanoDMSAdminService.DTO.DiscountRule
         public string? Applicable_Days { get; set; }
         public int? Transaction_Cap { get; set; }
         public int Priority { get; set; }
-
+        public bool Stackable { get; set; }
         public TimeSpan? Start_Time { get; set; }
         public TimeSpan? End_Time { get; set; }
 

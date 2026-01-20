@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using NanoDMSAdminService.Common;
 using NanoDMSAdminService.DTO.PosTerminalMaster;
 using NanoDMSAdminService.DTO.Psp;
@@ -6,97 +7,35 @@ using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class PspService : IPspService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IDistributedCache _cache;
 
-        public PspService(IUnitOfWork uow)
+        public PspService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
-        }
-
-        public async Task<PspDto> CreateAsync(PspCreateDto dto, string userId)
-        {
-            var psp = new Psp
-            {
-                Id = Guid.NewGuid(),
-
-                Name = dto.Name,
-                Short_Name = dto.Short_Name,
-                Code = dto.Code,
-                Psp_Category_Id = dto.Psp_Category_Id,
-                Country_Id = dto.Country_Id,
-                Currency_Code = dto.Currency_Code,
-                Currency_Symbol = dto.Currency_Symbol,
-                Registration_Number = dto.Registration_Number,
-                Reg_Doc_Url = dto.Reg_Doc_Url,
-                Compliance_Status = dto.Compliance_Status,
-                Website = dto.Website,
-                Contact_Email = dto.Contact_Email,
-                Contact_Phone = dto.Contact_Phone,
-                Api_Endpoint = dto.Api_Endpoint,
-                Sandbox_Endpoint = dto.Sandbox_Endpoint,
-                Webhook_Url = dto.Webhook_Url,
-                Api_Key = dto.Api_Key,
-                Documentation_Url = dto.Documentation_Url,
-                Integration_Type = dto.Integration_Type,
-                Supported_Payment_Methods = dto.Supported_Payment_Methods,
-                Supported_Currencies = dto.Supported_Currencies,
-                Settlement_Frequency = dto.Settlement_Frequency,
-                Transaction_Limit = dto.Transaction_Limit,
-                Daily_Volume_Limit = dto.Daily_Volume_Limit,
-                Risk_Score = dto.Risk_Score,
-                Requires_Kyc = dto.Requires_Kyc,
-                Onboarded_By = dto.Onboarded_By,
-                Onboarded_At = dto.Onboarded_At,
-
-
-                BusinessLocation_Id = dto.Business_Location_Id,
-                Business_Id = dto.Business_Id,
-
-                Is_Active = true,
-                Deleted = false,
-                Published = true,
-                RecordStatus = Blocks.RecordStatus.Active,
-
-                Create_Date = DateTime.UtcNow,
-                Create_User = Guid.Parse(userId)
-            };
-
-            await _uow.Psps.AddAsync(psp);
-            await _uow.SaveAsync();
-
-            return MapToDto(psp);
-        }
-
-        public async Task<PspDto> DeleteAsync(Guid id, string userId)
-        {
-            var psp = await _uow.Psps.GetByIdAsync(id);
-            if (psp == null) return new PspDto();
-
-            psp.Deleted = true;
-            psp.Published = false;
-            psp.Is_Active = false;
-            psp.RecordStatus = Blocks.RecordStatus.Inactive;
-            psp.Last_Update_Date = DateTime.UtcNow;
-            psp.Last_Update_User = Guid.Parse(userId);
-
-            _uow.Psps.Update(psp);
-            await _uow.SaveAsync();
-
-            return MapToDto(psp);
+            _cache = cache;
         }
 
         public async Task<IEnumerable<PspDto>> GetAllAsync()
         {
+            const string cacheKey = "psps:all";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<PspDto>>(cached)!;
+
             var psp = await _uow.Psps.GetAllByConditionAsync(b =>
                 !b.Deleted && b.Is_Active
             );
 
-            return psp.Select(x => new PspDto
+            var result = psp.Select(x => new PspDto
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -140,16 +79,36 @@ namespace NanoDMSAdminService.Services.Implementations
                 Last_Update_User = x.Last_Update_User,
                 RecordStatus = x.RecordStatus
             });
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
+
+            return result;
         }
 
         public async Task<PspDto?> GetByIdAsync(Guid id)
         {
+            var cacheKey = $"psps:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PspDto>(cached);
+
             var psp = await _uow.Psps.GetByIdAsync(id);
-            return psp == null ? null : MapToDto(psp);
+            var dto = psp == null ? null : MapToDto(psp);
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(dto), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return dto;
         }
 
         public async Task<PaginatedResponseDto<PspDto>> GetPagedAsync(PspFilterModel filter)
         {
+            var cacheKey = PspCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<PspDto>>(cached)!;
+
             var query = _uow.Psps.GetQueryable();
 
             if (!string.IsNullOrWhiteSpace(filter.Name))
@@ -198,7 +157,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 .Take(filter.PageSize)
                 .ToListAsync();
 
-            return new PaginatedResponseDto<PspDto>
+            var result = new PaginatedResponseDto<PspDto>
             {
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
@@ -206,6 +165,62 @@ namespace NanoDMSAdminService.Services.Implementations
                 TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
                 Data = psp.Select(MapToDto).ToList()
             };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return result;
+        }
+
+        public async Task<PspDto> CreateAsync(PspCreateDto dto, string userId)
+        {
+            var psp = new Psp
+            {
+                Id = Guid.NewGuid(),
+                Name = dto.Name,
+                Short_Name = dto.Short_Name,
+                Code = dto.Code,
+                Psp_Category_Id = dto.Psp_Category_Id,
+                Country_Id = dto.Country_Id,
+                Currency_Code = dto.Currency_Code,
+                Currency_Symbol = dto.Currency_Symbol,
+                Registration_Number = dto.Registration_Number,
+                Reg_Doc_Url = dto.Reg_Doc_Url,
+                Compliance_Status = dto.Compliance_Status,
+                Website = dto.Website,
+                Contact_Email = dto.Contact_Email,
+                Contact_Phone = dto.Contact_Phone,
+                Api_Endpoint = dto.Api_Endpoint,
+                Sandbox_Endpoint = dto.Sandbox_Endpoint,
+                Webhook_Url = dto.Webhook_Url,
+                Api_Key = dto.Api_Key,
+                Documentation_Url = dto.Documentation_Url,
+                Integration_Type = dto.Integration_Type,
+                Supported_Payment_Methods = dto.Supported_Payment_Methods,
+                Supported_Currencies = dto.Supported_Currencies,
+                Settlement_Frequency = dto.Settlement_Frequency,
+                Transaction_Limit = dto.Transaction_Limit,
+                Daily_Volume_Limit = dto.Daily_Volume_Limit,
+                Risk_Score = dto.Risk_Score,
+                Requires_Kyc = dto.Requires_Kyc,
+                Onboarded_By = dto.Onboarded_By,
+                Onboarded_At = dto.Onboarded_At,
+                BusinessLocation_Id = dto.Business_Location_Id,
+                Business_Id = dto.Business_Id,
+                Is_Active = true,
+                Deleted = false,
+                Published = true,
+                RecordStatus = Blocks.RecordStatus.Active,
+                Create_Date = DateTime.UtcNow,
+                Create_User = Guid.Parse(userId)
+            };
+
+            await _uow.Psps.AddAsync(psp);
+            await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PspCacheKeys.All);
+
+            return MapToDto(psp);
         }
 
         public async Task<PspDto> UpdateAsync(Guid id, PspUpdateDto dto, string userId)
@@ -248,7 +263,34 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.Psps.Update(entity);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PspCacheKeys.All);
+            await _cache.RemoveAsync(PspCacheKeys.ById(id));
+
             return MapToDto(entity);
+        }
+
+        public async Task<PspDto> DeleteAsync(Guid id, string userId)
+        {
+            var psp = await _uow.Psps.GetByIdAsync(id);
+            if (psp == null) return new PspDto();
+
+            psp.Deleted = true;
+            psp.Published = false;
+            psp.Is_Active = false;
+            psp.RecordStatus = Blocks.RecordStatus.Inactive;
+            psp.Last_Update_Date = DateTime.UtcNow;
+            psp.Last_Update_User = Guid.Parse(userId);
+
+            _uow.Psps.Update(psp);
+            await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(PspCacheKeys.All);
+            await _cache.RemoveAsync(PspCacheKeys.ById(id));
+
+            return MapToDto(psp);
         }
 
         private static PspDto MapToDto(Psp x) => new()
@@ -258,9 +300,9 @@ namespace NanoDMSAdminService.Services.Implementations
             Short_Name = x.Short_Name,
             Code = x.Code,
             Psp_Category_Id = x.Psp_Category_Id,
-            Psp_Category_Name = x.PspCategory.Name,
+            Psp_Category_Name = x.PspCategory?.Name ?? string.Empty,
             Country_Id = x.Country_Id,
-            Country_Name = x.Country?.Name,
+            Country_Name = x.Country?.Name ?? string.Empty,
             Currency_Code = x.Currency_Code,
             Currency_Symbol = x.Currency_Symbol,
             Registration_Number = x.Registration_Number,

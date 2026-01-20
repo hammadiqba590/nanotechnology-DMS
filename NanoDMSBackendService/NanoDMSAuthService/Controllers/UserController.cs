@@ -366,10 +366,12 @@ namespace NanoDMSAuthService.Controllers
 
             // Save the JWT token in the AspNetUserTokens table
             await _userManager.SetAuthenticationTokenAsync(user, "MyApp", "JwtToken", jwtToken);
+            
+            var BaseUrl = _configuration["GlobalConfiguration:BaseUrl"];
 
             // URLs should come from configuration ideally
-            string businessUsersUrl = "http://localhost:8010/apigateway/BusinessService/BusinessUser" + "/get-business-users";
-            string locationUsersUrl = "http://localhost:8010/apigateway/BusinessService/BusinessLocationUser" + "/get-business-location-users";
+            string businessUsersUrl = $"{BaseUrl}/apigateway/BusinessService/BusinessUser" + "/get-business-users";
+            string locationUsersUrl = $"{BaseUrl}/apigateway/BusinessService/BusinessLocationUser" + "/get-business-location-users";
             
 
             var businessUsersJson = await _apiServiceHelper.SendRequestAsync<object>(

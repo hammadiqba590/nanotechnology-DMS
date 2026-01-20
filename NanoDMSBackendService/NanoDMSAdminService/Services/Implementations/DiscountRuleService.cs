@@ -1,28 +1,40 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using NanoDMSAdminService.Common;
 using NanoDMSAdminService.DTO.Currency;
 using NanoDMSAdminService.DTO.DiscountRule;
+using NanoDMSAdminService.DTO.DiscountRuleHistory;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
+using NanoDMSAdminService.Services.Interfaces;
 using NanoDMSAdminService.UnitOfWorks;
+using NanoDMSSharedLibrary.CacheKeys;
+using System.Text.Json;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
     public class DiscountRuleService : IDiscountRuleService
     {
         private readonly IUnitOfWork _uow;
-
-        public DiscountRuleService(IUnitOfWork uow)
+        private readonly IDistributedCache _cache;
+        public DiscountRuleService(IUnitOfWork uow, IDistributedCache cache)
         {
             _uow = uow;
+            _cache = cache;
         }
         public async Task<IEnumerable<DiscountRuleDto>> GetAllAsync()
         {
+            const string cacheKey = "discountrules:all";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<IEnumerable<DiscountRuleDto>>(cached)!;
+
             var rules = await _uow.DiscountRules.GetAllByConditionAsync(b =>
                 !b.Deleted && b.Is_Active
             );
 
-            return rules.Select(b => new DiscountRuleDto
+            var result = rules.Select(b => new DiscountRuleDto
             {
                 Id = b.Id,
                 Campaign_Card_Bin_Id = b.Campaign_Card_Bin_Id,
@@ -49,9 +61,61 @@ namespace NanoDMSAdminService.Services.Implementations
                 Is_Active = b.Is_Active,
                 RecordStatus = b.RecordStatus,
             });
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
+
+            return result;
         }
+
+        public async Task<DiscountRuleDto?> GetByIdAsync(Guid id)
+        {
+            var cacheKey = $"discountrules:{id}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<DiscountRuleDto>(cached);
+
+            var rule = await _uow.DiscountRules.GetByIdAsync(id);
+            if (rule == null) return null;
+
+            var dto = new DiscountRuleDto
+            {
+                Id = rule.Id,
+                Campaign_Card_Bin_Id = rule.Campaign_Card_Bin_Id,
+                Discount_Type = rule.Discount_Type,
+                Discount_Value = rule.Discount_Value,
+                Min_Spend = rule.Min_Spend,
+                Max_Discount = rule.Max_Discount,
+                Payment_Type = rule.Payment_Type,
+                Budget_Limit_Type = rule.Budget_Limit_Type,
+                Budget_Limit_Value = rule.Budget_Limit_Value,
+                Applicable_Days = rule.Applicable_Days,
+                Transaction_Cap = rule.Transaction_Cap,
+                Priority = rule.Priority,
+                Start_Time = rule.Start_Time,
+                End_Time = rule.End_Time,
+                Published = rule.Published,
+                Deleted = rule.Deleted,
+                Business_Id = rule.Business_Id,
+                BusinessLocation_Id = rule.BusinessLocation_Id,
+                Is_Active = rule.Is_Active,
+                Create_Date = rule.Create_Date,
+                Last_Update_Date = rule.Last_Update_Date
+            };
+
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(dto), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
+
+            return dto;
+        }
+
         public async Task<PaginatedResponseDto<DiscountRuleDto>> GetPagedAsync(DiscountRuleFilterModel filter)
         {
+            var cacheKey = DiscountRuleCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<PaginatedResponseDto<DiscountRuleDto>>(cached)!;
+
             var query = _uow.DiscountRules.GetQueryable()
                 .Where(x => !x.Deleted);
 
@@ -98,7 +162,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 .AsNoTracking()
                 .ToListAsync();
 
-            return new PaginatedResponseDto<DiscountRuleDto>
+            var result = new PaginatedResponseDto<DiscountRuleDto>
             {
                 TotalRecords = totalRecords,
                 PageNumber = filter.PageNumber,
@@ -106,37 +170,10 @@ namespace NanoDMSAdminService.Services.Implementations
                 TotalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize),
                 Data = data
             };
-        }
 
-        public async Task<DiscountRuleDto?> GetByIdAsync(Guid id)
-        {
-            var rule = await _uow.DiscountRules.GetByIdAsync(id);
-            if (rule == null) return null;
+            await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(result), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15) });
 
-            return new DiscountRuleDto
-            {
-                Id = rule.Id,
-                Campaign_Card_Bin_Id = rule.Campaign_Card_Bin_Id,
-                Discount_Type = rule.Discount_Type,
-                Discount_Value = rule.Discount_Value,
-                Min_Spend = rule.Min_Spend,
-                Max_Discount = rule.Max_Discount,
-                Payment_Type = rule.Payment_Type,
-                Budget_Limit_Type = rule.Budget_Limit_Type,
-                Budget_Limit_Value = rule.Budget_Limit_Value,
-                Applicable_Days = rule.Applicable_Days,
-                Transaction_Cap = rule.Transaction_Cap,
-                Priority = rule.Priority,
-                Start_Time = rule.Start_Time,
-                End_Time = rule.End_Time,
-                Published = rule.Published,
-                Deleted = rule.Deleted,
-                Business_Id = rule.Business_Id,
-                BusinessLocation_Id = rule.BusinessLocation_Id,
-                Is_Active = rule.Is_Active,
-                Create_Date = rule.Create_Date,
-                Last_Update_Date = rule.Last_Update_Date
-            };
+            return result;
         }
 
         public async Task<DiscountRuleDto> CreateAsync(DiscountRuleCreateDto dto, string userId)
@@ -171,6 +208,10 @@ namespace NanoDMSAdminService.Services.Implementations
             await _uow.DiscountRules.AddAsync(rule);
             await _uow.SaveAsync();
 
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(DiscountRuleCacheKeys.All);
+
+
             return await GetByIdAsync(rule.Id) ?? new DiscountRuleDto();
         }
 
@@ -198,6 +239,10 @@ namespace NanoDMSAdminService.Services.Implementations
             _uow.DiscountRules.Update(rule);
             await _uow.SaveAsync();
 
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(DiscountRuleCacheKeys.All);
+            await _cache.RemoveAsync(DiscountRuleCacheKeys.ById(id));
+
             return await GetByIdAsync(id) ?? new DiscountRuleDto();
         }
 
@@ -215,6 +260,10 @@ namespace NanoDMSAdminService.Services.Implementations
 
             _uow.DiscountRules.Update(rule);
             await _uow.SaveAsync();
+
+            // 🔥 CACHE INVALIDATION
+            await _cache.RemoveAsync(DiscountRuleCacheKeys.All);
+            await _cache.RemoveAsync(DiscountRuleCacheKeys.ById(id));
 
             return await GetByIdAsync(id) ?? new DiscountRuleDto();
         }

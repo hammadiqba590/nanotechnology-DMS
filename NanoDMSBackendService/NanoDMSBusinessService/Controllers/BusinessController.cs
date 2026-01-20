@@ -110,8 +110,12 @@ namespace NanoDMSBusinessService.Controllers
                 if (model.Logo != null && model.Logo.Length > 0)
                 {
                     // Define the root directory for images
-                    var imagesRootPath = @"C:\Repos\dot net\PosApi\Images";
+                    var imagesRootPath = _configuration["ImageSettings:ImagesRootPath"];
 
+                    if (string.IsNullOrWhiteSpace(imagesRootPath))
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, "Image root path configuration is missing.");
+                    }
                     // Define subfolder dynamically (e.g., UserProfile, ProductImages, etc.)
                     var subFolder = "BusinessProfile"; // Change this dynamically based on use case
                     var staticPath = Path.Combine(imagesRootPath, subFolder);
@@ -286,7 +290,12 @@ namespace NanoDMSBusinessService.Controllers
                 if (updateDto.Logo != null && updateDto.Logo.Length > 0)
                 {
                     // Define the root directory for images
-                    var imagesRootPath = @"C:\Repos\dot net\PosApi\Images";
+                    var imagesRootPath = _configuration["ImageSettings:ImagesRootPath"];
+
+                    if (string.IsNullOrWhiteSpace(imagesRootPath))
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, "Image root path configuration is missing.");
+                    }
 
                     // Define subfolder dynamically (e.g., UserProfile, ProductImages, etc.)
                     var subFolder = "BusinessProfile"; // Change this dynamically based on use case
