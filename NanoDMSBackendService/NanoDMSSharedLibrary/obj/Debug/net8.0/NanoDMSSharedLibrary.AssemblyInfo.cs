@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NanoDMSSharedLibrary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+058f1a03e8608c6b82e9c74b30947044a826c7d0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71dcdb4ba10e2b0ed407ae01dae6da2997f7b06a")]
 [assembly: System.Reflection.AssemblyProductAttribute("NanoDMSSharedLibrary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NanoDMSSharedLibrary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

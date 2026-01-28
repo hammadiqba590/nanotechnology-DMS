@@ -20,7 +20,10 @@ namespace NanoDMSAdminService.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public CampaignController(ICampaignService campaign,ICampaignBankService campaignBank,ICampaignCardBinService campaignCardBin,UserManager<IdentityUser> userManager,
+        public CampaignController(ICampaignService campaign,
+            ICampaignBankService campaignBank,
+            ICampaignCardBinService campaignCardBin,
+            UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;

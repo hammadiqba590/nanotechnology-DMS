@@ -10,6 +10,7 @@ using NanoDMSAdminService.Repositories.Interfaces;
 using NanoDMSSharedLibrary;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +57,13 @@ builder.Services.AddStackExchangeRedisCache(options =>
 // Controllers & Swagger
 // =======================
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+        o.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter()
+        )
+    );
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

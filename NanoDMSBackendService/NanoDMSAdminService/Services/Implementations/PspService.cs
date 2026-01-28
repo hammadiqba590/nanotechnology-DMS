@@ -103,7 +103,21 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<PspDto>> GetPagedAsync(PspFilterModel filter)
         {
-            var cacheKey = PspCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = PspCacheKeys.Paged(filter.PageNumber, 
+                filter.PageSize,
+                filter.Name ?? string.Empty,
+                filter.Short_Name ?? string.Empty,
+                filter.Code ?? string.Empty,
+                filter.Currency_Code ?? string.Empty,
+                filter.Registration_Number ?? string.Empty,
+                filter.Contact_Email ?? string.Empty,
+                filter.Contact_Phone ?? string.Empty,
+                filter.Api_Key ?? string.Empty,
+                filter.Integration_Type?.ToString() ?? string.Empty,
+                filter.Compliance_Status?.ToString() ?? string.Empty,
+                filter.Settlement_Frequency?.ToString() ?? string.Empty,
+                filter.Requires_Kyc.ToString() ?? string.Empty
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)

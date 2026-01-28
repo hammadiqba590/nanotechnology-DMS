@@ -9,6 +9,7 @@ using NanoDMSAdminService.UnitOfWorks;
 using NanoDMSSharedLibrary;
 using NanoDMSSharedLibrary.CacheKeys;
 using System.Text.Json;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NanoDMSAdminService.Services.Implementations
 {
@@ -107,7 +108,7 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<BankDto>> GetPagedAsync(BankFilterModel filter)
         {
-            var cacheKey = BankCacheKeys.Paged(filter.PageNumber,filter.PageSize);
+            var cacheKey = BankCacheKeys.Paged(filter.PageNumber,filter.PageSize, filter.Name ?? string.Empty);
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)
@@ -117,6 +118,11 @@ namespace NanoDMSAdminService.Services.Implementations
 
             if (!banks.Any())
                 return new PaginatedResponseDto<BankDto>();
+
+            if (!string.IsNullOrEmpty(filter.Name))
+                banks = banks.Where(q => q.Name.Contains(filter.Name));
+
+            banks = banks.OrderByDescending(x => x.Create_Date);
 
             var mapped = banks.Select(b => new BankDto
             {
@@ -151,7 +157,6 @@ namespace NanoDMSAdminService.Services.Implementations
 
             return result;
         }
-
 
         // Create
         public async Task<BankDto> CreateAsync(BankCreateDto dto,string userId)

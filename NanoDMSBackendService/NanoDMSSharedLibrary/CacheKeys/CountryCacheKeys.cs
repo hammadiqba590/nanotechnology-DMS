@@ -13,7 +13,7 @@ namespace NanoDMSSharedLibrary.CacheKeys
         public static string ById(Guid id)
             => $"countries:{id}";
 
-        public static string Paged(int page, int size)
-            => $"countries:paged:{page}:{size}";
+        public static string Paged(int page, int size,string name = "",string iso2 = "")
+            => $"countries:paged:{page}:{size}:{name}:{iso2}";
     }
 }

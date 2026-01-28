@@ -32,6 +32,7 @@ namespace NanoDMSAdminService.Models
         public Guid? Country_Id { get; set; }
         [ForeignKey(nameof(Country_Id))]
         public Country? Country { get; set; }
+        public bool Is_Virtual { get; set; }
 
         public ICollection<CampaignCardBin> Campaign_Card_Bins { get; set; } = new List<CampaignCardBin>();
 

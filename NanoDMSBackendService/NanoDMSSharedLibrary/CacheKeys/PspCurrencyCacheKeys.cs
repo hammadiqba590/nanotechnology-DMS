@@ -13,8 +13,8 @@ namespace NanoDMSSharedLibrary.CacheKeys
         public static string ById(Guid id)
             => $"pspcurrencies:{id}";
 
-        public static string Paged(int page, int size)
-            => $"pspcurrencies:paged:{page}:{size}";
+        public static string Paged(int page, int size,string pspid = "",string currencyid = "")
+            => $"pspcurrencies:paged:{page}:{size}:{pspid}:{currencyid}";
     }
 }
 

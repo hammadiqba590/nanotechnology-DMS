@@ -9,6 +9,8 @@ namespace NanoDMSAdminService.DTO.DiscountRuleHistory
         public Guid Discount_Rule_Id { get; set; }
         public Guid Campaign_Card_Bin_Id { get; set; }
         public DiscountTypeStatus? Discount_Type { get; set; }
+        public string? Discount_Mode { get; set; }
+        public string? Pos_Mode { get; set; }
         public decimal Discount_Value { get; set; }
         public Guid Currency_Id { get; set; }
         public decimal? Min_Spend { get; set; }

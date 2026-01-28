@@ -13,7 +13,7 @@ namespace NanoDMSSharedLibrary.CacheKeys
         public static string ById(Guid id)
             => $"cardlevels:{id}";
 
-        public static string Paged(int page, int size)
-            => $"cardlevels:paged:{page}:{size}";
+        public static string Paged(int page, int size, string name = "")
+            => $"cardlevels:paged:{page}:{size}:{name}";
     }
 }

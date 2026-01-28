@@ -173,6 +173,15 @@ namespace NanoDMSBusinessService.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("DiscountBeforePosCharge")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DiscountBeforeServiceCharge")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DiscountBeforeTax")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -195,12 +204,18 @@ namespace NanoDMSBusinessService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<decimal>("PosCharge")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("Postal_Code")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<decimal>("ServiceCharges")
+                        .HasColumnType("numeric");
 
                     b.Property<Guid>("State")
                         .HasColumnType("uuid");
@@ -214,6 +229,92 @@ namespace NanoDMSBusinessService.Migrations
                     b.HasIndex("Business_Id");
 
                     b.ToTable("Business_Location", (string)null);
+                });
+
+            modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocationBankSettlement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Bank_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Bank_Share")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("Business_Location_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Create_User")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Merchant_Share")
+                        .HasColumnType("numeric");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Tax_On_Merchant")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Tax_Value")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Business_Location_Id");
+
+                    b.ToTable("BusinessLocationBankSettlements");
+                });
+
+            modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocationPsp", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Business_Location_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("Create_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Create_User")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Last_Update_Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Last_Update_User")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Psp_Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Business_Location_Id");
+
+                    b.ToTable("BusinessLocationPsps");
                 });
 
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocationUser", b =>
@@ -325,6 +426,28 @@ namespace NanoDMSBusinessService.Migrations
                     b.Navigation("Business");
                 });
 
+            modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocationBankSettlement", b =>
+                {
+                    b.HasOne("NanoDMSBusinessService.Models.BusinessLocation", "Business_Location")
+                        .WithMany("BankSettlements")
+                        .HasForeignKey("Business_Location_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business_Location");
+                });
+
+            modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocationPsp", b =>
+                {
+                    b.HasOne("NanoDMSBusinessService.Models.BusinessLocation", "Business_Location")
+                        .WithMany("Psps")
+                        .HasForeignKey("Business_Location_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business_Location");
+                });
+
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocationUser", b =>
                 {
                     b.HasOne("NanoDMSBusinessService.Models.Business", "Business")
@@ -368,9 +491,13 @@ namespace NanoDMSBusinessService.Migrations
 
             modelBuilder.Entity("NanoDMSBusinessService.Models.BusinessLocation", b =>
                 {
+                    b.Navigation("BankSettlements");
+
                     b.Navigation("BusinessConfigs");
 
                     b.Navigation("BusinessLocationUsers");
+
+                    b.Navigation("Psps");
                 });
 #pragma warning restore 612, 618
         }

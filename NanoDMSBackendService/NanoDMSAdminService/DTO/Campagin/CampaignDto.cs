@@ -1,5 +1,6 @@
 ﻿using NanoDMSAdminService.Blocks;
 using NanoDMSAdminService.Common;
+using NanoDMSAdminService.DTO.CampaignBank;
 
 namespace NanoDMSAdminService.DTO.Campagin
 {
@@ -15,7 +16,8 @@ namespace NanoDMSAdminService.DTO.Campagin
         public CampaginStatus? Status { get; set; }
         public BudgetLimitTypeStatus? Budget_Limit_Type { get; set; }
         public int? Budget_Limit_Value { get; set; }
-        public int Priority { get; set; } 
+        public int Priority { get; set; }
+        public List<CampaignBankDto> CampaignBanks { get; set; } = new();
     }
 
 }

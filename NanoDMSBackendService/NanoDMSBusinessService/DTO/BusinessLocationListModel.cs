@@ -17,5 +17,10 @@ namespace NanoDMSBusinessService.DTO
         public string Mobile { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Website { get; set; } = string.Empty;
+        public int DiscountBeforeTax { get; set; }
+        public decimal PosCharge { get; set; }
+        public int DiscountBeforePosCharge { get; set; }
+        public decimal ServiceCharges { get; set; }
+        public int DiscountBeforeServiceCharge { get; set; }
     }
 }

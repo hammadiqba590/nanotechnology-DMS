@@ -12,5 +12,7 @@ namespace NanoDMSAdminService.Services.Interfaces
         Task<CardBinDto> CreateAsync(CardBinCreateDto dto, string userId);
         Task<CardBinDto> UpdateAsync(Guid id, CardBinUpdateDto dto, string userId);
         Task<CardBinDto> DeleteAsync(Guid id, string userId);
+        Task<List<CardBinLookupDto>> GetCardBinLookupAsync(CardBinLookupFilterModel filter);
+        Task<List<CardBinGroupDto>> GetGroupedCardBinsAsync(CardBinGroupedFilterModel filter);
     }
 }

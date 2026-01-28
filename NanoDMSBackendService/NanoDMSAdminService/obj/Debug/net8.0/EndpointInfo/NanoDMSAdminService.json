@@ -606,6 +606,154 @@
         }
       }
     },
+    "/api/Card/get-card-bin-lookup": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "Bank_Ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "name": "Card_Brand_Ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "name": "Local_International_List",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LocalInternationalStatus"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/get-card-bin-grouped": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "name": "Bank_Ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "name": "Card_Brand_Ids",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "name": "Local_International_List",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/LocalInternationalStatus"
+              }
+            }
+          },
+          {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Card/bulk-upload-card-bin": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardBinBulkUploadResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardBinBulkUploadResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardBinBulkUploadResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Card/get-card-bin-list": {
       "get": {
         "tags": [
@@ -2230,6 +2378,39 @@
               "format": "uuid"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-enum-with-name": {
+      "get": {
+        "tags": [
+          "MasterEntry"
+        ],
+        "parameters": [
+          {
+            "name": "enumName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/MasterEntry/get-all-enums": {
+      "get": {
+        "tags": [
+          "MasterEntry"
         ],
         "responses": {
           "200": {
@@ -3896,8 +4077,6 @@
     "schemas": {
       "BankCreateDto": {
         "required": [
-          "business_Id",
-          "businessLocation_Id",
           "country_Id",
           "name",
           "short_Code",
@@ -3925,14 +4104,6 @@
             "nullable": true
           },
           "country_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "business_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "businessLocation_Id": {
             "type": "string",
             "format": "uuid"
           }
@@ -3941,8 +4112,6 @@
       },
       "BankUpdateDto": {
         "required": [
-          "business_Id",
-          "businessLocation_Id",
           "country_Id",
           "name",
           "short_Code",
@@ -3972,48 +4141,37 @@
           "country_Id": {
             "type": "string",
             "format": "uuid"
-          },
-          "business_Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "businessLocation_Id": {
-            "type": "string",
-            "format": "uuid"
           }
         },
         "additionalProperties": false
       },
       "BudgetLimitTypeStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5
+          "Unknown",
+          "Hourly",
+          "Daily",
+          "Weekly",
+          "Monthly",
+          "Yearly"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "CampaginCardBinStatus": {
         "enum": [
-          0,
-          1,
-          2
+          "Unknown",
+          "Active",
+          "Inactive"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "CampaginStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "Unkown",
+          "Active",
+          "Inactive",
+          "Expired"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "CampaignBankCreateDto": {
         "required": [
@@ -4037,6 +4195,10 @@
             "format": "double"
           },
           "discount_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "bank_Share": {
             "type": "number",
             "format": "double"
           },
@@ -4097,6 +4259,10 @@
             "format": "double"
           },
           "discount_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "bank_Share": {
             "type": "number",
             "format": "double"
           },
@@ -4165,6 +4331,10 @@
             "format": "double"
           },
           "discount_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "bank_Share": {
             "type": "number",
             "format": "double"
           },
@@ -4534,6 +4704,31 @@
         },
         "additionalProperties": false
       },
+      "CardBinBulkUploadResponse": {
+        "type": "object",
+        "properties": {
+          "totalRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "importedRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failedRows": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rowResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardBinUploadResult"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CardBinCreateDto": {
         "required": [
           "bank_Id",
@@ -4572,6 +4767,9 @@
             "type": "string",
             "format": "uuid",
             "nullable": true
+          },
+          "is_Virtual": {
+            "type": "boolean"
           },
           "business_Id": {
             "type": "string",
@@ -4623,6 +4821,9 @@
             "format": "uuid",
             "nullable": true
           },
+          "is_Virtual": {
+            "type": "boolean"
+          },
           "business_Id": {
             "type": "string",
             "format": "uuid"
@@ -4630,6 +4831,23 @@
           "business_Location_Id": {
             "type": "string",
             "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardBinUploadResult": {
+        "type": "object",
+        "properties": {
+          "bin": {
+            "type": "string",
+            "nullable": true
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4762,23 +4980,21 @@
       },
       "ChangeTypeStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "Unknown",
+          "Insert",
+          "Update",
+          "Delete"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "ComplianceStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "Unknown",
+          "Pending",
+          "Approved",
+          "Rejected"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "CountryCreateDto": {
         "required": [
@@ -4956,14 +5172,13 @@
       },
       "DiscountModeStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
+          "Unknown",
+          "All",
+          "Swipe",
+          "Dip",
+          "Tap"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "DiscountRuleCreateDto": {
         "required": [
@@ -4978,6 +5193,14 @@
           },
           "discount_Type": {
             "$ref": "#/components/schemas/DiscountTypeStatus"
+          },
+          "discount_Mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "pos_Mode": {
+            "type": "string",
+            "nullable": true
           },
           "discount_Value": {
             "type": "number",
@@ -4997,11 +5220,7 @@
             "$ref": "#/components/schemas/PaymentTypeStatus"
           },
           "budget_Limit_Type": {
-            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
-          },
-          "budget_Limit_Value": {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "nullable": true
           },
           "applicable_Days": {
@@ -5051,6 +5270,14 @@
           "discount_Type": {
             "$ref": "#/components/schemas/DiscountTypeStatus"
           },
+          "discount_Mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "pos_Mode": {
+            "type": "string",
+            "nullable": true
+          },
           "discount_Value": {
             "type": "number",
             "format": "double"
@@ -5069,11 +5296,7 @@
             "$ref": "#/components/schemas/PaymentTypeStatus"
           },
           "budget_Limit_Type": {
-            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
-          },
-          "budget_Limit_Value": {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "nullable": true
           },
           "applicable_Days": {
@@ -5131,6 +5354,14 @@
           },
           "discount_Type": {
             "$ref": "#/components/schemas/DiscountTypeStatus"
+          },
+          "discount_Mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "pos_Mode": {
+            "type": "string",
+            "nullable": true
           },
           "discount_Value": {
             "type": "number",
@@ -5202,6 +5433,14 @@
           "discount_Type": {
             "$ref": "#/components/schemas/DiscountTypeStatus"
           },
+          "discount_Mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "pos_Mode": {
+            "type": "string",
+            "nullable": true
+          },
           "discount_Value": {
             "type": "number",
             "format": "double"
@@ -5267,6 +5506,14 @@
           "discount_Type": {
             "$ref": "#/components/schemas/DiscountTypeStatus"
           },
+          "discount_Mode": {
+            "type": "string",
+            "nullable": true
+          },
+          "pos_Mode": {
+            "type": "string",
+            "nullable": true
+          },
           "discount_Value": {
             "type": "number",
             "format": "double"
@@ -5285,11 +5532,7 @@
             "$ref": "#/components/schemas/PaymentTypeStatus"
           },
           "budget_Limit_Type": {
-            "$ref": "#/components/schemas/BudgetLimitTypeStatus"
-          },
-          "budget_Limit_Value": {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "nullable": true
           },
           "applicable_Days": {
@@ -5331,42 +5574,38 @@
       },
       "DiscountTypeStatus": {
         "enum": [
-          0,
-          1,
-          2
+          "Unknown",
+          "Percentage",
+          "Flat"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "IntegrationTypeStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "Unknown",
+          "Direct",
+          "Aggregator",
+          "Gateway"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "LocalInternationalStatus": {
         "enum": [
-          0,
-          1,
-          2
+          "Unknown",
+          "Local",
+          "International"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "PaymentTypeStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
+          "Unknown",
+          "All",
+          "Card",
+          "Wallet",
+          "Qr"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "PosTerminalAssignmentCreateDto": {
         "type": "object",
@@ -5988,15 +6227,14 @@
       },
       "PspPaymentTypeStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5
+          "Unknown",
+          "Card",
+          "Wallet",
+          "BankTransfer",
+          "Upi",
+          "Qr"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "PspUpdateDto": {
         "required": [
@@ -6146,42 +6384,38 @@
       },
       "RecordStatus": {
         "enum": [
-          0,
-          1,
-          2
+          "Unknown",
+          "Active",
+          "Inactive"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "SettlementFrequencyStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "Unknown",
+          "Daily",
+          "Weekly",
+          "Monthly"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "TaxOnMerchantStatus": {
         "enum": [
-          0,
-          1,
-          2
+          "Unknown",
+          "Yes",
+          "No"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       },
       "TerminalHistoryStatus": {
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4
+          "Unknown",
+          "Active",
+          "Inactive",
+          "Maintenance",
+          "Decommissioned"
         ],
-        "type": "integer",
-        "format": "int32"
+        "type": "string"
       }
     }
   }

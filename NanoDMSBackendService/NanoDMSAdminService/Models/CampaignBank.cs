@@ -19,6 +19,7 @@ namespace NanoDMSAdminService.Models
         public Bank? Bank{ get; set; }
         public decimal Budget { get; set; }
         public decimal Discount_Share { get; set; }  // -- % share of discount for bank
+        public decimal Bank_Share { get; set; }
         public TaxOnMerchantStatus? Tax_On_Merchant_Share { get; set; }
         public BudgetLimitTypeStatus? Budget_Limit_Type { get; set; } //'hourly','daily','weekly','monthly','yearly'
         public int? Budget_Limit_Value { get; set; } //'Optional: max transactions or uses in the period',

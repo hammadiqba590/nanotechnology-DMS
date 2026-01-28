@@ -8,8 +8,10 @@ namespace NanoDMSAdminService.DTO.CampaignBank
         public Guid Id { get; set; }
         public Guid Campagin_Id { get; set; }
         public Guid Bank_Id { get; set; }
+        public string Bank_Name { get; set; } = "";
         public decimal Budget { get; set; }
         public decimal Discount_Share { get; set; }
+        public decimal Bank_Share { get; set; }
 
         public TaxOnMerchantStatus? Tax_On_Merchant_Share { get; set; }
         public BudgetLimitTypeStatus? Budget_Limit_Type { get; set; }

@@ -43,6 +43,8 @@ namespace NanoDMSAdminService.Services.Implementations
                 Campaign_Card_Bin_Id = b.Campaign_Card_Bin_Id,
                 Currency_Id = b.Currency_Id,
                 Discount_Type = b.Discount_Type,
+                Discount_Mode = b.Discount_Mode,
+                Pos_Mode = b.Pos_Mode,
                 Discount_Value = b.Discount_Value,
                 Min_Spend = b.Min_Spend,
                 Max_Discount = b.Max_Discount,
@@ -88,7 +90,15 @@ namespace NanoDMSAdminService.Services.Implementations
         // Get paginated histories
         public async Task<PaginatedResponseDto<DiscountRuleHistoryDto>> GetPagedAsync(DiscountRuleHistoryFilterModel filter)
         {
-            var cacheKey = DiscountRuleHistoryCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = DiscountRuleHistoryCacheKeys.Paged(filter.PageNumber, 
+                filter.PageSize,
+                filter.Discount_Rule_Id?.ToString() ?? string.Empty,
+                filter.Currency_Id?.ToString() ?? string.Empty,
+                filter.Campaign_Card_Bin_Id?.ToString() ?? string.Empty,
+                filter.Discount_Type?.ToString() ?? string.Empty,
+                filter.Payment_Type?.ToString() ?? string.Empty,
+                filter.Change_Type?.ToString() ?? string.Empty
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)
@@ -130,6 +140,8 @@ namespace NanoDMSAdminService.Services.Implementations
                 Discount_Rule_Id = x.Discount_Rule_Id,
                 Campaign_Card_Bin_Id = x.Campaign_Card_Bin_Id,
                 Discount_Type = x.Discount_Type,
+                Discount_Mode = x.Discount_Mode,
+                Pos_Mode = x.Pos_Mode,
                 Discount_Value = x.Discount_Value,
                 Currency_Id = x.Currency_Id,
                 Min_Spend = x.Min_Spend,
@@ -174,6 +186,8 @@ namespace NanoDMSAdminService.Services.Implementations
                 Discount_Rule_Id = dto.Discount_Rule_Id,
                 Campaign_Card_Bin_Id = dto.Campaign_Card_Bin_Id,
                 Discount_Type = dto.Discount_Type,
+                Discount_Mode = dto.Discount_Mode,
+                Pos_Mode = dto.Pos_Mode,
                 Discount_Value = dto.Discount_Value,
                 Currency_Id = dto.Currency_Id,
                 Min_Spend = dto.Min_Spend,
@@ -210,6 +224,8 @@ namespace NanoDMSAdminService.Services.Implementations
             entity.Discount_Rule_Id = dto.Discount_Rule_Id;
             entity.Campaign_Card_Bin_Id = dto.Campaign_Card_Bin_Id;
             entity.Discount_Type = dto.Discount_Type;
+            entity.Discount_Mode = dto.Discount_Mode;
+            entity.Pos_Mode = dto.Pos_Mode;
             entity.Discount_Value = dto.Discount_Value;
             entity.Currency_Id = dto.Currency_Id;
             entity.Min_Spend = dto.Min_Spend;
@@ -262,6 +278,8 @@ namespace NanoDMSAdminService.Services.Implementations
             Discount_Rule_Id = x.Discount_Rule_Id,
             Campaign_Card_Bin_Id = x.Campaign_Card_Bin_Id,
             Discount_Type = x.Discount_Type,
+            Discount_Mode = x.Discount_Mode,
+            Pos_Mode = x.Pos_Mode,
             Discount_Value = x.Discount_Value,
             Currency_Id = x.Currency_Id,
             Min_Spend = x.Min_Spend,

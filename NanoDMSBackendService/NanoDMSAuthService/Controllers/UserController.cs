@@ -356,6 +356,9 @@ namespace NanoDMSAuthService.Controllers
 
             // Generate JWT token
             var userRoles = await _userManager.GetRolesAsync(user);
+            var role = await _roleManager.Roles
+    .Where(r => userRoles.Contains(r.Name ?? string.Empty))
+    .ToListAsync();
 
             var jwtHelper = new JwtHelper(jwtKey, jwtIssuer, jwtAudience);
 
@@ -415,7 +418,7 @@ namespace NanoDMSAuthService.Controllers
                 Expiry = expiryLocal.ToString("yyyy-MM-dd HH:mm:ss"), // Simplified date and time format
                 User = user.UserName,
                 UserId = user.Id,
-                Roles = userRoles,
+                Roles = role,
                 BusinessId = businessId,
                 BusinessLocationId = businessLocationIds,
             });

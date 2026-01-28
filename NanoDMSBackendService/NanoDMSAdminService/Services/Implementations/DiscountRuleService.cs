@@ -39,12 +39,14 @@ namespace NanoDMSAdminService.Services.Implementations
                 Id = b.Id,
                 Campaign_Card_Bin_Id = b.Campaign_Card_Bin_Id,
                 Discount_Type = b.Discount_Type,
+                Discount_Mode = b.Discount_Mode,
+                Pos_Mode = b.Pos_Mode,
                 Discount_Value = b.Discount_Value,
                 Min_Spend = b.Min_Spend,
                 Max_Discount = b.Max_Discount,
                 Payment_Type = b.Payment_Type,
                 Budget_Limit_Type = b.Budget_Limit_Type,
-                Budget_Limit_Value = b.Budget_Limit_Value,
+                //Budget_Limit_Value = b.Budget_Limit_Value,
                 Applicable_Days = b.Applicable_Days,
                 Transaction_Cap = b.Transaction_Cap,
                 Priority = b.Priority,
@@ -83,12 +85,14 @@ namespace NanoDMSAdminService.Services.Implementations
                 Id = rule.Id,
                 Campaign_Card_Bin_Id = rule.Campaign_Card_Bin_Id,
                 Discount_Type = rule.Discount_Type,
+                Discount_Mode = rule.Discount_Mode,
+                Pos_Mode = rule.Pos_Mode,
                 Discount_Value = rule.Discount_Value,
                 Min_Spend = rule.Min_Spend,
                 Max_Discount = rule.Max_Discount,
                 Payment_Type = rule.Payment_Type,
                 Budget_Limit_Type = rule.Budget_Limit_Type,
-                Budget_Limit_Value = rule.Budget_Limit_Value,
+                //Budget_Limit_Value = rule.Budget_Limit_Value,
                 Applicable_Days = rule.Applicable_Days,
                 Transaction_Cap = rule.Transaction_Cap,
                 Priority = rule.Priority,
@@ -110,7 +114,13 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<DiscountRuleDto>> GetPagedAsync(DiscountRuleFilterModel filter)
         {
-            var cacheKey = DiscountRuleCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = DiscountRuleCacheKeys.Paged(filter.PageNumber,
+                filter.PageSize,
+                filter.Campaign_Card_Bin_Id?.ToString() ?? string.Empty,
+                filter.Discount_Type?.ToString() ?? string.Empty,
+                filter.Payment_Type?.ToString() ?? string.Empty,
+                filter.Budget_Limit_Type?.ToString() ?? string.Empty
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)
@@ -128,8 +138,8 @@ namespace NanoDMSAdminService.Services.Implementations
             if (filter.Payment_Type.HasValue)
                 query = query.Where(x => x.Payment_Type == filter.Payment_Type);
 
-            if (filter.Budget_Limit_Type.HasValue)
-                query = query.Where(x => x.Budget_Limit_Type == filter.Budget_Limit_Type);
+            //if (filter.Budget_Limit_Type)
+            //    query = query.Where(x => x.Budget_Limit_Type == filter.Budget_Limit_Type);
 
             var totalRecords = await query.CountAsync();
 
@@ -142,12 +152,14 @@ namespace NanoDMSAdminService.Services.Implementations
                     Id = x.Id,
                     Campaign_Card_Bin_Id = x.Campaign_Card_Bin_Id,
                     Discount_Type = x.Discount_Type,
+                    Discount_Mode = x.Discount_Mode,
+                    Pos_Mode = x.Pos_Mode,
                     Discount_Value = x.Discount_Value,
                     Min_Spend = x.Min_Spend,
                     Max_Discount = x.Max_Discount,
                     Payment_Type = x.Payment_Type,
                     Budget_Limit_Type = x.Budget_Limit_Type,
-                    Budget_Limit_Value = x.Budget_Limit_Value,
+                    //Budget_Limit_Value = x.Budget_Limit_Value,
                     Applicable_Days = x.Applicable_Days,
                     Transaction_Cap = x.Transaction_Cap,
                     Priority = x.Priority,
@@ -183,12 +195,14 @@ namespace NanoDMSAdminService.Services.Implementations
                 Id = Guid.NewGuid(),
                 Campaign_Card_Bin_Id = dto.Campaign_Card_Bin_Id,
                 Discount_Type = dto.Discount_Type,
+                Discount_Mode = dto.Discount_Mode,
+                Pos_Mode = dto.Pos_Mode,
                 Discount_Value = dto.Discount_Value,
                 Min_Spend = dto.Min_Spend,
                 Max_Discount = dto.Max_Discount,
                 Payment_Type = dto.Payment_Type,
                 Budget_Limit_Type = dto.Budget_Limit_Type,
-                Budget_Limit_Value = dto.Budget_Limit_Value,
+                //Budget_Limit_Value = dto.Budget_Limit_Value,
                 Applicable_Days = dto.Applicable_Days,
                 Transaction_Cap = dto.Transaction_Cap,
                 Priority = dto.Priority,
@@ -222,11 +236,13 @@ namespace NanoDMSAdminService.Services.Implementations
 
             rule.Discount_Type = dto.Discount_Type;
             rule.Discount_Value = dto.Discount_Value;
+            rule.Discount_Mode = dto.Discount_Mode;
+            rule.Pos_Mode = dto.Pos_Mode;
             rule.Min_Spend = dto.Min_Spend;
             rule.Max_Discount = dto.Max_Discount;
             rule.Payment_Type = dto.Payment_Type;
             rule.Budget_Limit_Type = dto.Budget_Limit_Type;
-            rule.Budget_Limit_Value = dto.Budget_Limit_Value;
+            //rule.Budget_Limit_Value = dto.Budget_Limit_Value;
             rule.Applicable_Days = dto.Applicable_Days;
             rule.Transaction_Cap = dto.Transaction_Cap;
             rule.Priority = dto.Priority;

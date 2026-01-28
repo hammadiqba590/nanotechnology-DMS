@@ -378,6 +378,32 @@
   },
   {
     "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "BulkUploadCsvOptimized",
+    "RelativePath": "api/Card/bulk-upload-card-bin",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "NanoDMSAdminService.DTO.CardBin.CardBinBulkUploadResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
     "Method": "DeleteCardBin",
     "RelativePath": "api/Card/delete-card-bin",
     "HttpMethod": "DELETE",
@@ -458,6 +484,37 @@
   },
   {
     "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "GetGroupedCardBins",
+    "RelativePath": "api/Card/get-card-bin-grouped",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Bank_Ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Card_Brand_Ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Local_International_List",
+        "Type": "System.Collections.Generic.List\u00601[[NanoDMSAdminService.Blocks.LocalInternationalStatus, NanoDMSAdminService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Search",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
     "Method": "GetList",
     "RelativePath": "api/Card/get-card-bin-list",
     "HttpMethod": "GET",
@@ -512,6 +569,32 @@
       {
         "Name": "PageSize",
         "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.CardController",
+    "Method": "CardBinLookup",
+    "RelativePath": "api/Card/get-card-bin-lookup",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Bank_Ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Card_Brand_Ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Local_International_List",
+        "Type": "System.Collections.Generic.List\u00601[[NanoDMSAdminService.Blocks.LocalInternationalStatus, NanoDMSAdminService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": false
       }
     ],
@@ -913,6 +996,16 @@
   },
   {
     "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetAllEnums",
+    "RelativePath": "api/MasterEntry/get-all-enums",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
     "Method": "GetById",
     "RelativePath": "api/MasterEntry/get-bank-by-id",
     "HttpMethod": "GET",
@@ -1239,6 +1332,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSAdminService.Controllers.MasterEntryController",
+    "Method": "GetEnum",
+    "RelativePath": "api/MasterEntry/get-enum-with-name",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "enumName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

@@ -174,3 +174,4 @@ D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\Na
 D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSAdminService\bin\Release\net8.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
 D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSAdminService\bin\Release\net8.0\Pipelines.Sockets.Unofficial.dll
 D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSAdminService\bin\Release\net8.0\StackExchange.Redis.dll
+D:\NanoDMS Project\NanoTechnologyApi\nanotechnology-DMS\NanoDMSBackendService\NanoDMSAdminService\bin\Release\net8.0\CsvHelper.dll

@@ -6,6 +6,7 @@ using NanoDMSAdminService.DTO.Bank;
 using NanoDMSAdminService.DTO.Campagin;
 using NanoDMSAdminService.DTO.CampaignCardBin;
 using NanoDMSAdminService.DTO.CardBin;
+using NanoDMSAdminService.DTO.CardBrand;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Interfaces;
@@ -51,6 +52,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Local_International = x.Local_International,
                 Country_Id = x.Country_Id,
                 Country_Name = x.Country?.Name,
+                Is_Virtual = x.Is_Virtual,
                 BusinessLocation_Id = x.BusinessLocation_Id,
                 Business_Id = x.Business_Id,
                 Is_Active = x.Is_Active,
@@ -83,10 +85,143 @@ namespace NanoDMSAdminService.Services.Implementations
 
             return dto;
         }
+        public async Task<List<CardBinLookupDto>> GetCardBinLookupAsync(CardBinLookupFilterModel filter)
+        {
+            var cacheKey =
+                $"cardbin:lookup:" +
+                $"{string.Join(",", filter.Bank_Ids ?? new())}|" +
+                $"{string.Join(",", filter.Card_Brand_Ids ?? new())}|" +
+                $"{string.Join(",", filter.Local_International_List ?? new())}";
+
+            var cached = await _cache.GetStringAsync(cacheKey);
+            if (cached != null)
+                return JsonSerializer.Deserialize<List<CardBinLookupDto>>(cached)!;
+
+            var query = _uow.CardBins.GetQueryable()
+                .Where(x => !x.Deleted && x.Is_Active);
+
+            // 🔹 Bank filter
+            if (filter.Bank_Ids != null && filter.Bank_Ids.Any())
+                query = query.Where(x => filter.Bank_Ids.Contains(x.Bank_Id));
+
+            // 🔹 Card Brand / Scheme filter
+            if (filter.Card_Brand_Ids != null && filter.Card_Brand_Ids.Any())
+                query = query.Where(x =>
+                    filter.Card_Brand_Ids.Contains(x.Card_Brand_Id));
+
+            // 🔹 Local / International enum filter
+            if (filter.Local_International_List != null &&
+                filter.Local_International_List.Any())
+                query = query.Where(x =>
+                    filter.Local_International_List.Contains(
+                        x.Local_International!.Value));
+
+            var data = await query
+                .OrderBy(x => x.Card_Bin_Value)
+                .Select(x => new CardBinLookupDto
+                {
+                    Id = x.Id,
+                    Card_Bin_Value = x.Card_Bin_Value,
+                    Bank_Id = x.Bank_Id,
+                    Card_Brand_Id = x.Card_Brand_Id,
+                    Local_International = x.Local_International,
+
+                    // 🔥 CONCAT VALUE
+                    Products =
+                        x.Card_Bin_Value + " - " +
+                        x.Card_Brand!.Name + " - " +
+                        x.Bank!.Name
+                })
+                .ToListAsync();
+
+            await _cache.SetStringAsync(
+                cacheKey,
+                JsonSerializer.Serialize(data),
+                new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+                });
+
+            return data;
+        }
+        public async Task<List<CardBinGroupDto>> GetGroupedCardBinsAsync(CardBinGroupedFilterModel filter)
+        {
+            var query = _uow.CardBins.GetQueryable()
+                .Where(x => !x.Deleted && x.Is_Active);
+
+            if (filter.Bank_Ids?.Any() == true)
+                query = query.Where(x => filter.Bank_Ids.Contains(x.Bank_Id));
+
+            if (filter.Card_Brand_Ids?.Any() == true)
+                query = query.Where(x =>
+                    filter.Card_Brand_Ids.Contains(x.Card_Brand_Id));
+
+            if (filter.Local_International_List?.Any() == true)
+                query = query.Where(x =>
+                    filter.Local_International_List.Contains(
+                        x.Local_International!.Value));
+
+            // 🔍 Search-as-you-type (BIN / Bank / Brand)
+            if (!string.IsNullOrWhiteSpace(filter.Search))
+            {
+                query = query.Where(x =>
+                    x.Card_Bin_Value.Contains(filter.Search) ||
+                    x.Bank!.Name.Contains(filter.Search) ||
+                    x.Card_Brand!.Name.Contains(filter.Search));
+            }
+
+            var data = await query
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Card_Bin_Value,
+                    x.Local_International,
+                    BankId = x.Bank_Id,
+                    BankName = x.Bank!.Name,
+                    BrandId = x.Card_Brand_Id,
+                    BrandName = x.Card_Brand!.Name
+                })
+                .ToListAsync();
+
+            var grouped = data
+                .GroupBy(x => new { x.BankId, x.BankName })
+                .Select(bank => new CardBinGroupDto
+                {
+                    Bank_Id = bank.Key.BankId,
+                    Bank_Name = bank.Key.BankName,
+                    Brands = bank
+                        .GroupBy(b => new { b.BrandId, b.BrandName })
+                        .Select(brand => new CardBrandGroupDto
+                        {
+                            Card_Brand_Id = brand.Key.BrandId,
+                            Card_Brand_Name = brand.Key.BrandName,
+                            CardBins = brand.Select(bin => new CardBinItemDto
+                            {
+                                Id = bin.Id,
+                                Card_Bin_Value = bin.Card_Bin_Value,
+                                Local_International = bin.Local_International,
+                                Products =
+                                    $"{bin.Card_Bin_Value} - {brand.Key.BrandName} - {bank.Key.BankName}"
+                            }).ToList()
+                        }).ToList()
+                }).ToList();
+
+            return grouped;
+        }
 
         public async Task<PaginatedResponseDto<CardBinDto>> GetPagedAsync(CardBinFilterModel filter)
         {
-            var cacheKey = CardBinCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = CardBinCacheKeys.Paged(filter.PageNumber,
+                filter.PageSize,
+                filter.Card_Bin_Value?.Trim().ToLower() ?? "",
+    filter.Bank_Id?.ToString() ?? "",
+    filter.Card_Brand_Id?.ToString() ?? "",
+    filter.Card_Type_Id?.ToString() ?? "",
+    filter.Card_Level_Id?.ToString() ?? "",
+    filter.Country_Id?.ToString() ?? "",
+    filter.Local_International?.ToString() ?? "",
+    filter.Is_Active?.ToString() ?? ""
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)
@@ -152,6 +287,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Card_Level_Id = dto.Card_Level_Id,
                 Local_International = dto.Local_International,
                 Country_Id = dto.Country_Id,
+                Is_Virtual = dto.Is_Virtual,
                 RecordStatus = RecordStatus.Active,
 
                 Published = true,
@@ -185,6 +321,7 @@ namespace NanoDMSAdminService.Services.Implementations
             entity.Card_Level_Id = dto.Card_Level_Id;
             entity.Local_International = dto.Local_International;
             entity.Country_Id = dto.Country_Id;
+            entity.Is_Virtual = dto.Is_Virtual;
 
             entity.Last_Update_Date = DateTime.UtcNow;
             entity.Last_Update_User = Guid.Parse(userId);

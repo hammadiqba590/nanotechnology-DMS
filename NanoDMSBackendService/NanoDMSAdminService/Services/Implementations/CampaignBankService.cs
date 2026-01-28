@@ -46,6 +46,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Budget = x.Budget,
                 Discount_Mode = x.Discount_Mode,
                 Discount_Share = x.Discount_Share,
+                Bank_Share = x.Bank_Share,
                 Tax_On_Merchant_Share = x.Tax_On_Merchant_Share,
                 Status = x.Status,
                 Budget_Limit_Type = x.Budget_Limit_Type,
@@ -87,7 +88,13 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<CampaignBankDto>> GetPagedAsync(CampaignBankFilterModel filter)
         {
-            var cacheKey = CampaignBankCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = CampaignBankCacheKeys.Paged(filter.PageNumber, 
+                filter.PageSize,
+                filter.Tax_On_Merchant_Share?.ToString() ?? "",
+                filter.Budget_Limit_Type?.ToString() ?? "",
+                filter.Discount_Mode?.ToString() ?? "",
+                filter.Status?.ToString() ?? ""
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)
@@ -139,6 +146,7 @@ namespace NanoDMSAdminService.Services.Implementations
                 Bank_Id = dto.Bank_Id,
                 Budget = dto.Budget,
                 Discount_Share = dto.Discount_Share,
+                Bank_Share = dto.Bank_Share,
                 Tax_On_Merchant_Share = dto.Tax_On_Merchant_Share,
                 Budget_Limit_Type = dto.Budget_Limit_Type,
                 Budget_Limit_Value = dto.Budget_Limit_Value,
@@ -176,6 +184,7 @@ namespace NanoDMSAdminService.Services.Implementations
             entity.Campagin_Id = dto.Campagin_Id;
             entity.Budget = dto.Budget;
             entity.Discount_Share = dto.Discount_Share;
+            entity.Bank_Share = dto.Bank_Share;
             entity.Tax_On_Merchant_Share = dto.Tax_On_Merchant_Share;
             entity.Budget_Limit_Type = dto.Budget_Limit_Type;
             entity.Budget_Limit_Value = dto.Budget_Limit_Value;
@@ -229,6 +238,7 @@ namespace NanoDMSAdminService.Services.Implementations
             Budget = x.Budget,
             Discount_Mode = x.Discount_Mode,
             Discount_Share = x.Discount_Share,
+            Bank_Share = x.Bank_Share,
             Tax_On_Merchant_Share = x.Tax_On_Merchant_Share,
             Status = x.Status,
             Start_Date = x.Start_Date,

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoDMSSetupService", "Nano
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoDMSAdminService", "NanoDMSAdminService\NanoDMSAdminService.csproj", "{5C33E8F4-E48C-4B3A-8304-51E608253193}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoDMSRightsService", "NanoDMSRightsService\NanoDMSRightsService.csproj", "{A13714DC-6A57-4960-9DB7-D032612F8072}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5C33E8F4-E48C-4B3A-8304-51E608253193}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C33E8F4-E48C-4B3A-8304-51E608253193}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C33E8F4-E48C-4B3A-8304-51E608253193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A13714DC-6A57-4960-9DB7-D032612F8072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A13714DC-6A57-4960-9DB7-D032612F8072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A13714DC-6A57-4960-9DB7-D032612F8072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A13714DC-6A57-4960-9DB7-D032612F8072}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

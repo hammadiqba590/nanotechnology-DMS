@@ -13,7 +13,7 @@ namespace NanoDMSSharedLibrary.CacheKeys
         public static string ById(Guid id)
             => $"pspcategories:{id}";
 
-        public static string Paged(int page, int size)
-            => $"pspcategories:paged:{page}:{size}";
+        public static string Paged(int page, int size,string name = "")
+            => $"pspcategories:paged:{page}:{size}:{name}";
     }
 }

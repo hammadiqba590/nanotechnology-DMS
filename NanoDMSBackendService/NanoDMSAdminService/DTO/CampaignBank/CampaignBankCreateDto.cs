@@ -14,6 +14,7 @@ namespace NanoDMSAdminService.DTO.CampaignBank
 
         public decimal Budget { get; set; }
         public decimal Discount_Share { get; set; }
+        public decimal Bank_Share { get; set; }
 
         public TaxOnMerchantStatus? Tax_On_Merchant_Share { get; set; }
         public BudgetLimitTypeStatus? Budget_Limit_Type { get; set; }

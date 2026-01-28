@@ -598,6 +598,61 @@ namespace NanoDMSAdminService.Controllers
         }
         #endregion
 
+        #region Enums
+
+        [Authorize]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [HttpGet("get-enum-with-name")]
+        public IActionResult GetEnum(string enumName)
+        {
+            var enumType = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .FirstOrDefault(t =>
+                    t.IsEnum &&
+                    t.Name.Equals(enumName, StringComparison.OrdinalIgnoreCase));
+
+            if (enumType == null)
+                return NotFound("Enum not found");
+
+            var values = Enum.GetValues(enumType)
+                .Cast<Enum>()
+                .Select(e => new
+                {
+                    Name = e.ToString(),
+                    Value = Convert.ToInt32(e)
+                });
+
+            return Ok(values);
+        }
+
+        [Authorize]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [HttpGet("get-all-enums")]
+        public IActionResult GetAllEnums()
+        {
+            var enums = new Dictionary<string, object>();
+
+            var enumTypes = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => t.IsEnum && t.Namespace == "NanoDMSAdminService.Blocks");
+
+            foreach (var type in enumTypes)
+            {
+                enums[type.Name] = Enum.GetValues(type)
+                    .Cast<Enum>()
+                    .Select(e => new
+                    {
+                        Name = e.ToString(),
+                        Value = Convert.ToInt32(e)
+                    });
+            }
+
+            return Ok(enums);
+        }
+
+        #endregion
 
     }
 }

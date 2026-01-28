@@ -101,7 +101,7 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<CountryDto>> GetPagedAsync(CountryFilterModel filter)
         {
-            var cacheKey = CountryCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = CountryCacheKeys.Paged(filter.PageNumber, filter.PageSize,filter.Name ?? string.Empty,filter.Iso2 ?? string.Empty );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)

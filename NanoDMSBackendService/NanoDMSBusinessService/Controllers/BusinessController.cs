@@ -245,7 +245,7 @@ namespace NanoDMSBusinessService.Controllers
         {
             try
             {
-                var business = await _context.Business.FindAsync(businessById.Id);
+                var business = await _context.Business.FindAsync(Guid.Parse(businessById.Id));
 
                 return business == null ? NotFound("Business Not Found.") : Ok(new { Business = business });
             }

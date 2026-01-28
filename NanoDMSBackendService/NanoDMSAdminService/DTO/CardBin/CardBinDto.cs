@@ -18,7 +18,8 @@ namespace NanoDMSAdminService.DTO.CardBin
         public LocalInternationalStatus? Local_International { get; set; }
         public Guid? Country_Id { get; set; }
         public string? Country_Name { get; set; }
-        
+        public bool Is_Virtual { get; set; }
+
     }
 
 }

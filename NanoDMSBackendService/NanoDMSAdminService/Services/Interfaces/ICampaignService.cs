@@ -14,6 +14,6 @@ namespace NanoDMSAdminService.Services.Interfaces
         Task<CampaignDto> UpdateAsync(Guid id, CampaignUpdateDto dto, string userId);
         Task<CampaignDto> DeleteAsync(Guid id, string userId);
         Task<CampaignFullResponseDto> CreateFullCampaignAsync(CampaignFullCreateDto dto,Guid userId);
-        Task<List<Campaign>> GetActiveCampaignsByTerminalAsync(string serialNumber);
+        Task<List<CampaignDto>> GetActiveCampaignsByTerminalAsync(string serialNumber);
     }
 }

@@ -30,6 +30,7 @@ namespace NanoDMSAdminService.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "integration_type_status", new[] { "unknown", "direct", "aggregator", "gateway" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "local_international_status", new[] { "unknown", "local", "international" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "payment_type_status", new[] { "unknown", "all", "card", "wallet", "qr" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "pos_mode_status", new[] { "unknown", "all", "dinein", "takeaway", "delivery" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "psp_payment_type_status", new[] { "unknown", "card", "wallet", "bank_transfer", "upi", "qr" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "record_status", new[] { "unknown", "active", "inactive" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "settlement_frequency_status", new[] { "unknown", "daily", "weekly", "monthly" });
@@ -210,6 +211,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<Guid>("Bank_Id")
                         .HasColumnType("uuid");
+
+                    b.Property<decimal>("Bank_Share")
+                        .HasColumnType("numeric");
 
                     b.Property<decimal>("Budget")
                         .HasColumnType("numeric");
@@ -402,6 +406,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Is_Active")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("Is_Virtual")
+                        .HasColumnType("boolean");
+
                     b.Property<DateTime>("Last_Update_Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -488,6 +495,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Card_Brands", (string)null);
                 });
 
@@ -539,6 +549,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Card_Levels", (string)null);
                 });
 
@@ -589,6 +602,9 @@ namespace NanoDMSAdminService.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Card_Types", (string)null);
                 });
@@ -675,12 +691,6 @@ namespace NanoDMSAdminService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Iso2")
-                        .IsUnique();
-
-                    b.HasIndex("Iso3")
-                        .IsUnique();
-
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -765,13 +775,8 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<string>("Applicable_Days")
                         .HasColumnType("text");
 
-                    b.Property<int?>("Budget_Limit_Type")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(5);
-
-                    b.Property<int?>("Budget_Limit_Value")
-                        .HasColumnType("integer");
+                    b.Property<string>("Budget_Limit_Type")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("BusinessLocation_Id")
                         .HasColumnType("uuid");
@@ -790,6 +795,9 @@ namespace NanoDMSAdminService.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("Discount_Mode")
+                        .HasColumnType("text");
 
                     b.Property<int?>("Discount_Type")
                         .ValueGeneratedOnAdd()
@@ -824,6 +832,9 @@ namespace NanoDMSAdminService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
+
+                    b.Property<string>("Pos_Mode")
+                        .HasColumnType("text");
 
                     b.Property<int>("Priority")
                         .HasColumnType("integer");
@@ -885,6 +896,9 @@ namespace NanoDMSAdminService.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Discount_Mode")
+                        .HasColumnType("text");
+
                     b.Property<Guid>("Discount_Rule_Id")
                         .HasColumnType("uuid");
 
@@ -918,6 +932,9 @@ namespace NanoDMSAdminService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasDefaultValue(1);
+
+                    b.Property<string>("Pos_Mode")
+                        .HasColumnType("text");
 
                     b.Property<int>("Priority")
                         .HasColumnType("integer");

@@ -14,7 +14,8 @@ namespace NanoDMSBusinessService.Data
         public DbSet<BusinessUser> BusinessUser { get; set; }
         public DbSet<BusinessLocationUser> BusinessLocationUser { get; set; }
         public DbSet<BusinessConfig> BusinessConfigs { get; set; }
-
+        public DbSet<BusinessLocationPsp> BusinessLocationPsps { get; set; }
+        public DbSet<BusinessLocationBankSettlement> BusinessLocationBankSettlements { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -81,6 +82,19 @@ namespace NanoDMSBusinessService.Data
                 .WithMany(bl => bl.BusinessConfigs) // Add navigation property in BusinessLocation
                 .HasForeignKey(blu => blu.Business_Location_Id)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<BusinessLocationPsp>()
+               .HasOne(blu => blu.Business_Location)
+               .WithMany(bl => bl.Psps) // Add navigation property in BusinessLocation
+               .HasForeignKey(blu => blu.Business_Location_Id)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<BusinessLocationBankSettlement>()
+               .HasOne(blu => blu.Business_Location)
+               .WithMany(bl => bl.BankSettlements) // Add navigation property in BusinessLocation
+               .HasForeignKey(blu => blu.Business_Location_Id)
+               .OnDelete(DeleteBehavior.Cascade);
+
 
         }
     }

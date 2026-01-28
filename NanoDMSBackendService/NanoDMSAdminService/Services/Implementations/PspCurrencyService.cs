@@ -77,7 +77,11 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<PspCurrencyDto>> GetPagedAsync(PspCurrencyFilterModel filter)
         {
-            var cacheKey = PspCurrencyCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = PspCurrencyCacheKeys.Paged(filter.PageNumber, 
+                filter.PageSize,
+                filter.Psp_Id?.ToString() ?? string.Empty,
+                filter.Currency_Id?.ToString() ?? string.Empty
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)

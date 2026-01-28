@@ -79,7 +79,12 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<PosTerminalAssignmentDto>> GetPagedAsync(PosTerminalAssignmentFilterModel filter)
         {
-            var cacheKey = PosTerminalAssignmentCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = PosTerminalAssignmentCacheKeys.Paged(filter.PageNumber, 
+                filter.PageSize,
+                filter.PosTerminal_Id?.ToString() ?? string.Empty,
+                filter.Mid ?? string.Empty,
+                filter.Tid ?? string.Empty
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)

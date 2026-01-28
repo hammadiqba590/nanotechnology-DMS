@@ -48,20 +48,19 @@ namespace NanoDMSBusinessService.Controllers
         [HttpPost("register-business-location")]
         public async Task<IActionResult> RegisterBusinessLocation([FromBody] RegisterBusinessLocationModel model)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
-
-                if (string.IsNullOrEmpty(model.Name))
+                // 🔹 VALIDATIONS
+                if (string.IsNullOrWhiteSpace(model.Name))
                     return BadRequest(new { Message = "Business Location Name Is Required." });
-
 
                 if (model.BusinessId == Guid.Empty)
                     return BadRequest(new { Message = "Business Id Is Required." });
 
-
-                if (string.IsNullOrEmpty(model.Address))
+                if (string.IsNullOrWhiteSpace(model.Address))
                     return BadRequest(new { Message = "Business Address Is Required." });
-
 
                 if (model.Country == Guid.Empty)
                     return BadRequest(new { Message = "Business Country Is Required." });
@@ -72,50 +71,41 @@ namespace NanoDMSBusinessService.Controllers
                 if (model.City == Guid.Empty)
                     return BadRequest(new { Message = "Business City Is Required." });
 
-                if (string.IsNullOrEmpty(model.PostalCode))
+                if (string.IsNullOrWhiteSpace(model.PostalCode))
                     return BadRequest(new { Message = "Business Postal Code Is Required." });
 
-                if (string.IsNullOrEmpty(model.Phone))
-                    return BadRequest(new { Message = "Business Phone Number  Is Required." });
+                if (string.IsNullOrWhiteSpace(model.Phone))
+                    return BadRequest(new { Message = "Business Phone Number Is Required." });
 
-                if (string.IsNullOrEmpty(model.Mobile))
+                if (string.IsNullOrWhiteSpace(model.Mobile))
                     return BadRequest(new { Message = "Business Mobile Number Is Required." });
 
-                if (string.IsNullOrEmpty(model.Email))
+                if (string.IsNullOrWhiteSpace(model.Email))
                     return BadRequest(new { Message = "Business Email Is Required." });
 
-                // 🔥 UNIQUE NAME CHECK
+                // 🔹 UNIQUE NAME CHECK
                 var normalizedName = model.Name.Trim().ToUpper();
 
-                // 🔥 ADD UNIQUENESS CHECK HERE
-
                 var existingLocation = await _context.BusinessLocation
-            .Where(x => x.Business_Id == model.BusinessId &&
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x =>
+                        x.Business_Id == model.BusinessId &&
                         x.Name.Trim().ToUpper() == normalizedName &&
-                        !x.Deleted)
-            .FirstOrDefaultAsync();
+                        !x.Deleted);
 
                 if (existingLocation != null)
-                {
                     return BadRequest(new { Message = "Business Location Name Must Be Unique For This Business." });
-                }
 
-                // Check if User.Identity is null
+                // 🔹 USER CHECK
                 if (User?.Identity?.Name == null)
                     return Unauthorized(new { Message = "User Identity Is Not Available." });
 
-                // Check if user exists
-                var userName = User.Identity.Name;
-                if (string.IsNullOrEmpty(userName))
-                    return Unauthorized(new { Message = "User Name Is Not Available." });
-
-                // Check if user exists
                 var superuser = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (superuser == null)
                     return Unauthorized(new { Message = "User Not Found." });
 
-                // Map DTO to entity (Assuming there's a Business entity)
-                var businesslocation = new BusinessLocation
+                // 🔹 CREATE BUSINESS LOCATION
+                var businessLocation = new BusinessLocation
                 {
                     Name = model.Name.Trim(),
                     Business_Id = model.BusinessId,
@@ -128,22 +118,118 @@ namespace NanoDMSBusinessService.Controllers
                     Mobile = model.Mobile,
                     Email = model.Email,
                     Website = model.Website,
+                    DiscountBeforeTax = model.DiscountBeforeTax,
+                    PosCharge = model.PosCharge,
+                    DiscountBeforePosCharge = model.DiscountBeforePosCharge,
+                    ServiceCharges = model.ServiceCharges,
+                    DiscountBeforeServiceCharge = model.DiscountBeforeServiceCharge,
                     Create_Date = DateTime.UtcNow,
                     Published = true,
                     Create_User = Guid.Parse(superuser.Id)
                 };
 
-                // Save to repository
-                await _businessLocationRepository.AddAsync(businesslocation);
+                await _businessLocationRepository.AddAsync(businessLocation);
                 await _businessLocationRepository.SaveChangesAsync();
 
-                // Return success response
-                return Ok(new { Message = "Business Location Registered Successfully", BusinessLocation = businesslocation });
+                // 🔹 INSERT PSPs
+                if (model.Psp_Ids?.Any() == true)
+                {
+                    var psps = model.Psp_Ids.Select(pspId => new BusinessLocationPsp
+                    {
+                        Id = Guid.NewGuid(),
+                        Business_Location_Id = businessLocation.Id,
+                        Psp_Id = pspId,
+                        Create_Date = DateTime.UtcNow,
+                        Published = true,
+                        Create_User = Guid.Parse(superuser.Id)
+                    });
+
+                    _context.BusinessLocationPsps.AddRange(psps);
+                }
+
+                // 🔹 INSERT BANKS
+                if (model.Banks?.Any() == true)
+                {
+                    var banks = model.Banks.Select(b => new BusinessLocationBankSettlement
+                    {
+                        Id = Guid.NewGuid(),
+                        Business_Location_Id = businessLocation.Id,
+                        Bank_Id = b.Bank_Id,
+                        Merchant_Share = b.Merchant_Share,
+                        Bank_Share = b.Bank_Share,
+                        Tax_Value = b.Tax_Value,
+                        Tax_On_Merchant = b.Tax_On_Merchant ? 1 : 0,
+                        Create_Date = DateTime.UtcNow,
+                        Published = true,
+                        Create_User = Guid.Parse(superuser.Id)
+                    });
+
+                    _context.BusinessLocationBankSettlements.AddRange(banks);
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                // 🔹 RELOAD WITH RELATED DATA
+                var savedLocation = await _context.BusinessLocation
+                    .AsNoTracking()
+                    .Include(x => x.Psps)
+                    .Include(x => x.BankSettlements)
+                    .FirstAsync(x => x.Id == businessLocation.Id);
+
+                // 🔹 MAP TO RESPONSE DTO
+                var response = new BusinessLocationResponseDto
+                {
+                    Id = savedLocation.Id,
+                    BusinessId = savedLocation.Business_Id,
+                    Name = savedLocation.Name,
+                    Address = savedLocation.Address,
+                    Country = savedLocation.Country,
+                    State = savedLocation.State,
+                    City = savedLocation.City,
+                    PostalCode = savedLocation.Postal_Code,
+                    Phone = savedLocation.Phone,
+                    Mobile = savedLocation.Mobile,
+                    Email = savedLocation.Email,
+                    Website = savedLocation.Website,
+
+                    DiscountBeforeTax = savedLocation.DiscountBeforeTax,
+                    PosCharge = savedLocation.PosCharge,
+                    DiscountBeforePosCharge = savedLocation.DiscountBeforePosCharge,
+                    ServiceCharges = savedLocation.ServiceCharges,
+                    DiscountBeforeServiceCharge = savedLocation.DiscountBeforeServiceCharge,
+
+                    LocationPsps = savedLocation.Psps.Select(p => new PspDto { 
+                      Id = p.Id,
+                      PspId = p.Id,
+                    
+                    }).ToList(),
+
+                    LocationBanks = savedLocation.BankSettlements.Select(b => new BankSettlementDto
+                    {
+                        Id = b.Id,
+                        Bank_Id = b.Bank_Id,
+                        Merchant_Share = b.Merchant_Share,
+                        Bank_Share = b.Bank_Share,
+                        Tax_Value = b.Tax_Value,
+                        TaxOnMerchant = b.Tax_On_Merchant
+                    }).ToList()
+                };
+
+                return Ok(new
+                {
+                    Message = "Business Location Registered Successfully",
+                    Data = response
+                });
             }
             catch (Exception ex)
             {
-                // Handle server errors
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Error: {ex.Message}" });
+                await transaction.RollbackAsync();
+                return StatusCode(500, new
+                {
+                    Message = "An unexpected error occurred.",
+                    Detail = ex.Message
+                });
             }
         }
 
@@ -173,6 +259,11 @@ namespace NanoDMSBusinessService.Controllers
                                 b.Mobile,
                                 b.Email,
                                 b.Website,
+                                b.DiscountBeforeTax,
+                                b.PosCharge,
+                                b.DiscountBeforePosCharge,
+                                b.ServiceCharges,
+                                b.DiscountBeforeServiceCharge,
                                 b.Create_Date,
                                 b.Create_User,
                                 b.Last_Update_Date,
@@ -232,6 +323,11 @@ namespace NanoDMSBusinessService.Controllers
                     Mobile = b.Mobile,
                     Email = b.Email,
                     Website = b.Website,
+                    DiscountBeforeTax = b.DiscountBeforeTax,
+                    PosCharge = b.PosCharge,
+                    DiscountBeforePosCharge = b.DiscountBeforePosCharge,
+                    ServiceCharges = b.ServiceCharges,
+                    DiscountBeforeServiceCharge = b.DiscountBeforeServiceCharge,
                     Create_Date = b.Create_Date,
                     Create_User = b.Create_User,
                     Last_Update_Date = b.Last_Update_Date,
@@ -256,6 +352,78 @@ namespace NanoDMSBusinessService.Controllers
             {
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
+        }
+
+        [Authorize]
+        [HttpGet("get-location-bank-details")]
+        public async Task<IActionResult> GetLocationBankDetails(Guid locationId)
+        {
+            if (locationId == Guid.Empty)
+                return BadRequest(new { Message = "Location Id Is Required." });
+
+            // 1️⃣ Get settlements
+            var settlements = await _context.BusinessLocationBankSettlements
+                .AsNoTracking()
+                .Where(x => x.Business_Location_Id == locationId && !x.Deleted)
+                .ToListAsync();
+
+            if (!settlements.Any())
+                return NoContent();
+
+            // 2️⃣ JWT token
+            var jwtToken = HttpContext.Request.Headers["Authorization"]
+                .FirstOrDefault()?.Split(" ").Last();
+
+            if (string.IsNullOrEmpty(jwtToken))
+                return Unauthorized(new { Message = "Authorization Token Missing." });
+
+            // 3️⃣ Prepare API helper
+            var apiService = new ApiServiceHelper(new HttpClient());
+            var baseUrl = _configuration["GlobalConfiguration:BaseUrl"];
+
+            var result = new List<LocationBankDetailDto>();
+
+            // 4️⃣ Call Bank Service PER BANK
+            foreach (var settlement in settlements)
+            {
+                var bankUrl = $"{baseUrl}/apigateway/AdminService/MasterEntry/get-bank-by-id?id={settlement.Bank_Id}";
+
+                var bankResponse = await apiService.SendRequestAsync<object>(
+                    bankUrl,
+                    HttpMethod.Get,
+                    null,
+                    jwtToken
+                );
+
+                string bankName = "Unknown";
+
+                if (bankResponse != null)
+                {
+                    var root = bankResponse.Value;
+
+                    if (root.TryGetProperty("bank", out var bankElement) &&
+                        bankElement.TryGetProperty("name", out var nameProp))
+                    {
+                        bankName = nameProp.GetString() ?? "Unknown";
+                    }
+                }
+
+                result.Add(new LocationBankDetailDto
+                {
+                    BankId = settlement.Bank_Id,
+                    BankName = bankName,
+                    MerchantShare = settlement.Merchant_Share,
+                    BankShare = settlement.Bank_Share,
+                    TaxValue = settlement.Tax_Value,
+                    TaxOnMerchant = settlement.Tax_On_Merchant == 1
+                });
+            }
+
+            return Ok(new
+            {
+                LocationId = locationId,
+                Banks = result
+            });
         }
 
         [Authorize]
@@ -317,6 +485,11 @@ namespace NanoDMSBusinessService.Controllers
                     Mobile = loc.Mobile,
                     Email = loc.Email,
                     Website = loc.Website,
+                    DiscountBeforeTax = loc.DiscountBeforeTax,
+                    PosCharge = loc.PosCharge,
+                    DiscountBeforePosCharge = loc.DiscountBeforePosCharge,
+                    ServiceCharges = loc.ServiceCharges,
+                    DiscountBeforeServiceCharge = loc.DiscountBeforeServiceCharge,
                     Deleted = loc.Deleted,
                     Published = loc.Published,
                     CreateDate = loc.Create_Date,
@@ -346,7 +519,9 @@ namespace NanoDMSBusinessService.Controllers
                     return BadRequest(new { Message = "Business Id Is Required." });
 
                 var locations = await _context.BusinessLocation
-                    .Where(x => x.Business_Id == businessId && !x.Deleted)
+                    .Include(x => x.Psps)
+                    .Include(x => x.BankSettlements)
+    .Where(x => x.Business_Id == businessId && !x.Deleted)
                     .OrderByDescending(x => x.Create_Date)
                     .ToListAsync();
 
@@ -389,12 +564,40 @@ namespace NanoDMSBusinessService.Controllers
                     Mobile = x.Mobile,
                     Email = x.Email,
                     Website = x.Website,
+                    DiscountBeforeTax = x.DiscountBeforeTax,
+                    PosCharge = x.PosCharge,
+                    DiscountBeforePosCharge = x.DiscountBeforePosCharge,
+                    ServiceCharges = x.ServiceCharges,
+                    DiscountBeforeServiceCharge = x.DiscountBeforeServiceCharge,
                     Published = x.Published,
                     Deleted = x.Deleted,
                     CreateDate = x.Create_Date,
                     CreateUser = x.Create_User,
                     LastUpdateDate = x.Last_Update_Date,
-                    LastUpdateUser = x.Last_Update_User
+                    LastUpdateUser = x.Last_Update_User,
+                    LocationPsps = x.Psps.Select(p => new PspDto
+                    {
+                        Id = p.Id,
+                        PspId = p.Psp_Id,
+                        Published = p.Published,
+                        Deleted = p.Deleted,
+                        Create_Date = p.Create_Date,
+                        Create_User = p.Create_User,
+                        Last_Update_Date = p.Last_Update_Date,
+                        Last_Update_User = p.Last_Update_User,
+                    }).ToList(),
+
+                    LocationBanks = x.BankSettlements.Select(b => new BankSettlementDto
+                    {
+                        Id = b.Id,
+                        Bank_Id = b.Bank_Id,
+                        Merchant_Share = b.Merchant_Share,
+                        Bank_Share = b.Bank_Share,
+                        Tax_Value = b.Tax_Value,
+                        TaxOnMerchant = b.Tax_On_Merchant
+                    }).ToList()
+
+
                 }).ToList();
 
                 return Ok(new { BusinessLocations = result });
@@ -433,6 +636,11 @@ namespace NanoDMSBusinessService.Controllers
                     Phone = location.Phone,
                     Email = location.Email,
                     Website = location.Website,
+                    DiscountBeforeTax = location.DiscountBeforeTax,
+                    PosCharge = location.PosCharge,
+                    DiscountBeforePosCharge = location.DiscountBeforePosCharge,
+                    ServiceCharges = location.ServiceCharges,
+                    DiscountBeforeServiceCharge = location.DiscountBeforeServiceCharge,
                 };
 
 
@@ -449,6 +657,8 @@ namespace NanoDMSBusinessService.Controllers
         [HttpPut("edit-business-location")]
         public async Task<IActionResult> EditBusinessLocation([FromBody] UpdateBusinessLocationModel updateDto)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
                 // Validate Id
@@ -509,6 +719,11 @@ namespace NanoDMSBusinessService.Controllers
                 businesslocation.Mobile = !string.IsNullOrEmpty(updateDto.Mobile) ? updateDto.Mobile : businesslocation.Mobile;
                 businesslocation.Email = !string.IsNullOrEmpty(updateDto.Email) ? updateDto.Email : businesslocation.Email;
                 businesslocation.Website = !string.IsNullOrEmpty(updateDto.Website) ? updateDto.Website : businesslocation.Website;
+                businesslocation.DiscountBeforeTax = updateDto.DiscountBeforeTax;
+                businesslocation.PosCharge = updateDto.PosCharge;
+                businesslocation.DiscountBeforePosCharge = updateDto.DiscountBeforePosCharge;
+                businesslocation.ServiceCharges = updateDto.ServiceCharges;
+                businesslocation.DiscountBeforeServiceCharge = updateDto.DiscountBeforeServiceCharge;
                 businesslocation.Last_Update_Date = DateTime.UtcNow;
                 businesslocation.Published = true;
                 businesslocation.Last_Update_User = Guid.Parse(superuser.Id);
@@ -516,6 +731,49 @@ namespace NanoDMSBusinessService.Controllers
                 // Save updates
                 _businessLocationRepository.Update(businesslocation);
                 await _businessLocationRepository.SaveChangesAsync();
+
+                var existingPsps = await _context.BusinessLocationPsps
+                .Where(x => x.Business_Location_Id == businesslocation.Id)
+                .ToListAsync();
+
+                _context.BusinessLocationPsps.RemoveRange(existingPsps);
+
+                if (updateDto.Psp_Ids != null && updateDto.Psp_Ids.Any())
+                {
+                    var newPsps = updateDto.Psp_Ids.Select(pspId => new BusinessLocationPsp
+                    {
+                        Id = Guid.NewGuid(),
+                        Business_Location_Id = businesslocation.Id,
+                        Psp_Id = pspId
+                    });
+
+                    _context.BusinessLocationPsps.AddRange(newPsps);
+                }
+
+                var existingBanks = await _context.BusinessLocationBankSettlements
+                    .Where(x => x.Business_Location_Id == businesslocation.Id)
+                    .ToListAsync();
+
+                _context.BusinessLocationBankSettlements.RemoveRange(existingBanks);
+
+                if (updateDto.Banks != null && updateDto.Banks.Any())
+                {
+                    var newBanks = updateDto.Banks.Select(b => new BusinessLocationBankSettlement
+                    {
+                        Id = Guid.NewGuid(),
+                        Business_Location_Id = businesslocation.Id,
+                        Bank_Id = b.Bank_Id,
+                        Merchant_Share = b.Merchant_Share,
+                        Bank_Share = b.Bank_Share,
+                        Tax_Value = b.Tax_Value,
+                        Tax_On_Merchant = b.Tax_On_Merchant ? 1 : 0
+                    });
+
+                    _context.BusinessLocationBankSettlements.AddRange(newBanks);
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
                 // Return success response
                 return Ok(new
@@ -526,6 +784,7 @@ namespace NanoDMSBusinessService.Controllers
             }
             catch (Exception ex)
             {
+                await transaction.RollbackAsync();
                 // Handle server errors
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = $"Error: {ex.Message}" });
             }

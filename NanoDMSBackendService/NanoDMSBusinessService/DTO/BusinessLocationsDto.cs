@@ -18,6 +18,13 @@
         public string Mobile { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Website { get; set; } = string.Empty;
+        public int DiscountBeforeTax { get; set; }
+        public decimal PosCharge { get; set; }
+        public int DiscountBeforePosCharge { get; set; }
+        public decimal ServiceCharges { get; set; }
+        public int DiscountBeforeServiceCharge { get; set; }
+        public List<PspDto> LocationPsps { get; set; } = new();
+        public List<BankSettlementDto> LocationBanks { get; set; } = new();
         public bool Deleted { get; set; } = false;
         public bool Published { get; set; } = false;
         public DateTime CreateDate { get; set; } = DateTime.UtcNow;

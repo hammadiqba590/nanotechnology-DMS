@@ -1,0 +1,108 @@
+[
+  {
+    "ContainingType": "NanoDMSRightsService.Controllers.MenuController",
+    "Method": "Create",
+    "RelativePath": "api/Menu/create-menus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSRightsService.DTO.Menu.MenuCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSRightsService.Controllers.MenuController",
+    "Method": "GetMenus",
+    "RelativePath": "api/Menu/get-all-menus",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSRightsService.Controllers.MenuController",
+    "Method": "GetMenuTree",
+    "RelativePath": "api/Menu/get-menu-tree-by-role-ids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSRightsService.Controllers.RightsController",
+    "Method": "AssignMenus",
+    "RelativePath": "api/Rights/assign-menus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "NanoDMSRightsService.DTO.RoleMenu.AssignMenusToRoleDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSRightsService.Controllers.RightsController",
+    "Method": "Claims",
+    "RelativePath": "api/Rights/get-claims-by-roles-ids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSRightsService.Controllers.RightsController",
+    "Method": "GetMenus",
+    "RelativePath": "api/Rights/get-menus-by-role-ids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NanoDMSRightsService.Controllers.RightsController",
+    "Method": "GetPermissionsByRoleIds",
+    "RelativePath": "api/Rights/permissions-by-role-ids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

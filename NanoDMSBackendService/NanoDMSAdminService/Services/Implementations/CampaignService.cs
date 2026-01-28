@@ -86,7 +86,11 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<CampaignDto>> GetPagedAsync(CampaignFilterModel filter)
         {
-            var cacheKey = CampaignCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = CampaignCacheKeys.Paged(filter.PageNumber, 
+                filter.PageSize,
+                filter.Campaign_Name?.ToString() ?? "",
+                filter.Status?.ToString() ?? ""
+                );
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)
@@ -213,7 +217,7 @@ namespace NanoDMSAdminService.Services.Implementations
 
             return MapToDto(campaign);
         }
-        public async Task<List<Campaign>> GetActiveCampaignsByTerminalAsync(string serialNumber)
+        public async Task<List<CampaignDto>> GetActiveCampaignsByTerminalAsync(string serialNumber)
         {
             var now = DateTime.UtcNow;
 
@@ -231,6 +235,63 @@ namespace NanoDMSAdminService.Services.Implementations
                         !a.Deleted
                     )
                 )
+                .Select(c => new CampaignDto
+                {
+                    Id = c.Id,
+                    Campaign_Name = c.Campaign_Name,
+                    Description = c.Description,
+                    Currency_Id = c.Currency_Id,
+                    Currency_Name = c.Currency.Name,
+                    Tax_Amount = c.Tax_Amount,
+                    Fbr = c.Fbr,
+                    Status = c.Status,
+                    Budget_Limit_Type = c.Budget_Limit_Type,
+                    Budget_Limit_Value = c.Budget_Limit_Value,
+                    Priority = c.Priority,
+                    Start_Date = c.Start_Date,
+                    End_Date = c.End_Date,
+                    Deleted = c.Deleted,
+                    Published = c.Published,
+                    Create_Date = c.Create_Date,
+                    Create_User = c.Create_User,
+                    Last_Update_Date = c.Last_Update_Date,
+                    Last_Update_User = c.Last_Update_User,
+                    Business_Id = c.Business_Id,
+                    BusinessLocation_Id = c.BusinessLocation_Id,
+                    Is_Active = c.Is_Active,
+                    RecordStatus = c.RecordStatus,
+
+                    CampaignBanks = c.CampaignBanks
+                        .Where(cb => !cb.Deleted)
+                        .Select(cb => new CampaignBankDto
+                        {
+                            Id = cb.Id,
+                            Campagin_Id = cb.Campagin_Id,
+                            Bank_Id = cb.Bank_Id,
+                            Bank_Name = cb.Bank.Name,
+                            Budget = cb.Budget,
+                            Discount_Share = cb.Discount_Share,
+                            Bank_Share = cb.Bank_Share,
+                            Tax_On_Merchant_Share = cb.Tax_On_Merchant_Share,
+                            Budget_Limit_Type = cb.Budget_Limit_Type,
+                            Budget_Limit_Value = cb.Budget_Limit_Value,
+                            Discount_Mode = cb.Discount_Mode,
+                            Status = cb.Status,
+                            Deleted = cb.Deleted,
+                            Published = cb.Published,
+                            Create_Date = cb.Create_Date,
+                            Create_User = cb.Create_User,
+                            Last_Update_Date = cb.Last_Update_Date,
+                            Last_Update_User = cb.Last_Update_User,
+                            Business_Id = cb.Business_Id,
+                            BusinessLocation_Id = cb.BusinessLocation_Id,
+                            Is_Active = cb.Is_Active,
+                            Start_Date = cb.Start_Date,
+                            End_Date = cb.End_Date,
+                            RecordStatus = cb.RecordStatus,
+                        })
+                        .ToList()
+                })
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -309,6 +370,7 @@ namespace NanoDMSAdminService.Services.Implementations
                         Bank_Id = bankDto.Bank_Id,
                         Budget = bankDto.Budget,
                         Discount_Share = bankDto.Discount_Share,
+                        Bank_Share = bankDto.Bank_Share,
                         Tax_On_Merchant_Share = bankDto.Tax_On_Merchant_Share,
                         Budget_Limit_Type = bankDto.Budget_Limit_Type,
                         Budget_Limit_Value = bankDto.Budget_Limit_Value,
@@ -337,6 +399,7 @@ namespace NanoDMSAdminService.Services.Implementations
                         Bank_Name = campaignBank.Bank?.Name ?? string.Empty,
                         Budget = campaignBank.Budget,
                         Discount_Share = campaignBank.Discount_Share,
+                        Bank_Share = campaignBank.Bank_Share,
                         Tax_On_Merchant_Share = campaignBank.Tax_On_Merchant_Share,
                         Budget_Limit_Type = campaignBank.Budget_Limit_Type,
                         Budget_Limit_Value = campaignBank.Budget_Limit_Value,
@@ -410,12 +473,14 @@ namespace NanoDMSAdminService.Services.Implementations
                                 Id = Guid.NewGuid(),
                                 Campaign_Card_Bin_Id = cardBin.Id,
                                 Discount_Type = ruleDto.Discount_Type,
+                                Discount_Mode = ruleDto.Discount_Mode,
+                                Pos_Mode = ruleDto.Pos_Mode,
                                 Discount_Value = ruleDto.Discount_Value,
                                 Min_Spend = ruleDto.Min_Spend,
                                 Max_Discount = ruleDto.Max_Discount,
                                 Payment_Type = ruleDto.Payment_Type,
                                 Budget_Limit_Type = ruleDto.Budget_Limit_Type,
-                                Budget_Limit_Value = ruleDto.Budget_Limit_Value,
+                                //Budget_Limit_Value = ruleDto.Budget_Limit_Value,
                                 Applicable_Days = ruleDto.Applicable_Days,
                                 Transaction_Cap = ruleDto.Transaction_Cap,
                                 Priority = ruleDto.Priority,
@@ -440,6 +505,8 @@ namespace NanoDMSAdminService.Services.Implementations
                                 Campaign_Card_Bin_Id = cardBin.Id,
                                 Currency_Id = dto.Currency_Id,
                                 Discount_Type = rule.Discount_Type,
+                                Discount_Mode = rule.Discount_Mode,
+                                Pos_Mode = rule.Pos_Mode,
                                 Discount_Value = rule.Discount_Value,
                                 Min_Spend = rule.Min_Spend,
                                 Max_Discount = rule.Max_Discount,
@@ -457,12 +524,14 @@ namespace NanoDMSAdminService.Services.Implementations
                                 Campaign_Card_Bin_Id = rule.Campaign_Card_Bin_Id,
                                 Campaign_Name = campaign.Campaign_Name,
                                 Discount_Type = rule.Discount_Type,
+                                Discount_Mode = rule.Discount_Mode,
+                                Pos_Mode = rule.Pos_Mode,
                                 Discount_Value = rule.Discount_Value,
                                 Min_Spend = rule.Min_Spend,
                                 Max_Discount = rule.Max_Discount,
                                 Payment_Type = rule.Payment_Type,
                                 Budget_Limit_Type = rule.Budget_Limit_Type,
-                                Budget_Limit_Value = rule.Budget_Limit_Value,
+                                //Budget_Limit_Value = rule.Budget_Limit_Value,
                                 Applicable_Days = rule.Applicable_Days,
                                 Transaction_Cap = rule.Transaction_Cap,
                                 Priority = rule.Priority,

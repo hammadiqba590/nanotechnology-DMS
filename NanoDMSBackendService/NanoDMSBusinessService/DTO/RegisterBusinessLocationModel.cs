@@ -13,5 +13,15 @@
         public string Mobile { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Website { get; set; } = string.Empty;
+        public int DiscountBeforeTax { get; set; }
+        public decimal PosCharge { get; set; }
+        public int DiscountBeforePosCharge { get; set; }
+        public decimal ServiceCharges { get; set; }
+        public int DiscountBeforeServiceCharge { get; set; }
+        // 👇 Multiple PSPs
+        public List<Guid> Psp_Ids { get; set; } = new();
+
+        // 👇 Multiple Banks
+        public List<BankSettlementCreateDto> Banks { get; set; } = new();
     }
 }

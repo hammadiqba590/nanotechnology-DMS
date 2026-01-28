@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CsvHelper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NanoDMSAdminService.Blocks;
+using NanoDMSAdminService.Common;
+using NanoDMSAdminService.Data;
 using NanoDMSAdminService.DTO.CardBin;
 using NanoDMSAdminService.DTO.CardBrand;
 using NanoDMSAdminService.DTO.CardLevel;
@@ -9,6 +14,7 @@ using NanoDMSAdminService.DTO.CardType;
 using NanoDMSAdminService.Filters;
 using NanoDMSAdminService.Models;
 using NanoDMSAdminService.Services.Interfaces;
+using System.Globalization;
 
 namespace NanoDMSAdminService.Controllers
 {
@@ -20,6 +26,7 @@ namespace NanoDMSAdminService.Controllers
         private readonly ICardBrandService _cardBrand;
         private readonly ICardLevelService _cardLevel;
         private readonly ICardTypeService _cardType;
+        private readonly AppDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
@@ -28,6 +35,7 @@ namespace NanoDMSAdminService.Controllers
             ICardBrandService cardBrand,
             ICardLevelService cardLevel,
             ICardTypeService cardType,
+            AppDbContext context,
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
@@ -35,6 +43,7 @@ namespace NanoDMSAdminService.Controllers
             _cardBrand = cardBrand;
             _cardLevel = cardLevel;
             _cardType = cardType;
+            _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -48,6 +57,225 @@ namespace NanoDMSAdminService.Controllers
         {
             var cardBin = await _cardBin.GetAllAsync();
             return Ok(cardBin);
+        }
+
+        [Authorize]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [HttpGet("get-card-bin-lookup")]
+        public async Task<IActionResult> CardBinLookup([FromQuery] CardBinLookupFilterModel filter)
+        {
+            var result = await _cardBin.GetCardBinLookupAsync(filter);
+
+            if (!result.Any())
+                return NoContent();
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [HttpGet("get-card-bin-grouped")]
+        public async Task<IActionResult> GetGroupedCardBins([FromQuery] CardBinGroupedFilterModel filter)
+        {
+            var result = await _cardBin.GetGroupedCardBinsAsync(filter);
+
+            if (!result.Any())
+                return NoContent();
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPost("bulk-upload-card-bin")]
+        public async Task<ActionResult<CardBinBulkUploadResponse>> BulkUploadCsvOptimized(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("CSV file is required");
+
+            // --- 1️⃣ Parse CSV ---
+            List<CardBinCsvRowDto> rows;
+            using (var stream = file.OpenReadStream())
+            using (var reader = new StreamReader(stream))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Context.RegisterClassMap<CardBinCsvRowMap>();
+                rows = csv.GetRecords<CardBinCsvRowDto>()
+                          .Select(r => new CardBinCsvRowDto
+                          {
+                              Bin = r.Bin?.Trim() ?? "",
+                              IssuingBank = r.IssuingBank?.Trim() ?? "N/A",
+                              CardBrand = r.CardBrand?.Trim() ?? "N/A",
+                              CardType = r.CardType?.Trim() ?? "N/A",
+                              CardLevel = r.CardLevel?.Trim() ?? "N/A",
+                              Country = r.Country?.Trim() ?? "N/A",
+                              LocalInternational = r.LocalInternational?.Trim() ?? ""
+                          })
+                          .ToList();
+            }
+
+            var response = new CardBinBulkUploadResponse { TotalRows = rows.Count };
+
+            // --- 2️⃣ Wrap everything inside EF Core execution strategy for PostgreSQL ---
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            return await strategy.ExecuteAsync(async () =>
+            {
+                using var transaction = await _context.Database.BeginTransactionAsync();
+
+                try
+                {
+                    // --- 3️⃣ Collect unique reference values from CSV ---
+                    var countriesCsv = rows.Select(r => string.IsNullOrWhiteSpace(r.Country) ? "N/A" : r.Country).Distinct().ToList();
+                    var banksCsv = rows.Select(r => string.IsNullOrWhiteSpace(r.IssuingBank) ? "N/A" : r.IssuingBank).Distinct().ToList();
+                    var brandsCsv = rows.Select(r => string.IsNullOrWhiteSpace(r.CardBrand) ? "N/A" : r.CardBrand).Distinct().ToList();
+                    var typesCsv = rows.Select(r => string.IsNullOrWhiteSpace(r.CardType) ? "N/A" : r.CardType).Distinct().ToList();
+                    var levelsCsv = rows.Select(r => string.IsNullOrWhiteSpace(r.CardLevel) ? "N/A" : r.CardLevel).Distinct().ToList();
+
+                    // --- 4️⃣ Load existing reference tables ---
+                    var countriesDb = await _context.Countries.Where(c => countriesCsv.Contains(c.Name)).ToDictionaryAsync(c => c.Name, c => c);
+                    var banksDb = await _context.Banks.Include(b => b.Country).Where(b => banksCsv.Contains(b.Name)).ToDictionaryAsync(b => b.Name, b => b);
+                    var brandsDb = await _context.CardBrands.Where(b => brandsCsv.Contains(b.Name)).ToDictionaryAsync(b => b.Name, b => b);
+                    var typesDb = await _context.CardTypes.Where(t => typesCsv.Contains(t.Name)).ToDictionaryAsync(t => t.Name, t => t);
+                    var levelsDb = await _context.CardLevels.Where(l => levelsCsv.Contains(l.Name)).ToDictionaryAsync(l => l.Name, l => l);
+
+                    // --- 5️⃣ Ensure "N/A" entries exist ---
+                    T EnsureNa<T>(Dictionary<string, T> cache, Func<T> createFunc) where T : BaseEntity
+                    {
+                        if (!cache.ContainsKey("N/A"))
+                        {
+                            var entry = createFunc();
+                            _context.Set<T>().Add(entry);
+                            cache["N/A"] = entry;
+                            return entry;
+                        }
+                        return cache["N/A"];
+                    }
+
+                    var naCountry = EnsureNa(countriesDb, () => new Country { Id = Guid.NewGuid(), Name = "N/A", Iso2 = "NA", Iso3 = "NA" });
+                    var naBank = EnsureNa(banksDb, () => new Bank
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "N/A",
+                        Short_Name = "N/A",
+                        Short_Code = Guid.NewGuid().ToString("N")[..6],
+                        Country_Id = naCountry.Id
+                    });
+                    var naBrand = EnsureNa(brandsDb, () => new CardBrand { Id = Guid.NewGuid(), Name = "N/A" });
+                    var naType = EnsureNa(typesDb, () => new CardType { Id = Guid.NewGuid(), Name = "N/A" });
+                    var naLevel = EnsureNa(levelsDb, () => new CardLevel { Id = Guid.NewGuid(), Name = "N/A" });
+
+                    await _context.SaveChangesAsync(); // Save N/A entries to get IDs
+
+                    // --- 6️⃣ Create missing reference entries from CSV ---
+                    void CreateMissing<T>(List<string> keys, Dictionary<string, T> cache, Func<string, T> createFunc) where T : BaseEntity
+                    {
+                        foreach (var key in keys)
+                        {
+                            if (!cache.ContainsKey(key))
+                            {
+                                var entry = createFunc(key);
+                                _context.Set<T>().Add(entry);
+                                cache[key] = entry;
+                            }
+                        }
+                    }
+
+                    CreateMissing(countriesCsv, countriesDb, k => new Country { Id = Guid.NewGuid(), Name = k, Iso2 = "NA", Iso3 = "NA" });
+                    CreateMissing(banksCsv, banksDb, k => new Bank
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = k,
+                        Short_Name = k.Length > 20 ? k[..20] : k,
+                        Short_Code = Guid.NewGuid().ToString("N")[..6],
+                        Country_Id = naCountry.Id
+                    });
+                    CreateMissing(brandsCsv, brandsDb, k => new CardBrand { Id = Guid.NewGuid(), Name = k });
+                    CreateMissing(typesCsv, typesDb, k => new CardType { Id = Guid.NewGuid(), Name = k });
+                    CreateMissing(levelsCsv, levelsDb, k => new CardLevel { Id = Guid.NewGuid(), Name = k });
+
+                    await _context.SaveChangesAsync(); // Save all missing reference entries
+
+                    // --- 7️⃣ Load existing BINs once for duplication check ---
+                    var csvBins = rows.Select(r => r.Bin).ToList();
+                    var existingBins = await _context.CardBins
+                                                    .Where(cb => csvBins.Contains(cb.Card_Bin_Value))
+                                                    .Select(cb => cb.Card_Bin_Value)
+                                                    .ToHashSetAsync();
+
+                    // --- 8️⃣ Prepare CardBins in memory ---
+                    var cardBinsToInsert = new List<CardBin>();
+
+                    foreach (var row in rows)
+                    {
+                        var result = new CardBinUploadResult { Bin = row.Bin };
+
+                        try
+                        {
+                            if (string.IsNullOrWhiteSpace(row.Bin))
+                                throw new Exception("BIN is required");
+                            if (!row.Bin.All(char.IsDigit) || row.Bin.Length < 6 || row.Bin.Length > 12)
+                                throw new Exception("BIN must be 6–12 digits");
+                            if (existingBins.Contains(row.Bin))
+                                throw new Exception("Duplicate BIN");
+
+                            var country = countriesDb.GetValueOrDefault(row.Country) ?? naCountry;
+                            var bank = banksDb.GetValueOrDefault(row.IssuingBank) ?? naBank;
+                            var brand = brandsDb.GetValueOrDefault(row.CardBrand) ?? naBrand;
+                            var type = typesDb.GetValueOrDefault(row.CardType) ?? naType;
+                            var levelKey = string.IsNullOrWhiteSpace(row.CardLevel) ? "N/A" : row.CardLevel;
+                            var level = levelsDb.GetValueOrDefault(levelKey) ?? naLevel;
+
+                            var localInternational = row.LocalInternational?.ToLower() switch
+                            {
+                                "local" => LocalInternationalStatus.Local,
+                                "international" => LocalInternationalStatus.International,
+                                _ => LocalInternationalStatus.Unknown
+                            };
+
+                            cardBinsToInsert.Add(new CardBin
+                            {
+                                Id = Guid.NewGuid(),
+                                Card_Bin_Value = row.Bin,
+                                Bank_Id = bank.Id,
+                                Card_Brand_Id = brand.Id,
+                                Card_Type_Id = type.Id,
+                                Card_Level_Id = level.Id,
+                                Country_Id = country.Id,
+                                Local_International = localInternational,
+                                Is_Virtual = false
+                            });
+
+                            result.Success = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            result.Success = false;
+                            result.ErrorMessage = ex.Message;
+                        }
+
+                        response.RowResults.Add(result);
+                    }
+
+                    // --- 9️⃣ Bulk insert all CardBins ---
+                    if (cardBinsToInsert.Any())
+                        await _context.CardBins.AddRangeAsync(cardBinsToInsert);
+
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    response.ImportedRows = response.RowResults.Count(r => r.Success);
+                    response.FailedRows = response.RowResults.Count(r => !r.Success);
+
+                    return Ok(response);
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    // Get full details including inner exceptions
+                    var fullMessage = ex.ToString(); // includes inner exceptions stack
+                    return StatusCode(500, new { Message = "Import failed", Details = fullMessage });
+                }
+            });
         }
 
         [Authorize]

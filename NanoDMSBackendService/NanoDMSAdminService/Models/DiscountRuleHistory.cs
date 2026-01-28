@@ -11,6 +11,8 @@ namespace NanoDMSAdminService.Models
         public Guid Discount_Rule_Id { get; set; }
         [ForeignKey(nameof(Discount_Rule_Id))]
         public DiscountRule? DiscountRule { get; set; }
+        public string? Discount_Mode { get; set; }
+        public string? Pos_Mode { get; set; }
         public Guid Campaign_Card_Bin_Id { get; set; }
         [ForeignKey(nameof(Campaign_Card_Bin_Id))]
         public CampaignCardBin? CampaignCardBin { get; set; }

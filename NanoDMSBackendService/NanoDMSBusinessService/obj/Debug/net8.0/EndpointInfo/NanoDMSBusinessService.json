@@ -524,6 +524,28 @@
         }
       }
     },
+    "/api/BusinessLocation/get-location-bank-details": {
+      "get": {
+        "tags": [
+          "BusinessLocation"
+        ],
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/BusinessLocation/get-business-location-count": {
       "post": {
         "tags": [
@@ -1094,6 +1116,31 @@
   },
   "components": {
     "schemas": {
+      "BankSettlementCreateDto": {
+        "type": "object",
+        "properties": {
+          "bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "merchant_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "bank_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax_Value": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax_On_Merchant": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "BusinessByIdModel": {
         "type": "object",
         "properties": {
@@ -1284,6 +1331,41 @@
           "website": {
             "type": "string",
             "nullable": true
+          },
+          "discountBeforeTax": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "posCharge": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountBeforePosCharge": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "serviceCharges": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountBeforeServiceCharge": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "psp_Ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "banks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BankSettlementCreateDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1320,6 +1402,31 @@
           "userID": {
             "type": "string",
             "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateBankSettlementModel": {
+        "type": "object",
+        "properties": {
+          "bank_Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "merchant_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "bank_Share": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax_Value": {
+            "type": "number",
+            "format": "double"
+          },
+          "tax_On_Merchant": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1407,6 +1514,41 @@
           },
           "website": {
             "type": "string",
+            "nullable": true
+          },
+          "discountBeforeTax": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "posCharge": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountBeforePosCharge": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "serviceCharges": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountBeforeServiceCharge": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "psp_Ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          },
+          "banks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateBankSettlementModel"
+            },
             "nullable": true
           }
         },

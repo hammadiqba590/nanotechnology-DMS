@@ -72,7 +72,7 @@ namespace NanoDMSAdminService.Services.Implementations
 
         public async Task<PaginatedResponseDto<CardLevelDto>> GetPagedAsync(CardLevelFilterModel filter)
         {
-            var cacheKey = CardLevelCacheKeys.Paged(filter.PageNumber, filter.PageSize);
+            var cacheKey = CardLevelCacheKeys.Paged(filter.PageNumber, filter.PageSize, filter.Name ?? string.Empty);
 
             var cached = await _cache.GetStringAsync(cacheKey);
             if (cached != null)

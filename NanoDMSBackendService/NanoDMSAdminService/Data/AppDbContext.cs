@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using NanoDMSAdminService.Blocks;
 using NanoDMSAdminService.Models;
 
@@ -105,6 +106,8 @@ namespace NanoDMSAdminService.Data
 
             modelBuilder.HasPostgresEnum<TerminalHistoryStatus>();
 
+            modelBuilder.HasPostgresEnum<PosModeStatus>();
+
             modelBuilder.Entity<Campaign>(entity =>
             {
                 entity.Property(e => e.Budget_Limit_Type)
@@ -116,11 +119,11 @@ namespace NanoDMSAdminService.Data
                       .HasDefaultValue(BudgetLimitTypeStatus.Yearly);
             });
 
-            modelBuilder.Entity<DiscountRule>(entity =>
-            {
-                entity.Property(e => e.Budget_Limit_Type)
-                      .HasDefaultValue(BudgetLimitTypeStatus.Yearly);
-            });
+            //modelBuilder.Entity<DiscountRule>(entity =>
+            //{
+            //    entity.Property(e => e.Budget_Limit_Type)
+            //          .HasDefaultValue(BudgetLimitTypeStatus.Yearly);
+            //});
 
             modelBuilder.Entity<CampaignCardBin>(entity =>
             {
@@ -158,11 +161,35 @@ namespace NanoDMSAdminService.Data
                       .HasDefaultValue(DiscountTypeStatus.Percentage);
             });
 
+            //modelBuilder.Entity<DiscountRule>(entity =>
+            //{
+            //    entity.Property(e => e.Discount_Mode)
+            //          .HasDefaultValue(DiscountModeStatus.All);
+            //});
+
+            //modelBuilder.Entity<DiscountRule>(entity =>
+            //{
+            //    entity.Property(e => e.Pos_Mode)
+            //          .HasDefaultValue(PosModeStatus.All);
+            //});
+
             modelBuilder.Entity<DiscountRuleHistory>(entity =>
             {
                 entity.Property(e => e.Discount_Type)
                       .HasDefaultValue(DiscountTypeStatus.Percentage);
             });
+
+            //modelBuilder.Entity<DiscountRuleHistory>(entity =>
+            //{
+            //    entity.Property(e => e.Discount_Mode)
+            //          .HasDefaultValue(DiscountModeStatus.All);
+            //});
+
+            //modelBuilder.Entity<DiscountRuleHistory>(entity =>
+            //{
+            //    entity.Property(e => e.Pos_Mode)
+            //          .HasDefaultValue(PosModeStatus.All);
+            //});
 
             modelBuilder.Entity<Psp>(entity =>
             {
@@ -231,14 +258,6 @@ namespace NanoDMSAdminService.Data
                .IsUnique();
 
             modelBuilder.Entity<Country>()
-                .HasIndex(x => x.Iso2)
-                .IsUnique();
-
-            modelBuilder.Entity<Country>()
-                .HasIndex(x => x.Iso3)
-                .IsUnique();
-
-            modelBuilder.Entity<Country>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
 
@@ -265,6 +284,18 @@ namespace NanoDMSAdminService.Data
 
             modelBuilder.Entity<Currency>()
                 .HasIndex(x => x.Code)
+                .IsUnique();
+
+            modelBuilder.Entity<CardBrand>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<CardLevel>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<CardType>()
+                .HasIndex(x => x.Name)
                 .IsUnique();
 
             modelBuilder.Entity<PspCategory>()
@@ -412,5 +443,8 @@ namespace NanoDMSAdminService.Data
             
         }
     }
+
+    
+
 
 }
